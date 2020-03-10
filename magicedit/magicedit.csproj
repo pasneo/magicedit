@@ -54,6 +54,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GameWindow.xaml.cs">
+      <DependentUpon>GameWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="model\object\Property.cs" />
+    <Compile Include="model\scheme\CompiledScheme.cs" />
+    <Compile Include="model\game\Game.cs" />
+    <Compile Include="model\object\MapObject.cs" />
+    <Compile Include="model\map\Square.cs" />
+    <Compile Include="model\scheme\Scheme.cs" />
+    <Compile Include="model\scheme\SchemeCommand.cs" />
+    <Compile Include="model\scheme\SchemeFunction.cs" />
+    <Compile Include="model\resource\Visual.cs" />
+    <Compile Include="model\resource\Text.cs" />
+    <Page Include="GameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -62,12 +79,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="model\map\Map.cs" />
+    <Compile Include="model\config\ItemSpellConfig.cs" />
+    <Compile Include="model\config\CharacterConfig.cs" />
+    <Compile Include="model\config\Config.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="model\object\Object.cs" />
+    <Compile Include="model\map\Position.cs" />
+    <Compile Include="model\game\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -94,7 +118,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="framework\" />
+    <Folder Include="windows\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -54,6 +54,12 @@
                 <Grid x:Name="gridExplorerContainer" Grid.Column="0">
                     <Label>Hello</Label>
                     <TreeView x:Name="tvExplorer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="auto" Height="auto">
+                        <TreeViewItem Header="Resources">
+                            <TreeViewItem Header="Visuals">
+                            </TreeViewItem>
+                            <TreeViewItem Header="Texts">
+                            </TreeViewItem>
+                        </TreeViewItem>
                         <TreeViewItem Header="Map">
                             <TreeViewItem Header="Squares">
                             </TreeViewItem>
@@ -88,8 +94,6 @@
                         </TreeViewItem>
                         <TreeViewItem Header="Object">
                             <TreeViewItem Header="Schemes">
-                            </TreeViewItem>
-                            <TreeViewItem Header="Object schemes">
                             </TreeViewItem>
                             <TreeViewItem Header="Objects">
                             </TreeViewItem>

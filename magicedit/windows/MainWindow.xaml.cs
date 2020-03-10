@@ -29,5 +29,11 @@ namespace magicedit
         {
             //tvExplorer.Width = gridExplorerContainer.ActualWidth;
         }
+
+        private void mRun_Click(object sender, RoutedEventArgs e)
+        {
+            GameWindow gameWindow = new GameWindow();
+            gameWindow.Show();
+        }
     }
 }

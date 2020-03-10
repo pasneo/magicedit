@@ -26,7 +26,7 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Execute">
-                <MenuItem Header="Run">
+                <MenuItem x:Name="mRun" Header="Run" Click="mRun_Click">
                 </MenuItem>
                 <MenuItem Header="Validate">
                 </MenuItem>
@@ -34,7 +34,7 @@
         </Menu>
 
         <Grid
-            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="PaleVioletRed" Width="auto" Height="auto"
+            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="auto" Height="auto"
             Margin="0,20,0,0">
 
             <Grid.RowDefinitions>
@@ -52,7 +52,6 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid x:Name="gridExplorerContainer" Grid.Column="0">
-                    <Label>Hello</Label>
                     <TreeView x:Name="tvExplorer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="auto" Height="auto">
                         <TreeViewItem Header="Resources">
                             <TreeViewItem Header="Visuals">

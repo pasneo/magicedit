@@ -54,10 +54,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\map\SquareType.cs" />
+    <Compile Include="model\object\ObjectAttribute.cs" />
     <Compile Include="windows\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="model\object\Property.cs" />
+    <Compile Include="model\object\ObjectVariable.cs" />
     <Compile Include="model\scheme\CompiledScheme.cs" />
     <Compile Include="model\game\Game.cs" />
     <Compile Include="model\object\MapObject.cs" />

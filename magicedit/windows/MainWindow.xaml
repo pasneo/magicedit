@@ -60,6 +60,8 @@
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Map">
+                            <TreeViewItem Header="Square Types">
+                            </TreeViewItem>
                             <TreeViewItem Header="Squares">
                             </TreeViewItem>
                             <TreeViewItem Header="Objects">

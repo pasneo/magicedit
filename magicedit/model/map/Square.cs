@@ -8,5 +8,7 @@ namespace magicedit
 {
     public class Square
     {
+        public SquareType Type { get; set; }
+        public Position Position { get; set; }
     }
 }

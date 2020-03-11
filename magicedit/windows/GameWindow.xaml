@@ -31,6 +31,66 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
+                <StackPanel HorizontalAlignment="Stretch">
+                    
+                    <Grid HorizontalAlignment="Stretch" Background="#ab99ff">
+                        <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
+                            <TextBlock FontSize="16">Desciption</TextBlock>
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
+                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
+                                    This is a place where you can find general info about an object.
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+
+
+                    <Grid HorizontalAlignment="Stretch" Background="#99ffab">
+                        <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
+                            <TextBlock FontSize="16">Report</TextBlock>
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
+                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
+                                    In this box there will be reports about objects when you do something with them.
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+
+
+                    <Grid HorizontalAlignment="Stretch" Background="#ff99ab">
+                        <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
+                            <TextBlock FontSize="16">Actions</TextBlock>
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
+                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
+                                    Here you'll find all the actions you can do with the currently selected object.
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Stretch" Background="#fffef2">
+                        <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
+                            <TextBlock FontSize="16">Inventory</TextBlock>
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
+                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
+                                    All your items will be listed here, and you can select any of them to do something with them.
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid HorizontalAlignment="Stretch" Background="#ffeaff">
+                        <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
+                            <TextBlock FontSize="16">Spells</TextBlock>
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
+                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
+                                    Whenever you learn a new spell, it will appear in the list here, where you can select them.
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+
+                </StackPanel>
             </Grid>
 
             <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"

@@ -83,5 +83,23 @@ namespace magicedit
             }
         }
 
+        public SchemeFunction GetFunctionByName(string functionName)
+        {
+            SchemeFunction matchingFunction = CompiledScheme.GetFunctionByName(functionName);
+
+            //If given name was not found in this scheme, we try the parents
+            if (matchingFunction == null)
+            {
+                foreach(Scheme parent in Parents)
+                {
+                    matchingFunction = parent.GetFunctionByName(functionName);
+                    if (matchingFunction != null) return matchingFunction;
+                }
+            }
+
+            return null;
+
+        }
+
     }
 }

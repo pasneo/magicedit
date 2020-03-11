@@ -8,6 +8,13 @@ namespace magicedit
 {
     public class SchemeFunction
     {
+        public string Name { get; set; }
         List<SchemeCommand> Commands;
+
+        public void Execute(Object @object, Character actor)
+        {
+            //TODO
+        }
+
     }
 }

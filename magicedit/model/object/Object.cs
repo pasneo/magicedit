@@ -9,6 +9,8 @@ namespace magicedit
     public class Object
     {
         
+        public string Name { get; set; }
+
         public Scheme Scheme { get; set; }
         public Visual Visual { get; set; }
 

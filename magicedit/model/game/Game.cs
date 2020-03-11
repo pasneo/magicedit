@@ -18,7 +18,16 @@ namespace magicedit
 
         public void Start()
         {
+            Round = 0;
             //TODO
+        }
+
+        private void NextRound()
+        {
+            foreach(Player player in Players)
+            {
+                player.Act(this);
+            }
         }
 
     }

@@ -23,5 +23,19 @@ namespace magicedit
             //TODO
         }
 
+        //Returns the function that matches the given name, or null if none matches
+        public SchemeFunction GetFunctionByName(string functionName)
+        {
+            if (InitFunction.Name == functionName) return InitFunction;
+
+            foreach(SchemeFunction actionFunction in ActionFunctions)
+            {
+                if (actionFunction.Name == functionName) return actionFunction;
+            }
+
+            return null;
+
+        }
+
     }
 }

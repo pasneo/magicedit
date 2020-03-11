@@ -9,6 +9,8 @@ namespace magicedit
     public class Config
     {
 
+        private Map Map;
+
         private CharacterConfig CharacterConfig;
         private ItemSpellConfig ItemConfig;
         private ItemSpellConfig SpellConfig;

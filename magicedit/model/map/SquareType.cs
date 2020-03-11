@@ -10,6 +10,7 @@ namespace magicedit
     {
 
         public string Name { get; set; }
+        public Visual Visual { get; set; }
 
         //Code written in scheme lang. Executes when a character steps on the squre
         private string StepFunctionCode;

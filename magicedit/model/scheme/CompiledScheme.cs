@@ -13,7 +13,12 @@ namespace magicedit
 
         /* *** */
 
-        public void Construct(Object @object)
+        public void Construct(Object @object, List<ObjectVariable> parameters)
+        {
+            //TODO
+        }
+
+        public void Init(Object @object)
         {
             //TODO
         }

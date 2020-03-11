@@ -17,5 +17,12 @@ namespace magicedit
         public List<ObjectVariable> Variables;
         public List<ObjectAttribute> Attributes;
 
+        /* *** */
+
+        public void Construct()
+        {
+            //compile scheme and call its constructor
+        }
+
     }
 }

@@ -13,9 +13,9 @@
             <!-- For setting menu height -->
 
             <MenuItem Header="File">
-                <MenuItem Header="Save">
+                <MenuItem Header="Save Game">
                 </MenuItem>
-                <MenuItem Header="Save As...">
+                <MenuItem Header="Save Game As...">
                 </MenuItem>
             </MenuItem>
         </Menu>

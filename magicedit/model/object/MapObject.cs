@@ -8,5 +8,6 @@ namespace magicedit
 {
     public class MapObject : Object
     {
+        public Position Position { get; set; }
     }
 }

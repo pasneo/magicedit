@@ -9,7 +9,7 @@ namespace magicedit
     public class Object
     {
         
-        public string Name { get; set; }
+        public string Id { get; set; }
 
         public Scheme Scheme { get; set; }
         public Visual Visual { get; set; }
@@ -23,7 +23,12 @@ namespace magicedit
 
         public void Construct()
         {
-            //compile scheme and call its constructor
+            //TODO: compile scheme and call its constructor
+        }
+
+        public void ExecuteAction(string actionName, Object actor)
+        {
+            //TODO: get action by name, and execute it
         }
 
     }

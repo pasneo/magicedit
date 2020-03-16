@@ -30,5 +30,10 @@ namespace magicedit
             }
         }
 
+        public Map GetMap()
+        {
+            return Config.Map;
+        }
+
     }
 }

@@ -11,7 +11,7 @@ namespace magicedit
 {
     public class Character : MapObject
     {
-        List<Item> Items;
-        List<Spell> Spells;
+        public List<Item> Items;
+        public List<Spell> Spells;
     }
 }

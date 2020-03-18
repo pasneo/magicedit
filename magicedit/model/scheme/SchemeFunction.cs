@@ -9,9 +9,9 @@ namespace magicedit
     public class SchemeFunction
     {
         public string Name { get; set; }
-        List<SchemeCommand> Commands;
+        List<ISchemeCommand> Commands;
 
-        public void Execute(Object @object, Character actor)
+        public void Execute(Object @object, Object actor)
         {
             //TODO
         }

@@ -31,5 +31,14 @@ namespace magicedit
             //TODO: get action by name, and execute it
         }
 
+        public ObjectVariable GetVariableByName(string name)
+        {
+            foreach(var variable in Variables)
+            {
+                if (variable.Name == name) return variable;
+            }
+            return null;
+        }
+
     }
 }

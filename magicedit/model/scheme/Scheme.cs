@@ -9,6 +9,8 @@ namespace magicedit
     public class Scheme
     {
 
+        public string Name { get; set; }
+
         private string code;
         public string Code
         {
@@ -99,6 +101,16 @@ namespace magicedit
 
             return null;
 
+        }
+
+        public bool HasAncestor(string ancestorName)
+        {
+            foreach(Scheme parent in Parents)
+            {
+                if (parent.Name == ancestorName) return true;
+                if (parent.HasAncestor(ancestorName)) return true;
+            }
+            return false;
         }
 
     }

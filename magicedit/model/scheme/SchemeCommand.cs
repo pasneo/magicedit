@@ -5,12 +5,28 @@ namespace magicedit
 
     public enum SchemeCommandType
     {
-        None
+        None,
+
+        CreateVariable,
+        CreateClassVariable,
+
+        SetVariable,
+
+        Add,
+        Subtract,
+        Multiply,
+        Divide
+
+
     }
 
-    public class SchemeCommand
+    public interface ISchemeCommand
     {
-        public SchemeCommandType Type;
-        public List<object> Parameters;
+        //public SchemeCommandType Type;
+        //public List<object> Parameters;
+
+        void Execute(SchemeExecutor executioner);
+        string GetAsString();
+
     }
 }

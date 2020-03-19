@@ -11,9 +11,15 @@ namespace magicedit
 
         string variable, value;
 
-        public void Execute(SchemeExecutor executioner)
+        public CommandSetVariable(string variable, string value)
         {
-            throw new NotImplementedException();
+            this.variable = variable;
+            this.value = value;
+        }
+
+        public void Execute(SchemeExecutor executor)
+        {
+            executor.SetVariable(variable, value);
         }
 
         public string GetAsString()

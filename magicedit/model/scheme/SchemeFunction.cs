@@ -9,11 +9,20 @@ namespace magicedit
     public class SchemeFunction
     {
         public string Name { get; set; }
-        List<ISchemeCommand> Commands;
+        private List<ISchemeCommand> Commands = new List<ISchemeCommand>();
 
         public void Execute(Object @object, Object actor)
         {
-            //TODO
+            SchemeExecutor executor = new SchemeExecutor(@object, actor);
+            foreach(ISchemeCommand command in Commands)
+            {
+                command.Execute(executor);
+            }
+        }
+
+        public void AddCommand(ISchemeCommand command)
+        {
+            Commands.Add(command);
         }
 
     }

@@ -25,7 +25,7 @@ namespace magicedit
         //public SchemeCommandType Type;
         //public List<object> Parameters;
 
-        void Execute(SchemeExecutor executioner);
+        void Execute(SchemeExecutor executor);
         string GetAsString();
 
     }

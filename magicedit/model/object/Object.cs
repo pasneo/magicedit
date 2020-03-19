@@ -16,8 +16,8 @@ namespace magicedit
 
         public Text Description { get; set; }
 
-        public List<ObjectVariable> Variables;
-        public List<ObjectAttribute> Attributes;
+        public List<ObjectVariable> Variables = new List<ObjectVariable>();
+        public List<ObjectAttribute> Attributes = new List<ObjectAttribute>();
 
         /* *** */
 

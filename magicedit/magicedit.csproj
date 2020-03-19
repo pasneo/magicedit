@@ -54,7 +54,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CommandSetVariable.cs" />
+    <Compile Include="CommandOperation.cs" />
+    <Compile Include="model\scheme\commands\CommandPrintValue.cs" />
+    <Compile Include="model\scheme\commands\CommandSubtract.cs" />
+    <Compile Include="model\scheme\commands\CommandAdd.cs" />
+    <Compile Include="model\scheme\commands\CommandSetVariable.cs" />
     <Compile Include="model\scheme\commands\CommandCreateVariable.cs" />
     <Compile Include="model\object\Character.cs" />
     <Compile Include="model\map\SquareType.cs" />
@@ -69,7 +73,7 @@
     <Compile Include="model\object\MapObject.cs" />
     <Compile Include="model\map\Square.cs" />
     <Compile Include="model\scheme\Scheme.cs" />
-    <Compile Include="model\scheme\SchemeCommand.cs" />
+    <Compile Include="model\scheme\ISchemeCommand.cs" />
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />

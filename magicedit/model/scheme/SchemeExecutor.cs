@@ -20,9 +20,16 @@ namespace magicedit
         private Config Config;
 
         private Object Object;
-        private List<ObjectVariable> LocalVariables;
+        private Object Actor;
+        private List<ObjectVariable> LocalVariables = new List<ObjectVariable>();
 
         /* *** */
+
+        public SchemeExecutor(Object @object, Object actor)
+        {
+            Object = @object;
+            Actor = actor;
+        }
 
         public void CreateLocalVariable(string type, string name, object value)
         {

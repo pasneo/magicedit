@@ -13,16 +13,22 @@ namespace magicedit
 
         public void Execute(Object @object, Object actor)
         {
-            SchemeExecutor executor = new SchemeExecutor(@object, actor);
-            foreach(ISchemeCommand command in Commands)
-            {
-                command.Execute(executor);
-            }
+            SchemeExecutor executor = new SchemeExecutor(@object, actor, Commands);
+            executor.Execute();
         }
 
         public void AddCommand(ISchemeCommand command)
         {
             Commands.Add(command);
+        }
+
+        public void Print()
+        {
+            int line = 0;
+            foreach(var command in Commands)
+            {
+                Console.WriteLine(line++ + "\t" + command.GetAsString());
+            }
         }
 
     }

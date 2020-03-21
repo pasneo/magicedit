@@ -21,14 +21,40 @@ namespace magicedit
 
         private Object Object;
         private Object Actor;
+        private List<ISchemeCommand> Commands;
+
+        private int CommandIndex;           //no. of current command
+        private bool CommandIndexChanged;   //Indicates wether a jump instruction changed current cmd index
+
+        private List<object> Registers = new List<object>();
         private List<ObjectVariable> LocalVariables = new List<ObjectVariable>();
 
         /* *** */
 
-        public SchemeExecutor(Object @object, Object actor)
+        public SchemeExecutor(Object @object, Object actor, List<ISchemeCommand> commands)
         {
             Object = @object;
             Actor = actor;
+            Commands = commands;
+        }
+
+        public void Execute()
+        {
+            CommandIndex = 0;
+
+            while(CommandIndex < Commands.Count)
+            {
+                CommandIndexChanged = false;
+
+                Commands[CommandIndex].Execute(this);
+                
+                //If command index was NOT changed by a jump instruction, we go to the next instruction
+                if (!CommandIndexChanged)
+                {
+                    ++CommandIndex;
+                }
+            }
+
         }
 
         public void CreateLocalVariable(string type, string name, object value)
@@ -39,6 +65,13 @@ namespace magicedit
 
         public ObjectVariable GetVariableByName(string name)
         {
+
+            //If variable is "actor" or "me"
+            if (name == "actor") return new ObjectVariable("object", "actor", Actor);
+            if (name == "me") return new ObjectVariable("object", "me", Object);
+
+            //TODO: If it is a register (_0, _1 ... _r0, _r1 ...) we return its value
+
             //First we check if object has such variable
             ObjectVariable objectVariable = Object.GetVariableByName(name);
             if (objectVariable != null) return objectVariable;
@@ -74,13 +107,13 @@ namespace magicedit
 
                 Scheme valueScheme = Config.GetSchemeByName(valueType);
 
-                if (valueScheme == null) throw new Exception("Unknown type");
+                if (valueScheme == null) throw new SchemeExecutionException("Unknown type");
 
                 //Check if the two (different) schemes are compatible (ie. variableType is the ancestor of valueType)
                 return valueScheme.HasAncestor(variableType);
             }
 
-            throw new Exception("Unknown type");
+            throw new SchemeExecutionException("Unknown type");
 
         }
 
@@ -91,7 +124,7 @@ namespace magicedit
             ObjectVariable variable = GetVariableByName(s);
             if (variable != null) return variable;
 
-            //If s is a number we return it as a new number variable
+            //If s is a number const we return it as a new number variable
             int number;
             bool canConvert = int.TryParse(s, out number);
             if (canConvert) return new ObjectVariable("number", "", number);
@@ -100,10 +133,10 @@ namespace magicedit
             if (s == "true") return new ObjectVariable("logical", "", true);
             if (s == "false") return new ObjectVariable("logical", "", false);
 
-            //If s is a string const
+            //If s is a string const we return its content as a text variable
             if (s.Length >= 1 && s[0] == '$') return new ObjectVariable("text", "", Config.GetStringConstByName(s));
 
-            throw new Exception("Unidentifyable value");
+            throw new SchemeExecutionException("Unidentifyable value");
         }
 
         public void SetVariable(string variableName, string valueName)
@@ -115,11 +148,29 @@ namespace magicedit
                 ObjectVariable value = FindValueByString(valueName);
 
                 if (!CheckTypeCompatibility(variable.Type, value.Type))
-                    throw new Exception("Incompatible types");
+                    throw new SchemeExecutionException("Incompatible types");
 
                 variable.Value = value.Value;
 
             }
+            else
+                throw new SchemeExecutionException("Unidentifyable variable");
+        }
+
+        //Returns the given property (as reference) of the object identified by objectName
+        public ObjectVariable GetPropertyOf(string propertyName, string objectName)
+        {
+            //First we identify the object
+            Object @object = null;
+
+            ObjectVariable objectVariable = GetVariableByName(objectName);
+
+            if (objectVariable == null)
+                throw new SchemeExecutionException("Object not found");
+
+            @object = (Object)objectVariable.Value;
+
+            return @object.GetVariableByName(propertyName);
         }
 
     }

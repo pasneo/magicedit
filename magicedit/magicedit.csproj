@@ -54,7 +54,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CommandOperation.cs" />
+    <Compile Include="model\scheme\commands\CommandSetOf.cs" />
+    <Compile Include="model\scheme\commands\CommandOf.cs" />
+    <Compile Include="model\scheme\commands\CommandDivide.cs" />
+    <Compile Include="model\scheme\commands\CommandMultiply.cs" />
+    <Compile Include="model\scheme\commands\CommandOperation.cs" />
     <Compile Include="model\scheme\commands\CommandPrintValue.cs" />
     <Compile Include="model\scheme\commands\CommandSubtract.cs" />
     <Compile Include="model\scheme\commands\CommandAdd.cs" />
@@ -64,6 +68,7 @@
     <Compile Include="model\map\SquareType.cs" />
     <Compile Include="model\object\ObjectAttribute.cs" />
     <Compile Include="model\scheme\SchemeExecutor.cs" />
+    <Compile Include="model\scheme\SchemeExecutionException.cs" />
     <Compile Include="windows\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>

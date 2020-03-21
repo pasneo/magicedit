@@ -36,14 +36,18 @@ namespace magicedit
             function.AddCommand(new CommandSetVariable("a", "5"));
             function.AddCommand(new CommandPrintValue("a"));
 
-            function.AddCommand(new CommandCreateVariable("number", "b"));
-            function.AddCommand(new CommandSetVariable("b", "a"));
-            function.AddCommand(new CommandPrintValue("b"));
+            function.AddCommand(new CommandSetOf("x", "me", "30"));
 
-            function.AddCommand(new CommandAdd("a", "b", "a"));
+            function.AddCommand(new CommandOf("x", "me", "a"));
             function.AddCommand(new CommandPrintValue("a"));
 
-            function.Execute(new MapObject(), new Character());
+            function.Print();
+
+            //Create sample object
+            MapObject @object = new MapObject();
+            @object.Variables.Add(new ObjectVariable("number", "x", 15));
+
+            function.Execute(@object, new Character());
 
         }
 

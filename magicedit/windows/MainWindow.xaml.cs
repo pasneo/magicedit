@@ -24,29 +24,42 @@ namespace magicedit
         {
             InitializeComponent();
 
-            Test();
+            try
+            {
+                Test();
+            }
+            catch(SchemeExecutionException ex)
+            {
+                Console.WriteLine($"Error at [{ex.CommandIndex}]: {ex.Message}");
+            }
 
         }
 
         private void Test()
         {
+
+            //Create function, add commands to it
             SchemeFunction function = new SchemeFunction();
 
-            function.AddCommand(new CommandCreateVariable("number", "a"));
-            function.AddCommand(new CommandSetVariable("a", "5"));
-            function.AddCommand(new CommandPrintValue("a"));
+            function.AddCommand(new CommandCreateVariable("number", "i"));
+            function.AddCommand(new CommandCreateVariable("logical", "l"));
+            function.AddCommand(new CommandSetVariable("i", "0"));
+            
+            function.AddCommand(new CommandPrintValue("i"));
 
-            function.AddCommand(new CommandSetOf("x", "me", "30"));
+            function.AddCommand(new CommandAdd("i", "1", "i"));
 
-            function.AddCommand(new CommandOf("x", "me", "a"));
-            function.AddCommand(new CommandPrintValue("a"));
+            function.AddCommand(new CommandLower("10", "i", "l"));
+            function.AddCommand(new CommandJumpIfFalse("l", 3));
 
+            //Print full code of function
             function.Print();
 
             //Create sample object
             MapObject @object = new MapObject();
-            @object.Variables.Add(new ObjectVariable("number", "x", 15));
+            @object.Variables.Add(new ObjectVariable("number", "x", 15));   //x of object = 15
 
+            //Execute function on object
             function.Execute(@object, new Character());
 
         }

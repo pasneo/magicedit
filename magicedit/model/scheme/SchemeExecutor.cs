@@ -23,7 +23,8 @@ namespace magicedit
         private Object Actor;
         private List<ISchemeCommand> Commands;
 
-        private int CommandIndex;           //no. of current command
+        public static int GlobalCommandIndex { get; private set; }  //command index for exception creation
+        public int CommandIndex { get; private set; }           //no. of current command
         private bool CommandIndexChanged;   //Indicates wether a jump instruction changed current cmd index
 
         private List<object> Registers = new List<object>();
@@ -38,6 +39,11 @@ namespace magicedit
             Commands = commands;
         }
 
+        public static SchemeExecutionException CreateException(string message)
+        {
+            return new SchemeExecutionException(GlobalCommandIndex, message);
+        }
+
         public void Execute()
         {
             CommandIndex = 0;
@@ -46,6 +52,7 @@ namespace magicedit
             {
                 CommandIndexChanged = false;
 
+                GlobalCommandIndex = CommandIndex;
                 Commands[CommandIndex].Execute(this);
                 
                 //If command index was NOT changed by a jump instruction, we go to the next instruction
@@ -57,8 +64,17 @@ namespace magicedit
 
         }
 
+        public void Jump(int index)
+        {
+            CommandIndex = index;
+            CommandIndexChanged = true;
+        }
+
         public void CreateLocalVariable(string type, string name, object value)
         {
+
+            if (GetVariableByName(name) != null) throw CreateException($"Variable '{name}' already exists");
+
             ObjectVariable variable = new ObjectVariable(type, name, value);
             LocalVariables.Add(variable);
         }
@@ -107,13 +123,13 @@ namespace magicedit
 
                 Scheme valueScheme = Config.GetSchemeByName(valueType);
 
-                if (valueScheme == null) throw new SchemeExecutionException("Unknown type");
+                if (valueScheme == null) throw CreateException("Unknown type");
 
                 //Check if the two (different) schemes are compatible (ie. variableType is the ancestor of valueType)
                 return valueScheme.HasAncestor(variableType);
             }
 
-            throw new SchemeExecutionException("Unknown type");
+            throw CreateException("Unknown type");
 
         }
 
@@ -130,13 +146,13 @@ namespace magicedit
             if (canConvert) return new ObjectVariable("number", "", number);
 
             //If s is a logical const, we return it as a new logical variable
-            if (s == "true") return new ObjectVariable("logical", "", true);
-            if (s == "false") return new ObjectVariable("logical", "", false);
+            if (s == "true" || s == "True") return new ObjectVariable("logical", "", true);
+            if (s == "false" || s == "False") return new ObjectVariable("logical", "", false);
 
             //If s is a string const we return its content as a text variable
             if (s.Length >= 1 && s[0] == '$') return new ObjectVariable("text", "", Config.GetStringConstByName(s));
 
-            throw new SchemeExecutionException("Unidentifyable value");
+            throw CreateException($"Unidentifyable value '{s}'");
         }
 
         public void SetVariable(string variableName, string valueName)
@@ -148,13 +164,13 @@ namespace magicedit
                 ObjectVariable value = FindValueByString(valueName);
 
                 if (!CheckTypeCompatibility(variable.Type, value.Type))
-                    throw new SchemeExecutionException("Incompatible types");
+                    throw CreateException("Incompatible types");
 
                 variable.Value = value.Value;
 
             }
             else
-                throw new SchemeExecutionException("Unidentifyable variable");
+                throw CreateException($"Unidentifyable variable '{variableName}'");
         }
 
         //Returns the given property (as reference) of the object identified by objectName
@@ -166,7 +182,7 @@ namespace magicedit
             ObjectVariable objectVariable = GetVariableByName(objectName);
 
             if (objectVariable == null)
-                throw new SchemeExecutionException("Object not found");
+                throw CreateException("Object not found");
 
             @object = (Object)objectVariable.Value;
 

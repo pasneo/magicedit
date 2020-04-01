@@ -54,14 +54,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\scheme\commands\jump instructions\CommandJumpIfFalse.cs" />
+    <Compile Include="model\scheme\commands\jump instructions\CommandJump.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandNot.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandComparison.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandEquals.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandLower.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandAnd.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandLogicalOperation.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandOr.cs" />
     <Compile Include="model\scheme\commands\CommandSetOf.cs" />
     <Compile Include="model\scheme\commands\CommandOf.cs" />
-    <Compile Include="model\scheme\commands\CommandDivide.cs" />
-    <Compile Include="model\scheme\commands\CommandMultiply.cs" />
-    <Compile Include="model\scheme\commands\CommandOperation.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandDivide.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandMultiply.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandOperation.cs" />
     <Compile Include="model\scheme\commands\CommandPrintValue.cs" />
-    <Compile Include="model\scheme\commands\CommandSubtract.cs" />
-    <Compile Include="model\scheme\commands\CommandAdd.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandSubtract.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandAdd.cs" />
     <Compile Include="model\scheme\commands\CommandSetVariable.cs" />
     <Compile Include="model\scheme\commands\CommandCreateVariable.cs" />
     <Compile Include="model\object\Character.cs" />

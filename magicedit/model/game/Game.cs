@@ -8,31 +8,144 @@ namespace magicedit
 {
     public class Game
     {
+
+        //Actions that characters can do without a target object
+        public class BasicActions
+        {
+            public static string Movement = "_movement";
+            public static string EndTurn = "_end turn";
+        }
+
+
         private Config Config;
+
+        //A copy of the map in Config
+        private Map Map;
+        
         private List<Player> Players;
+
+        //A list of all the objects currently existing in the game
         private List<Object> Objects;
 
         public int Round { get; private set; }
+        public int CurrentPlayerNo { get; private set; }
+        public Player CurrentPlayer { get; private set; }
+        public Object SelectedObject { get; private set; }
 
         /* *** */
 
+        public Game(Config config)
+        {
+            Config = config;
+            //TODO: copy map from config, collect all objects into the list Objects
+        }
+
+        public void SetupPlayers(int numberOfPlayers)
+        {
+            Players = new List<Player>();
+
+            for(int i=0; i<numberOfPlayers; ++i)
+            {
+                Player player = new Player();
+                //TODO: get details of player (character starting abilities, etc.)
+                Players.Add(player);
+            }
+
+        }
+
         public void Start()
         {
+
+            Log.Write("Starting game");
+
             Round = 0;
-            //TODO
+
+            if (Players.Count == 0) return;
+
+            CurrentPlayerNo = 0;
+            CurrentPlayer = Players[CurrentPlayerNo];
+        }
+
+        public Object GetObjectById(string objectId)
+        {
+            foreach(Object @object in Objects)
+            {
+                if (@object.Id == objectId) return @object;
+            }
+            return null;
+        }
+
+        //The current player can select the object with which they want to do something
+        public void SelectObject(string objectId)
+        {
+
+            Log.Write($"Player [{CurrentPlayerNo}]: select object '{objectId}'");
+
+            SelectedObject = GetObjectById(objectId);
+
+            if (SelectedObject == null)
+            {
+                throw new GameException("The given id is invalid.");
+            }
+        }
+
+        //After an object is selected, the current player can do some action with it (or they can do basic actions)
+        public void DoAction(string actionName, List<string> actionParameters = null)
+        {
+
+            if (SelectedObject != null)
+                Log.Write($"Player [{CurrentPlayerNo}]: do '{actionName}' with object '{SelectedObject.Id}'");
+            else
+                Log.Write($"Player [{CurrentPlayerNo}]: do '{actionName}({string.Join(", ",actionParameters)})'");
+
+            if (actionName == BasicActions.Movement)
+            {
+                //TODO: implement movement based on action parameters
+            }
+            else if (actionName == BasicActions.EndTurn)
+            {
+                NextPlayer();
+            }
+            else if (SelectedObject != null)
+            {
+                //UNDONE: remove action points if action was successful
+                SelectedObject.ExecuteAction(actionName, CurrentPlayer.Character);
+            }
+            else
+            {
+                throw new GameException("Non-basic actions can only be applied to objects.");
+            }
+
+        }
+
+        private void NextPlayer()
+        {
+
+            Log.Write($"Next player's turn");
+
+            CurrentPlayerNo++;
+
+            if (CurrentPlayerNo >= Players.Count)
+            {
+                NextRound();
+                CurrentPlayerNo = 0;
+            }
+
+            CurrentPlayer = Players[CurrentPlayerNo];
+
+            Log.Write($"Next player: {CurrentPlayerNo}");
         }
 
         private void NextRound()
         {
-            foreach(Player player in Players)
-            {
-                player.Act(this);
-            }
+            Round++;
+
+            Log.Write($"Next round: {Round}");
         }
 
         public Map GetMap()
         {
-            return Config.Map;
+            return Map;
         }
 
     }

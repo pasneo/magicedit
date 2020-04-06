@@ -9,12 +9,13 @@ namespace magicedit
     public class Object
     {
         
-        public string Id { get; set; }
+        public string Id { get; set; }      //A unique identifier
+        public string Name { get; set; }    //The name the creator gave in the editor
 
         public Scheme Scheme { get; set; }
         public Visual Visual { get; set; }
 
-        public Text Description { get; set; }
+        public Text Description { get; set; }   //Current description (can be changed with scheme execution)
 
         public List<ObjectVariable> Variables = new List<ObjectVariable>();
         public List<ObjectAttribute> Attributes = new List<ObjectAttribute>();
@@ -28,7 +29,11 @@ namespace magicedit
 
         public void ExecuteAction(string actionName, Object actor)
         {
-            //TODO: get action by name, and execute it
+            SchemeFunction action = Scheme.GetFunctionByName(actionName);
+
+            if (action == null) throw new GameException("Given action does not exist.");
+
+            action.Execute(this, actor);
         }
 
         public ObjectVariable GetVariableByName(string name)

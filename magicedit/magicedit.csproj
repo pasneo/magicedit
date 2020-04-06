@@ -54,6 +54,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\game\GameException.cs" />
+    <Compile Include="model\Log.cs" />
     <Compile Include="model\scheme\commands\jump instructions\CommandJumpIfFalse.cs" />
     <Compile Include="model\scheme\commands\jump instructions\CommandJump.cs" />
     <Compile Include="model\scheme\commands\operations\CommandNot.cs" />

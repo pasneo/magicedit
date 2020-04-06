@@ -35,6 +35,28 @@ namespace magicedit
 
         }
 
+        private void GameTest()
+        {
+            Config config = new Config();
+
+            //... create string consts
+            //... create map and squares
+            //... create objects (with known IDs)
+            //... create schemes for objects
+
+            //Create game based on config
+            Game game = new Game(config);
+
+            //Set up game with some players (eg. one)
+            game.SetupPlayers(1);
+
+            //Start game
+            game.Start();
+
+            //... do some example actions
+
+        }
+
         private void Test()
         {
 

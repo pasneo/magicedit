@@ -8,14 +8,52 @@ namespace magicedit
 {
     public class CompiledScheme
     {
+
+        //Variables that are created when constructing object
+        private List<ObjectVariable> Variables = new List<ObjectVariable>();
+        //Parameters that are created and set when constructing object
+        private List<ObjectVariable> Parameters = new List<ObjectVariable>();
+
         private SchemeFunction InitFunction;
-        private List<SchemeFunction> ActionFunctions;
+        private List<SchemeFunction> ActionFunctions = new List<SchemeFunction>();
 
         /* *** */
 
+        public void AddVariable(ObjectVariable variable)
+        {
+            Variables.Add(variable);
+        }
+
+        public void AddParameter(ObjectVariable parameter)
+        {
+            Parameters.Add(parameter);
+        }
+
+        public void AddAction(SchemeFunction action)
+        {
+            ActionFunctions.Add(action);
+        }
+
+        //Creates variables in object, fills parameter variables with given values
         public void Construct(Object @object, List<ObjectVariable> parameters)
         {
-            //TODO
+
+            foreach (ObjectVariable variable in Variables)
+            {
+                @object.Variables.Add(variable);
+            }
+
+            if (Parameters.Count > parameters.Count)
+                throw new SchemeExecutionException($"Not all parameters are set for object with id '{@object.Id}'");
+
+            foreach (ObjectVariable param in parameters)
+            {
+                //Check if parameter is present in the Parameters list
+                if (Parameters.Any(p => (p.Name == param.Name && p.Type == param.Type)))
+                {
+                    @object.Variables.Add(param);
+                }
+            }
         }
 
         public void Init(Object @object)

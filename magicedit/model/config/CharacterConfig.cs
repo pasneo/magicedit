@@ -8,5 +8,6 @@ namespace magicedit
 {
     public class CharacterConfig
     {
+        public int ActionPoints { get; set; }
     }
 }

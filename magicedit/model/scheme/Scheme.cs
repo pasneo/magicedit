@@ -26,7 +26,7 @@ namespace magicedit
         private List<Scheme> Parents;
 
         private CompiledScheme compiledScheme;
-        private CompiledScheme CompiledScheme
+        public CompiledScheme CompiledScheme
         {
             //Accessing CompiledScheme causes a recompilation if it is out of date
             get
@@ -37,6 +37,7 @@ namespace magicedit
             set
             {
                 compiledScheme = value;
+                IsCompiledValid = true;
             }
         }
 
@@ -50,7 +51,7 @@ namespace magicedit
             if (IsCompiledValid) return;
             
             // compile
-            //TODO
+            //TODO: compile scheme
             IsCompiledValid = true;
 
             // compile parents

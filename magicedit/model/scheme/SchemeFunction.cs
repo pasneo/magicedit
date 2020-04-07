@@ -10,11 +10,14 @@ namespace magicedit
     {
         public string Name { get; set; }
         private List<ISchemeCommand> Commands = new List<ISchemeCommand>();
+        public int ActionPoints { get; set; }
 
-        public void Execute(Object @object, Object actor)
+        //Executes function and returns the action points to be removed from current player
+        public int Execute(Object @object, Object actor, Config config)
         {
-            SchemeExecutor executor = new SchemeExecutor(@object, actor, Commands);
-            executor.Execute();
+            SchemeExecutor executor = new SchemeExecutor(@object, actor, Commands, config);
+            if (executor.Execute()) return ActionPoints;
+            return 0;
         }
 
         public void AddCommand(ISchemeCommand command)

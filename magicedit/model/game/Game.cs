@@ -16,8 +16,16 @@ namespace magicedit
             public static string EndTurn = "_end turn";
         }
 
+        public class MovementParameters
+        {
+            public static string Norht = "_north";
+            public static string East = "_east";
+            public static string South = "_south";
+            public static string West = "_west";
+        }
 
-        private Config Config;
+
+        public Config Config { get; private set; }
 
         //A copy of the map in Config
         private Map Map;
@@ -37,7 +45,7 @@ namespace magicedit
         public Game(Config config)
         {
             Config = config;
-            //TODO: copy map from config, collect all objects into the list Objects
+            //TODO: copy map from config, collect all objects into the list Objects, construct and init objects
         }
 
         public void SetupPlayers(int numberOfPlayers)
@@ -85,18 +93,20 @@ namespace magicedit
 
             if (SelectedObject == null)
             {
-                throw new GameException("The given id is invalid.");
+                throw new GameException("The given id is invalid");
             }
         }
 
         //After an object is selected, the current player can do some action with it (or they can do basic actions)
-        public void DoAction(string actionName, List<string> actionParameters = null)
+        public void DoAction(string actionName, params string[] actionParameters)
         {
 
             if (SelectedObject != null)
                 Log.Write($"Player [{CurrentPlayerNo}]: do '{actionName}' with object '{SelectedObject.Id}'");
             else
                 Log.Write($"Player [{CurrentPlayerNo}]: do '{actionName}({string.Join(", ",actionParameters)})'");
+
+
 
             if (actionName == BasicActions.Movement)
             {
@@ -108,12 +118,16 @@ namespace magicedit
             }
             else if (SelectedObject != null)
             {
-                //UNDONE: remove action points if action was successful
-                SelectedObject.ExecuteAction(actionName, CurrentPlayer.Character);
+                int actionPointsToRemove = SelectedObject.ExecuteAction(actionName, CurrentPlayer.Character, this);
+
+                if (actionPointsToRemove > CurrentPlayer.AvailableActionPoints)
+                    throw new GameException("Too few action points");
+
+                CurrentPlayer.AvailableActionPoints -= actionPointsToRemove;
             }
             else
             {
-                throw new GameException("Non-basic actions can only be applied to objects.");
+                throw new GameException("Non-basic actions can only be applied to objects");
             }
 
         }

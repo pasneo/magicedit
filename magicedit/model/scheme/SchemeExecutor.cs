@@ -17,26 +17,28 @@ namespace magicedit
     public class SchemeExecutor
     {
 
-        private Config Config;
+        public Config Config { get; private set; }
 
-        private Object Object;
+        public Object Object { get; private set; }
         private Object Actor;
         private List<ISchemeCommand> Commands;
 
         public static int GlobalCommandIndex { get; private set; }  //command index for exception creation
         public int CommandIndex { get; private set; }           //no. of current command
         private bool CommandIndexChanged;   //Indicates wether a jump instruction changed current cmd index
+        private bool ExecutionFailed = false;
 
         private List<object> Registers = new List<object>();
         private List<ObjectVariable> LocalVariables = new List<ObjectVariable>();
 
         /* *** */
 
-        public SchemeExecutor(Object @object, Object actor, List<ISchemeCommand> commands)
+        public SchemeExecutor(Object @object, Object actor, List<ISchemeCommand> commands, Config config)
         {
             Object = @object;
             Actor = actor;
             Commands = commands;
+            Config = config;
         }
 
         public static SchemeExecutionException CreateException(string message)
@@ -44,7 +46,7 @@ namespace magicedit
             return new SchemeExecutionException(GlobalCommandIndex, message);
         }
 
-        public void Execute()
+        public bool Execute()
         {
             CommandIndex = 0;
 
@@ -54,7 +56,9 @@ namespace magicedit
 
                 GlobalCommandIndex = CommandIndex;
                 Commands[CommandIndex].Execute(this);
-                
+
+                if (ExecutionFailed) return false;
+
                 //If command index was NOT changed by a jump instruction, we go to the next instruction
                 if (!CommandIndexChanged)
                 {
@@ -62,6 +66,13 @@ namespace magicedit
                 }
             }
 
+            return true;
+
+        }
+
+        public void Fail()
+        {
+            ExecutionFailed = true;
         }
 
         public void Jump(int index)

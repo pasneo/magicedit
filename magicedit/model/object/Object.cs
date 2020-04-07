@@ -27,13 +27,13 @@ namespace magicedit
             //TODO: compile scheme and call its constructor
         }
 
-        public void ExecuteAction(string actionName, Object actor)
+        public int ExecuteAction(string actionName, Object actor, Game game)
         {
             SchemeFunction action = Scheme.GetFunctionByName(actionName);
 
             if (action == null) throw new GameException("Given action does not exist.");
 
-            action.Execute(this, actor);
+            return action.Execute(this, actor, game.Config);
         }
 
         public ObjectVariable GetVariableByName(string name)

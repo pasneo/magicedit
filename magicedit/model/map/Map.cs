@@ -14,7 +14,17 @@ namespace magicedit
 
         private List<Square> Squares;
 
+        private List<Position> SpawnerPositions = new List<Position>();
+
+        //References to the objects on the map (these are not stored here)
         private List<MapObject> Objects;
+
+        /* *** */
+        
+        public void AddSpawner(Position position)
+        {
+            SpawnerPositions.Add(position);
+        }
 
     }
 }

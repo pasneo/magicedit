@@ -11,12 +11,12 @@ namespace magicedit
 
         public Map Map;
 
-        private CharacterConfig CharacterConfig;
+        public CharacterConfig CharacterConfig { get; set; } = new CharacterConfig();
         private ItemSpellConfig ItemConfig;
         private ItemSpellConfig SpellConfig;
 
         private List<Visual> Visuals;
-        private List<Text> Texts;
+        private Dictionary<string, Text> Texts;
 
         private List<Scheme> Schemes;
         private List<string> StringConsts;
@@ -32,12 +32,9 @@ namespace magicedit
             return null;
         }
 
-        public string GetStringConstByName(string name)
+        public Text GetStringConstByName(string name)
         {
-            foreach (string s in StringConsts)
-            {
-                if (s == name) return s;
-            }
+            if (Texts.ContainsKey(name)) return Texts[name];
             return null;
         }
 

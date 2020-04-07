@@ -10,6 +10,7 @@ namespace magicedit
     {
 
         public Character Character { get; private set; }
+        public int AvailableActionPoints { get; set; }
 
         /* *** */
 
@@ -73,7 +74,7 @@ namespace magicedit
 
                     if (@object != null)
                     {
-                        @object.ExecuteAction(actionName, Character);
+                        @object.ExecuteAction(actionName, Character, game);
                     }
                 }
 

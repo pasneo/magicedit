@@ -9,5 +9,16 @@ namespace magicedit
     public class Text
     {
         public string Content { get; set; }
+
+        public Text()
+        {
+            Content = "";
+        }
+
+        public Text(string content)
+        {
+            Content = content;
+        }
+
     }
 }

@@ -3,9 +3,9 @@
 
     public class VariableTypes
     {
-        public static string Logical = "logical";
-        public static string Number = "number";
-        public static string Text = "text";
+        public static string Logical = "logical";   //bool
+        public static string Number = "number";     //int
+        public static string Text = "text";         //class Text, not string
     }
 
     public class ObjectVariable

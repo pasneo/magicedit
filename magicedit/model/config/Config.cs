@@ -16,7 +16,7 @@ namespace magicedit
         private ItemSpellConfig SpellConfig;
 
         private List<Visual> Visuals;
-        private Dictionary<string, Text> StringConsts;
+        private Dictionary<string, Text> StringConsts = new Dictionary<string, Text>();
 
         private List<Scheme> Schemes;
 

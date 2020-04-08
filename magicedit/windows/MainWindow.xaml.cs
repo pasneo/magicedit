@@ -26,9 +26,13 @@ namespace magicedit
 
             try
             {
-                Test();
+                GameTest();
             }
-            catch(SchemeExecutionException ex)
+            catch (GameException ex)
+            {
+                Console.WriteLine($"Game error: {ex.Message}");
+            }
+            catch (SchemeExecutionException ex)
             {
                 Console.WriteLine($"Error at [{ex.CommandIndex}]: {ex.Message}");
             }
@@ -41,7 +45,8 @@ namespace magicedit
             leverScheme.CompiledScheme = new CompiledScheme();
 
             SchemeFunction use = new SchemeFunction();
-            use.AddCommand(new CommandSetOf("ready", "cola", "true"));
+            use.Name = "use";
+            use.AddCommand(new CommandSetOf("ready", "box", "true"));
             use.AddCommand(new CommandDesc("LEVER_DESC_2"));
 
             leverScheme.CompiledScheme.AddAction(use);
@@ -49,20 +54,23 @@ namespace magicedit
             return leverScheme;
         }
 
-        private Scheme GetDrinkScheme()
+        private Scheme GetBoxScheme()
         {
-            Scheme drinkScheme = new Scheme();
-            drinkScheme.CompiledScheme = new CompiledScheme();
+            Scheme boxScheme = new Scheme();
+            boxScheme.CompiledScheme = new CompiledScheme();
 
-            drinkScheme.CompiledScheme.AddVariable(new ObjectVariable(VariableTypes.Logical, "ready", false));
+            boxScheme.CompiledScheme.AddVariable(new ObjectVariable(VariableTypes.Logical, "ready", false));
 
             SchemeFunction pickup = new SchemeFunction();
-            pickup.AddCommand(new CommandJumpIfFalse("ready", 100));
+            pickup.Name = "pickup";
+            pickup.AddCommand(new CommandJumpIfFalse("ready", 3));
             pickup.AddCommand(new CommandPrint("Picked up"));
+            pickup.AddCommand(new CommandJump(4));
+            pickup.AddCommand(new CommandPrint("Box is stuck"));
 
-            drinkScheme.CompiledScheme.AddAction(pickup);
+            boxScheme.CompiledScheme.AddAction(pickup);
 
-            return drinkScheme;
+            return boxScheme;
         }
 
         private void GameTest()
@@ -71,6 +79,7 @@ namespace magicedit
 
             //... set up character rules (eg. action points)
             config.CharacterConfig.ActionPoints = 10;
+            config.CharacterConfig.MovementActionPoints = 1;
 
             //... create string consts
             config.AddStringConst("LEVER_DESC", new Text("This is a lever"));
@@ -90,19 +99,22 @@ namespace magicedit
             lever.Position = new Position(2, 1);
             lever.Description = config.GetStringConstByName("LEVER_DESC");
 
-            MapObject drink = new MapObject();
-            drink.Id = "cola";
-            drink.Position = new Position(4, 3);
-            drink.Variables.Add(new ObjectVariable("logical", "ready", false));   //ready of cola = false
+            MapObject box = new MapObject();
+            box.Id = "box";
+            box.Position = new Position(4, 3);
+            box.Variables.Add(new ObjectVariable("logical", "ready", false));   //ready of box = false
 
             //... create schemes for objects
             lever.Scheme = GetLeverScheme();
-            drink.Scheme = GetDrinkScheme();
+            box.Scheme = GetBoxScheme();
 
             //... add everything to config
+            config.Map = map;
 
             //Create game based on config
             Game game = new Game(config);
+            game._AddObject(lever);
+            game._AddObject(box);
 
             //Set up game with some players (eg. 2)
             game.SetupPlayers(2);
@@ -112,23 +124,25 @@ namespace magicedit
 
             //do some example actions
 
+                Console.WriteLine($"Lever desc: {lever.Description.Content}");
+
                 //move player1 2 squares north
                 game.DoAction(Game.BasicActions.Movement, Game.MovementParameters.Norht);
                 game.DoAction(Game.BasicActions.Movement, Game.MovementParameters.Norht);
-                //'use' the lever with id 'lever'       # this makes it possible to pick up the drink
+                //'use' the lever with id 'lever'       # this makes it possible to pick up the box
                 game.SelectObject("lever");
-                game.DoAction("use");
+                //game.DoAction("use");
+            
+                Console.WriteLine($"Lever desc: {lever.Description.Content}");
+
                 //next player
                 game.DoAction(Game.BasicActions.EndTurn);
                 //move player2 2 squares east
                 game.DoAction(Game.BasicActions.Movement, Game.MovementParameters.East);
                 game.DoAction(Game.BasicActions.Movement, Game.MovementParameters.East);
-                //'pickup' the drink with id 'cola'     # this creates a copy of cola with id 'cola (1)'
-                game.SelectObject("cola");
+                //'pickup' the box with id 'box'
+                game.SelectObject("box");
                 game.DoAction("pickup");
-                //'drink' the cola with id 'cola (1)'   # after this action the action points of player2 is zero
-                game.SelectObject("cola (1)");
-                game.DoAction("drink");
 
             //... check outcomes
 

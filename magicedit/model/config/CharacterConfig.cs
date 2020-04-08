@@ -9,5 +9,6 @@ namespace magicedit
     public class CharacterConfig
     {
         public int ActionPoints { get; set; }
+        public int MovementActionPoints { get; set; }
     }
 }

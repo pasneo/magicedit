@@ -64,7 +64,7 @@ namespace magicedit
         //Returns the function that matches the given name, or null if none matches
         public SchemeFunction GetFunctionByName(string functionName)
         {
-            if (InitFunction.Name == functionName) return InitFunction;
+            if (InitFunction != null && InitFunction.Name == functionName) return InitFunction;
 
             foreach(SchemeFunction actionFunction in ActionFunctions)
             {

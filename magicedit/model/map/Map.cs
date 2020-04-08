@@ -26,5 +26,14 @@ namespace magicedit
             SpawnerPositions.Add(position);
         }
 
+        public int GetSpawnerCount() { return SpawnerPositions.Count; }
+        public Position GetSpawnerByNo(int no) { return SpawnerPositions[no]; }
+
+        public bool IsPositionWithin(Position position)
+        {
+            return (position.X >= 0) && (position.X < Width) &&
+                   (position.Y >= 0) && (position.Y < Height);
+        }
+
     }
 }

@@ -45,16 +45,21 @@ namespace magicedit
         public Game(Config config)
         {
             Config = config;
-            //TODO: copy map from config, collect all objects into the list Objects, construct and init objects
+            Map = config.Map;
+            //TODO: copy map from config (instead of ref copy), collect all objects into the list Objects, construct and init objects
         }
 
         public void SetupPlayers(int numberOfPlayers)
         {
+
+            if (numberOfPlayers > Map.GetSpawnerCount()) throw new GameException("Number of players exceeds number of spawn points");
+
             Players = new List<Player>();
 
             for(int i=0; i<numberOfPlayers; ++i)
             {
                 Player player = new Player();
+                player.Character.Position = Map.GetSpawnerByNo(i);
                 //TODO: get details of player (character starting abilities, etc.)
                 Players.Add(player);
             }
@@ -72,6 +77,7 @@ namespace magicedit
 
             CurrentPlayerNo = 0;
             CurrentPlayer = Players[CurrentPlayerNo];
+            CurrentPlayer.AvailableActionPoints = Config.CharacterConfig.ActionPoints;
         }
 
         public Object GetObjectById(string objectId)
@@ -86,6 +92,8 @@ namespace magicedit
         //The current player can select the object with which they want to do something
         public void SelectObject(string objectId)
         {
+
+            //TODO: check if character can reach the object to be selected (eg. owns it, or close enough on map)
 
             Log.Write($"Player [{CurrentPlayerNo}]: select object '{objectId}'");
 
@@ -110,7 +118,25 @@ namespace magicedit
 
             if (actionName == BasicActions.Movement)
             {
-                //TODO: implement movement based on action parameters
+                
+                if (Config.CharacterConfig.MovementActionPoints > CurrentPlayer.AvailableActionPoints)
+                    throw new GameException("Too few action points for movement");
+                
+                Character character = CurrentPlayer.Character;
+
+                Position newPosition = new Position(character.Position.X, character.Position.Y);
+
+                if (actionParameters[0] == MovementParameters.Norht) newPosition.Y -= 1;
+                else if (actionParameters[0] == MovementParameters.East) newPosition.X += 1;
+                else if (actionParameters[0] == MovementParameters.South) newPosition.Y += 1;
+                else if (actionParameters[0] == MovementParameters.West) newPosition.X -= 1;
+
+                if (!Map.IsPositionWithin(newPosition))
+                    throw new GameException("Invalid movement");
+
+                character.Position = newPosition;
+                CurrentPlayer.AvailableActionPoints -= Config.CharacterConfig.MovementActionPoints;
+
             }
             else if (actionName == BasicActions.EndTurn)
             {
@@ -146,6 +172,7 @@ namespace magicedit
             }
 
             CurrentPlayer = Players[CurrentPlayerNo];
+            CurrentPlayer.AvailableActionPoints = Config.CharacterConfig.ActionPoints;
 
             Log.Write($"Next player: {CurrentPlayerNo}");
         }

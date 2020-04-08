@@ -93,12 +93,13 @@ namespace magicedit
             //If given name was not found in this scheme, we try the parents
             if (matchingFunction == null)
             {
-                foreach(Scheme parent in Parents)
+                foreach (Scheme parent in Parents)
                 {
                     matchingFunction = parent.GetFunctionByName(functionName);
                     if (matchingFunction != null) return matchingFunction;
                 }
             }
+            else return matchingFunction;
 
             return null;
 

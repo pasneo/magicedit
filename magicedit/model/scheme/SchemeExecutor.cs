@@ -28,7 +28,7 @@ namespace magicedit
         private bool CommandIndexChanged;   //Indicates wether a jump instruction changed current cmd index
         private bool ExecutionFailed = false;
 
-        private List<object> Registers = new List<object>();
+        private Dictionary<string, ObjectVariable> Registers = new Dictionary<string, ObjectVariable>();
         private List<ObjectVariable> LocalVariables = new List<ObjectVariable>();
 
         /* *** */
@@ -90,6 +90,11 @@ namespace magicedit
             LocalVariables.Add(variable);
         }
 
+        private bool IsRegister(string variableName)
+        {
+            return variableName.Length > 0 && variableName[0] == '_';
+        }
+
         public ObjectVariable GetVariableByName(string name)
         {
 
@@ -97,7 +102,12 @@ namespace magicedit
             if (name == "actor") return new ObjectVariable("object", "actor", Actor);
             if (name == "me") return new ObjectVariable("object", "me", Object);
 
-            //TODO: If it is a register (_0, _1 ... _r0, _r1 ...) we return its value
+            //If it is a register (_0, _1 ... _r0, _r1 ...) we return its value
+            if (IsRegister(name))
+            {
+                if (Registers.ContainsKey(name)) return Registers[name];
+                else throw CreateException($"Register '{name}' does not exist.");
+            }
 
             //First we check if object has such variable
             ObjectVariable objectVariable = Object.GetVariableByName(name);
@@ -180,20 +190,30 @@ namespace magicedit
 
         public void SetVariable(string variableName, string valueName)
         {
-            ObjectVariable variable = GetVariableByName(variableName);
-
-            if (variable != null)
+            //Check if variable is a register
+            if (IsRegister(variableName))
             {
+                //First we get value, and create register with same type and value
                 ObjectVariable value = FindValueByString(valueName);
-
-                if (!CheckTypeCompatibility(variable.Type, value.Type))
-                    throw CreateException("Incompatible types");
-
-                variable.Value = value.Value;
-
+                Registers[variableName] = new ObjectVariable(value.Type, variableName, value.Value);
             }
             else
-                throw CreateException($"Unidentifyable variable '{variableName}'");
+            {
+                ObjectVariable variable = GetVariableByName(variableName);
+
+                if (variable != null)
+                {
+                    ObjectVariable value = FindValueByString(valueName);
+
+                    if (!CheckTypeCompatibility(variable.Type, value.Type))
+                        throw CreateException("Incompatible types");
+
+                    variable.Value = value.Value;
+
+                }
+                else
+                    throw CreateException($"Unidentifyable variable '{variableName}'");
+            }
         }
 
         //Returns the given property (as reference) of the object identified by objectName

@@ -41,8 +41,10 @@ namespace magicedit
             leverScheme.CompiledScheme = new CompiledScheme();
 
             SchemeFunction use = new SchemeFunction();
-            use.AddCommand(new CommandSetOf("ready", "cola", "true"));  //TODO (!!!): most nem tudunk még más objektumokat manipulálni
-                                                                        // azaz a lever kódjából nem tudjuk elérni a cola-t, ez megoldandó!!
+            use.AddCommand(new CommandSetOf("ready", "cola", "true"));
+            use.AddCommand(new CommandDesc("LEVER_DESC_2"));
+
+            leverScheme.CompiledScheme.AddAction(use);
 
             return leverScheme;
         }
@@ -51,7 +53,15 @@ namespace magicedit
         {
             Scheme drinkScheme = new Scheme();
             drinkScheme.CompiledScheme = new CompiledScheme();
-            //TODO
+
+            drinkScheme.CompiledScheme.AddVariable(new ObjectVariable(VariableTypes.Logical, "ready", false));
+
+            SchemeFunction pickup = new SchemeFunction();
+            pickup.AddCommand(new CommandJumpIfFalse("ready", 100));
+            pickup.AddCommand(new CommandPrint("Picked up"));
+
+            drinkScheme.CompiledScheme.AddAction(pickup);
+
             return drinkScheme;
         }
 
@@ -63,6 +73,8 @@ namespace magicedit
             config.CharacterConfig.ActionPoints = 10;
 
             //... create string consts
+            config.AddStringConst("LEVER_DESC", new Text("This is a lever"));
+            config.AddStringConst("LEVER_DESC_2", new Text("Someone used this lever"));
 
             //... create map, spawners and squares
             Map map = new Map();
@@ -129,25 +141,29 @@ namespace magicedit
             SchemeFunction function = new SchemeFunction();
 
             function.AddCommand(new CommandCreateVariable("number", "i"));
-            function.AddCommand(new CommandCreateVariable("logical", "l"));
-            function.AddCommand(new CommandSetVariable("i", "0"));
-            
+            function.AddCommand(new CommandSetOf("x", "object2", "30"));
+            function.AddCommand(new CommandOf("x", "object2", "_0"));
+            function.AddCommand(new CommandSetVariable("i", "_0"));
+
             function.AddCommand(new CommandPrintValue("i"));
-
-            function.AddCommand(new CommandAdd("i", "1", "i"));
-
-            function.AddCommand(new CommandLower("10", "i", "l"));
-            function.AddCommand(new CommandJumpIfFalse("l", 3));
 
             //Print full code of function
             function.Print();
 
             //Create sample object
             MapObject @object = new MapObject();
-            @object.Variables.Add(new ObjectVariable("number", "x", 15));   //x of object = 15
+
+            MapObject object2 = new MapObject();
+            object2.Id = "object2";
+            object2.Variables.Add(new ObjectVariable("number", "x", 15));   //x of object = 15
+
+            Config config = new Config();
+            Game game = new Game(config);
+
+            game._AddObject(object2);
 
             //Execute function on object
-            function.Execute(@object, new Character(), new Game(new Config()));
+            function.Execute(@object, new Character(), game);
 
         }
 

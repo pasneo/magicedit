@@ -16,10 +16,9 @@ namespace magicedit
         private ItemSpellConfig SpellConfig;
 
         private List<Visual> Visuals;
-        private Dictionary<string, Text> Texts;
+        private Dictionary<string, Text> StringConsts;
 
         private List<Scheme> Schemes;
-        private List<string> StringConsts;
 
         /* *** */
 
@@ -34,8 +33,13 @@ namespace magicedit
 
         public Text GetStringConstByName(string name)
         {
-            if (Texts.ContainsKey(name)) return Texts[name];
+            if (StringConsts.ContainsKey(name)) return StringConsts[name];
             return null;
+        }
+
+        public void AddStringConst(string name, Text text)
+        {
+            StringConsts[name] = text;
         }
 
     }

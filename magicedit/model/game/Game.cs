@@ -33,7 +33,7 @@ namespace magicedit
         private List<Player> Players;
 
         //A list of all the objects currently existing in the game
-        private List<Object> Objects;
+        private List<Object> Objects = new List<Object>();
 
         public int Round { get; private set; }
         public int CurrentPlayerNo { get; private set; }
@@ -160,6 +160,11 @@ namespace magicedit
         public Map GetMap()
         {
             return Map;
+        }
+
+        public void _AddObject(Object @object)
+        {
+            Objects.Add(@object);
         }
 
     }

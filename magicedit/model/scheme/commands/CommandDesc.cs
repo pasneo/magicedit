@@ -18,7 +18,7 @@ namespace magicedit
 
         public void Execute(SchemeExecutor executor)
         {
-            executor.Object.Description = executor.Config.GetStringConstByName(descStringConstName);
+            executor.Object.Description = executor.Game.Config.GetStringConstByName(descStringConstName);
         }
 
         public string GetAsString()

@@ -17,7 +17,7 @@ namespace magicedit
     public class SchemeExecutor
     {
 
-        public Config Config { get; private set; }
+        public Game Game { get; private set; }
 
         public Object Object { get; private set; }
         private Object Actor;
@@ -33,12 +33,12 @@ namespace magicedit
 
         /* *** */
 
-        public SchemeExecutor(Object @object, Object actor, List<ISchemeCommand> commands, Config config)
+        public SchemeExecutor(Object @object, Object actor, List<ISchemeCommand> commands, Game game)
         {
             Object = @object;
             Actor = actor;
             Commands = commands;
-            Config = config;
+            Game = game;
         }
 
         public static SchemeExecutionException CreateException(string message)
@@ -109,6 +109,17 @@ namespace magicedit
                 if (localVariable.Name == name) return localVariable;
             }
 
+            //Check if it is a global object
+            Object @object = Game.GetObjectById(name);
+
+            if (@object != null)
+            {
+                //Type of an object is its scheme
+                if (@object.Scheme != null)
+                    return new ObjectVariable(@object.Scheme.Name, name, @object);
+                return new ObjectVariable("unknown", name, @object);
+            }
+
             return null;
         }
 
@@ -121,8 +132,9 @@ namespace magicedit
             if (variableType == "number") return valueType == "number";
             if (variableType == "logical") return valueType == "logical";
             if (variableType == "text") return valueType == "text";
+            if (variableType == "unknown" || valueType == "unknown") return false;
 
-            Scheme variableScheme = Config.GetSchemeByName(variableType);
+            Scheme variableScheme = Game.Config.GetSchemeByName(variableType);
 
             if (variableScheme != null)
             {
@@ -132,7 +144,7 @@ namespace magicedit
                 //Basic types are not compatible with any scheme
                 if (valueType == "number" || valueType == "logical" || valueType == "text") return false;
 
-                Scheme valueScheme = Config.GetSchemeByName(valueType);
+                Scheme valueScheme = Game.Config.GetSchemeByName(valueType);
 
                 if (valueScheme == null) throw CreateException("Unknown type");
 
@@ -144,7 +156,7 @@ namespace magicedit
 
         }
 
-        // Finds the type and value represented by the given string
+        // Finds the type and value represented by the given string (including variables; and constants like 11, 5, true, $STRING etc.)
         public ObjectVariable FindValueByString(string s)
         {
             //If there is a variable with the name s, we return its value
@@ -157,11 +169,11 @@ namespace magicedit
             if (canConvert) return new ObjectVariable("number", "", number);
 
             //If s is a logical const, we return it as a new logical variable
-            if (s == "true" || s == "True") return new ObjectVariable("logical", "", true);
-            if (s == "false" || s == "False") return new ObjectVariable("logical", "", false);
+            if (s.ToLower() == "true") return new ObjectVariable("logical", "", true);
+            if (s.ToLower() == "false") return new ObjectVariable("logical", "", false);
 
             //If s is a string const we return its content as a text variable
-            if (s.Length >= 1 && s[0] == '$') return new ObjectVariable("text", "", Config.GetStringConstByName(s));
+            if (s.Length >= 1 && s[0] == '$') return new ObjectVariable("text", "", Game.Config.GetStringConstByName(s));
 
             throw CreateException($"Unidentifyable value '{s}'");
         }

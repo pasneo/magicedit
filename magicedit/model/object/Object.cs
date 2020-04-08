@@ -33,7 +33,7 @@ namespace magicedit
 
             if (action == null) throw new GameException("Given action does not exist.");
 
-            return action.Execute(this, actor, game.Config);
+            return action.Execute(this, actor, game);
         }
 
         public ObjectVariable GetVariableByName(string name)

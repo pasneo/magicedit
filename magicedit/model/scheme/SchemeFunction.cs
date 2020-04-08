@@ -13,9 +13,9 @@ namespace magicedit
         public int ActionPoints { get; set; }
 
         //Executes function and returns the action points to be removed from current player
-        public int Execute(Object @object, Object actor, Config config)
+        public int Execute(Object @object, Object actor, Game game)
         {
-            SchemeExecutor executor = new SchemeExecutor(@object, actor, Commands, config);
+            SchemeExecutor executor = new SchemeExecutor(@object, actor, Commands, game);
             if (executor.Execute()) return ActionPoints;
             return 0;
         }

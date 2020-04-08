@@ -147,7 +147,7 @@ namespace magicedit
             @object.Variables.Add(new ObjectVariable("number", "x", 15));   //x of object = 15
 
             //Execute function on object
-            function.Execute(@object, new Character(), new Config());
+            function.Execute(@object, new Character(), new Game(new Config()));
 
         }
 

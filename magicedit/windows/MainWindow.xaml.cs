@@ -104,6 +104,9 @@ namespace magicedit
             box.Position = new Position(4, 3);
             box.Variables.Add(new ObjectVariable("logical", "ready", false));   //ready of box = false
 
+            map._AddObject(lever);
+            map._AddObject(box);
+
             //... create schemes for objects
             lever.Scheme = GetLeverScheme();
             box.Scheme = GetBoxScheme();
@@ -137,7 +140,10 @@ namespace magicedit
 
                 //next player
                 game.DoAction(Game.BasicActions.EndTurn);
+
                 //move player2 2 squares east
+                game.SelectObject("_none");
+                game.DoAction(Game.BasicActions.Movement, Game.MovementParameters.East);
                 game.DoAction(Game.BasicActions.Movement, Game.MovementParameters.East);
                 game.DoAction(Game.BasicActions.Movement, Game.MovementParameters.East);
                 //'pickup' the box with id 'box'

@@ -17,7 +17,7 @@ namespace magicedit
         private List<Position> SpawnerPositions = new List<Position>();
 
         //References to the objects on the map (these are not stored here)
-        private List<MapObject> Objects;
+        private List<MapObject> Objects = new List<MapObject>();
 
         /* *** */
         
@@ -34,6 +34,18 @@ namespace magicedit
             return (position.X >= 0) && (position.X < Width) &&
                    (position.Y >= 0) && (position.Y < Height);
         }
+
+        //If the given object is on this map, it is returned as MapObject (else null is returned)
+        public MapObject GetMapObject(Object @object)
+        {
+            foreach(MapObject obj in Objects)
+            {
+                if (obj == @object) return obj;
+            }
+            return null;
+        }
+
+        public void _AddObject(MapObject @object) { Objects.Add(@object); }
 
     }
 }

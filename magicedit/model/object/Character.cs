@@ -11,7 +11,31 @@ namespace magicedit
 {
     public class Character : MapObject
     {
-        public List<Item> Items;
-        public List<Spell> Spells;
+        public List<Item> Items = new List<Item>();
+        public List<Spell> Spells = new List<Item>();
+
+        public bool CanReachObject(Game game, Object @object)
+        {
+
+            MapObject mapObject = game.GetMap().GetMapObject(@object);
+
+            if (mapObject != null)
+            {
+                return (Position.GetDistance(mapObject.Position) <= 1);
+            }
+
+            foreach(Item item in Items)
+            {
+                if (@object == item) return true;
+            }
+
+            foreach (Spell spell in Spells)
+            {
+                if (@object == spell) return true;
+            }
+
+            return false;
+        }
+
     }
 }

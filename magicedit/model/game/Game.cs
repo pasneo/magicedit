@@ -93,9 +93,13 @@ namespace magicedit
         public void SelectObject(string objectId)
         {
 
-            //TODO: check if character can reach the object to be selected (eg. owns it, or close enough on map)
-
             Log.Write($"Player [{CurrentPlayerNo}]: select object '{objectId}'");
+
+            if (objectId == "_none")
+            {
+                SelectedObject = null;
+                return;
+            }
 
             SelectedObject = GetObjectById(objectId);
 
@@ -103,6 +107,11 @@ namespace magicedit
             {
                 throw new GameException("The given id is invalid");
             }
+
+            //Check if character can reach the object to be selected (eg. owns it, or close enough on map)
+            if (!CurrentPlayer.Character.CanReachObject(this, SelectedObject))
+                throw new GameException("Character cannot reach selected object");
+
         }
 
         //After an object is selected, the current player can do some action with it (or they can do basic actions)

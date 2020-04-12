@@ -56,9 +56,9 @@ namespace magicedit
             }
         }
 
-        public void Init(Object @object)
+        public void Init(Object @object, Game game)
         {
-            //TODO
+            InitFunction?.Execute(@object, null, game);
         }
 
         //Returns the function that matches the given name, or null if none matches

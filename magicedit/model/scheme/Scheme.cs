@@ -74,15 +74,15 @@ namespace magicedit
 
         }
 
-        public void Init(Object @object)
+        public void Init(Object @object, Game game)
         {
             //initialize object with this scheme
-            CompiledScheme.Init(@object);
+            CompiledScheme.Init(@object, game);
 
             //call parents
             foreach (var parent in Parents)
             {
-                parent.Init(@object);
+                parent.Init(@object, game);
             }
         }
 

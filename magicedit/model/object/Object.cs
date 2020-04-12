@@ -19,12 +19,15 @@ namespace magicedit
 
         public List<ObjectVariable> Variables = new List<ObjectVariable>();
         public List<ObjectAttribute> Attributes = new List<ObjectAttribute>();
+        public List<ObjectVariable> Parameters = new List<ObjectVariable>();
 
         /* *** */
 
-        public void Construct()
+        public void Create(Game game)
         {
-            //TODO: compile scheme and call its constructor
+            //Compile scheme and call its constructor
+            Scheme.Construct(this, Parameters);
+            Scheme.Init(this, game);
         }
 
         public int ExecuteAction(string actionName, Object actor, Game game)

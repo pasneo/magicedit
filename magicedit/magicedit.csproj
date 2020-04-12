@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D2BE2911-5C40-4AEA-B2D2-45737AF2F3EC}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>magicedit</RootNamespace>
     <AssemblyName>magicedit</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -32,6 +32,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>magicedit.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -82,6 +85,7 @@
     <Compile Include="model\object\ObjectAttribute.cs" />
     <Compile Include="model\scheme\SchemeExecutor.cs" />
     <Compile Include="model\scheme\SchemeExecutionException.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="windows\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>

@@ -99,8 +99,8 @@ namespace magicedit
         {
 
             //If variable is "actor" or "me"
-            if (name == "actor") return new ObjectVariable("object", "actor", Actor);
-            if (name == "me") return new ObjectVariable("object", "me", Object);
+            if (name == "actor") return new ObjectVariable(Actor.Scheme.Name, "actor", Actor);
+            if (name == "me") return new ObjectVariable(Object.Scheme.Name, "me", Object);
 
             //If it is a register (_0, _1 ... _r0, _r1 ...) we return its value
             if (IsRegister(name))

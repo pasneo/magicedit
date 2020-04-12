@@ -37,5 +37,20 @@ namespace magicedit
             return false;
         }
 
+        public int CountItem(string itemName)
+        {
+            int n = 0;
+            foreach(Item item in Items)
+            {
+                if (item.Name == itemName) ++n;
+            }
+            return n;
+        }
+
+        public void AddItem(Item item)
+        {
+            Items.Add(item);
+        }
+
     }
 }

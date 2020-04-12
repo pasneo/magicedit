@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\scheme\commands\CommandOwns.cs" />
     <Compile Include="model\scheme\commands\CommandPrint.cs" />
     <Compile Include="model\scheme\commands\CommandDesc.cs" />
     <Compile Include="model\game\GameException.cs" />

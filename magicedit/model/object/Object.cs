@@ -9,8 +9,9 @@ namespace magicedit
     public class Object
     {
         
-        public string Id { get; set; }      //A unique identifier
-        public string Name { get; set; }    //The name the creator gave in the editor
+        public string Id { get; set; }      //A unique identifier (eg. "sword (1)", "sword (2)")
+        public string Name { get; set; }    //The name the creator gave in the editor (eg. "sword")
+        public Text ShwonName { get; set; } //The name displayed during game (eg. "Sword of Death")
 
         public Scheme Scheme { get; set; }
         public Visual Visual { get; set; }
@@ -22,6 +23,14 @@ namespace magicedit
         public List<ObjectVariable> Parameters = new List<ObjectVariable>();
 
         /* *** */
+
+        public Object() { }
+
+        public Object(string id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
 
         public void Create(Game game)
         {

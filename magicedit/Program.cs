@@ -147,7 +147,7 @@ namespace magicedit
 
         private void Test()
         {
-
+            
             //Create function, add commands to it
             SchemeFunction function = new SchemeFunction();
 

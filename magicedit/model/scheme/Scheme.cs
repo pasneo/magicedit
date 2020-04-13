@@ -45,6 +45,10 @@ namespace magicedit
 
         /* *** */
 
+        public Scheme() { }
+
+        public Scheme(string name) { Name = name; }
+
         public void Compile()
         {
             //If compiled scheme is up to date, we don't need compiling

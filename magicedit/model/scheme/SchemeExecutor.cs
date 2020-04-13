@@ -109,11 +109,11 @@ namespace magicedit
                 else throw CreateException($"Register '{name}' does not exist.");
             }
 
-            //First we check if object has such variable
+            //Check if object (me) has such variable
             ObjectVariable objectVariable = Object.GetVariableByName(name);
             if (objectVariable != null) return objectVariable;
 
-            //If variable was not found, we check local variables
+            //Check local variables
             foreach (var localVariable in LocalVariables)
             {
                 if (localVariable.Name == name) return localVariable;
@@ -130,6 +130,8 @@ namespace magicedit
                 return new ObjectVariable("unknown", name, @object);
             }
 
+            //TODO: check if variable is a classvar constant
+
             return null;
         }
 
@@ -139,10 +141,21 @@ namespace magicedit
         {
             //Check if types are basic types (number, logical, text) or schemes
 
-            if (variableType == "number") return valueType == "number";
-            if (variableType == "logical") return valueType == "logical";
-            if (variableType == "text") return valueType == "text";
-            if (variableType == "unknown" || valueType == "unknown") return false;
+            if (variableType == VariableTypes.Number) return valueType == VariableTypes.Number;
+            if (variableType == VariableTypes.Logical) return valueType == VariableTypes.Logical;
+            if (variableType == VariableTypes.Text) return valueType == VariableTypes.Text;
+            if (variableType == VariableTypes.Unknown || valueType == VariableTypes.Unknown) return false;
+
+            //If variable is 'object', then a value with any object type can be assigned to it
+            if (variableType == VariableTypes.Object)
+            {
+                if (valueType == VariableTypes.Object) return true;
+                //Basic types are not compatible with 'object'
+                if (valueType == VariableTypes.Number || valueType == VariableTypes.Logical || valueType == VariableTypes.Text) return false;
+                Scheme valueScheme = Game.Config.GetSchemeByName(valueType);
+                if (valueScheme == null) throw CreateException($"Unknown type '{valueType}'");
+                return true;
+            }
 
             Scheme variableScheme = Game.Config.GetSchemeByName(variableType);
 
@@ -152,17 +165,17 @@ namespace magicedit
                 if (variableType == valueType) return true;
 
                 //Basic types are not compatible with any scheme
-                if (valueType == "number" || valueType == "logical" || valueType == "text") return false;
+                if (valueType == VariableTypes.Number || valueType == VariableTypes.Logical || valueType == VariableTypes.Text) return false;
 
                 Scheme valueScheme = Game.Config.GetSchemeByName(valueType);
 
-                if (valueScheme == null) throw CreateException("Unknown type");
+                if (valueScheme == null) throw CreateException($"Unknown type '{valueType}'");
 
                 //Check if the two (different) schemes are compatible (ie. variableType is the ancestor of valueType)
                 return valueScheme.HasAncestor(variableType);
             }
 
-            throw CreateException("Unknown type");
+            throw CreateException($"Unknown type '{variableType}'");
 
         }
 

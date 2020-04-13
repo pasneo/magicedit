@@ -6,6 +6,8 @@
         public static string Logical = "logical";   //bool
         public static string Number = "number";     //int
         public static string Text = "text";         //class Text, not string
+        public static string Unknown = "unknown";
+        public static string Object = "object";
     }
 
     public class ObjectVariable

@@ -10,5 +10,6 @@ namespace magicedit
     {
         public int ActionPoints { get; set; }
         public int MovementActionPoints { get; set; }
+        public int StartingAbilityPoints { get; set; }  //Points the player can spend on abilities at the beginning of a game
     }
 }

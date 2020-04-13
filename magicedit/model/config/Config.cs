@@ -18,7 +18,7 @@ namespace magicedit
         private List<Visual> Visuals;
         private Dictionary<string, Text> StringConsts = new Dictionary<string, Text>();
 
-        private List<Scheme> Schemes;
+        private List<Scheme> Schemes = new List<Scheme>();
 
         /* *** */
 
@@ -40,6 +40,11 @@ namespace magicedit
         public void AddStringConst(string name, Text text)
         {
             StringConsts[name] = text;
+        }
+
+        public void AddScheme(Scheme scheme)
+        {
+            Schemes.Add(scheme);
         }
 
     }

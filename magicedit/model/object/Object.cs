@@ -57,5 +57,14 @@ namespace magicedit
             return null;
         }
 
+        public bool HasAttribute(string attributeName)
+        {
+            foreach(ObjectAttribute attr in Attributes)
+            {
+                if (attr.Type == ObjectAttributeType.Set && attr.Name == attributeName) return true;
+            }
+            return false;
+        }
+
     }
 }

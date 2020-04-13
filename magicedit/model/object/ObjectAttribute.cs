@@ -16,5 +16,14 @@ namespace magicedit
     {
         public ObjectAttributeType Type;
         public string Name;
+
+        public ObjectAttribute() { }
+
+        public ObjectAttribute(ObjectAttributeType type, string name)
+        {
+            Type = type;
+            Name = name;
+        }
+
     }
 }

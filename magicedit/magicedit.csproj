@@ -57,6 +57,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\scheme\commands\CommandIs.cs" />
+    <Compile Include="model\scheme\commands\CommandKnows.cs" />
     <Compile Include="model\scheme\commands\CommandOwns.cs" />
     <Compile Include="model\scheme\commands\CommandPrint.cs" />
     <Compile Include="model\scheme\commands\CommandDesc.cs" />
@@ -142,6 +144,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ADL spec.docx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

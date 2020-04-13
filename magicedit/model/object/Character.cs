@@ -12,7 +12,7 @@ namespace magicedit
     public class Character : MapObject
     {
         public List<Item> Items = new List<Item>();
-        public List<Spell> Spells = new List<Item>();
+        public HashSet<Spell> Spells = new HashSet<Item>();
 
         public bool CanReachObject(Game game, Object @object)
         {
@@ -47,9 +47,23 @@ namespace magicedit
             return n;
         }
 
+        public bool KnowsSpell(string spellName)
+        {
+            foreach (Spell spell in Spells)
+            {
+                if (spell.Name == spellName) return true;
+            }
+            return false;
+        }
+
         public void AddItem(Item item)
         {
             Items.Add(item);
+        }
+
+        public void AddSpell(Spell spell)
+        {
+            Spells.Add(spell);
         }
 
     }

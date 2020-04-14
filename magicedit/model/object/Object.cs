@@ -79,5 +79,30 @@ namespace magicedit
             AvailableActions.Remove(actionName);
         }
 
+        public void SetAttribute(string attributeName)
+        {
+            foreach(ObjectAttribute attr in Attributes)
+            {
+                if (attr.Name == attributeName)
+                {
+                    if (attr.Type == ObjectAttributeType.Forbid) throw new GameException($"Attribute '{attributeName}' is forbidden");
+                    return; //Attribute is already set, we are done
+                }
+            }
+            Attributes.Add(new ObjectAttribute(ObjectAttributeType.Set, attributeName));
+        }
+
+        public void RemoveAttribute(string attributeName)
+        {
+            Attributes.RemoveAll(attr => (attr.Type == ObjectAttributeType.Set && attr.Name == attributeName));
+        }
+
+        public void ForbidAttribute(string attributeName)
+        {
+            //Forbidding an attribute causes that attribute to be removed if it is set
+            Attributes.RemoveAll(attr => (attr.Name == attributeName));
+            Attributes.Add(new ObjectAttribute(ObjectAttributeType.Forbid, attributeName));
+        }
+
     }
 }

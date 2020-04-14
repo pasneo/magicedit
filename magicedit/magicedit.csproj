@@ -57,13 +57,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="model\scheme\commands\character\CommandAddAction.cs" />
-    <Compile Include="model\scheme\commands\character\CommandRemoveAction.cs" />
+    <Compile Include="model\scheme\commands\object\CommandForbidAttribute.cs" />
+    <Compile Include="model\scheme\commands\object\CommandRemoveAttribute.cs" />
+    <Compile Include="model\scheme\commands\object\CommandSetAttribute.cs" />
+    <Compile Include="model\scheme\commands\object\CommandAddAction.cs" />
+    <Compile Include="model\scheme\commands\object\CommandRemoveAction.cs" />
     <Compile Include="model\scheme\commands\CommandReport.cs" />
     <Compile Include="model\object\Class.cs" />
     <Compile Include="model\scheme\commands\CommandIs.cs" />
-    <Compile Include="model\scheme\commands\character\CommandKnows.cs" />
-    <Compile Include="model\scheme\commands\character\CommandOwns.cs" />
+    <Compile Include="model\scheme\commands\object\CommandKnows.cs" />
+    <Compile Include="model\scheme\commands\object\CommandOwns.cs" />
     <Compile Include="model\scheme\commands\CommandPrint.cs" />
     <Compile Include="model\scheme\commands\CommandDesc.cs" />
     <Compile Include="model\game\GameException.cs" />

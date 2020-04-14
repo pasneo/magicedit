@@ -26,42 +26,31 @@ namespace Test
         }
 
         [TestMethod]
-        public void TestCommandIs()
+        public void TestClassList()
         {
-            SchemeFunction f = new SchemeFunction();
-            f.AddCommand(new CommandIs("me", "john", "isJohn"));
-            f.AddCommand(new CommandIs("me", "james", "isJames"));
-            f.AddCommand(new CommandIs("me", "happy", "isHappy"));
-            f.AddCommand(new CommandIs("me", "angry", "isAngry"));
-            f.AddCommand(new CommandIs("me", "forbidden", "isForbidden"));
+            ClassList classList = new ClassList("races");
+            classList.AddClass(new Class("dwarf",
+                new AttributeModifier(AttributeModifier.AttributeModifierOptions.SET, "use_hammer"),
+                new AttributeModifier(AttributeModifier.AttributeModifierOptions.FORBID, "use_bow")
+                ));
 
-            //Create sample object
-            MapObject @object = new MapObject();
-            @object.Name = "john";
-            @object.Attributes.Add(new ObjectAttribute(ObjectAttributeType.Set, "happy"));
-            @object.Attributes.Add(new ObjectAttribute(ObjectAttributeType.Forbid, "forbidden"));
-            @object.Scheme = new Scheme("john_scheme");
-            @object.Variables.Add(new ObjectVariable("logical", "isJohn", false));
-            @object.Variables.Add(new ObjectVariable("logical", "isJames", false));
-            @object.Variables.Add(new ObjectVariable("logical", "isHappy", false));
-            @object.Variables.Add(new ObjectVariable("logical", "isAngry", false));
-            @object.Variables.Add(new ObjectVariable("logical", "isForbidden", false));
+            classList.AddClass(new Class("elf",
+                new AttributeModifier(AttributeModifier.AttributeModifierOptions.SET, "use_bow")
+                ));
 
-            Config config = new Config();
-            config.AddScheme(@object.Scheme);
-            Game game = new Game(config);
+            Assert.IsTrue(classList.IsClassExisting("dwarf"));
+            Assert.IsTrue(classList.IsClassExisting("elf"));
+            Assert.IsFalse(classList.IsClassExisting("human"));
 
-            game._AddObject(@object);
+            Class dwarf = classList.GetClassByName("dwarf");
+            Class elf = classList.GetClassByName("elf");
 
-            //Execute function on object
-            f.Execute(@object, new Character(), game);
+            Assert.IsTrue(dwarf.ContainsAttributeModifier("use_hammer"));
+            Assert.IsTrue(dwarf.ContainsAttributeModifier("use_bow"));
 
-            Assert.AreEqual(@object.GetVariableByName("isJohn").Value, true);
-            Assert.AreEqual(@object.GetVariableByName("isJames").Value, false);
-            Assert.AreEqual(@object.GetVariableByName("isHappy").Value, true);
-            Assert.AreEqual(@object.GetVariableByName("isAngry").Value, false);
-            Assert.AreEqual(@object.GetVariableByName("isForbidden").Value, false);
+            Assert.AreEqual(dwarf.GetAttributeModifier("use_bow").Option, AttributeModifier.AttributeModifierOptions.FORBID);
 
         }
+
     }
 }

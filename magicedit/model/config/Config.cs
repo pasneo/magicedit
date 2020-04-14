@@ -18,6 +18,8 @@ namespace magicedit
         private List<Visual> Visuals;
         private Dictionary<string, Text> StringConsts = new Dictionary<string, Text>();
 
+        private List<ClassList> ClassLists = new List<ClassList>();
+
         private List<Scheme> Schemes = new List<Scheme>();
 
         /* *** */

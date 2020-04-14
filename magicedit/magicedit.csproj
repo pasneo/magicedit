@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\object\Class.cs" />
     <Compile Include="model\scheme\commands\CommandIs.cs" />
     <Compile Include="model\scheme\commands\CommandKnows.cs" />
     <Compile Include="model\scheme\commands\CommandOwns.cs" />

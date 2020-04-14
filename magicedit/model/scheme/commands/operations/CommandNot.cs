@@ -23,7 +23,7 @@ namespace magicedit
             if (variable.Type != VariableTypes.Logical) throw SchemeExecutor.CreateException("Cannot invert non-logical");
 
             bool value_bool = (bool)variable.Value;
-            executor.SetVariable(target, (!value_bool).ToString());
+            executor.SetVariable(target, new ObjectVariable(VariableTypes.Logical, "", (!value_bool)));
         }
 
         public string GetAsString()

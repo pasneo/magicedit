@@ -7,6 +7,46 @@ namespace Test
     [TestClass]
     public class CommandUnitTests
     {
+
+        [TestMethod]
+        public void TestClasslistHandling()
+        {
+
+            ClassList races = new ClassList("races");
+            races.AddClass(new Class("dwarf"));
+            races.AddClass(new Class("elf"));
+
+            SchemeFunction f = new SchemeFunction();
+            f.AddCommand(new CommandOf("race", "actor", "_0"));
+            f.AddCommand(new CommandEquals("_0", "dwarf", "isDwarf"));
+            f.AddCommand(new CommandOf("race", "actor", "_0"));
+            f.AddCommand(new CommandEquals("_0", "elf", "isElf"));
+
+            MapObject @object = new MapObject();
+            @object.Name = "some_object";
+            @object.Scheme = new Scheme("some_scheme");
+            @object.Variables.Add(new ObjectVariable("logical", "isDwarf", false));
+            @object.Variables.Add(new ObjectVariable("logical", "isElf", false));
+
+            Config config = new Config();
+            config.AddScheme(@object.Scheme);
+            config.AddClassList(races);
+
+            Game game = new Game(config);
+            game._AddObject(@object);
+
+            Character actor = new Character();
+            actor.Scheme = new Scheme("character");
+            actor.Variables.Add(new ObjectVariable("races", "race", races.GetClassByName("dwarf")));
+
+            //Execute function on object
+            f.Execute(@object, actor, game);
+
+            Assert.AreEqual(@object.GetVariableByName("isDwarf").Value, true);
+            Assert.AreEqual(@object.GetVariableByName("isElf").Value, false);
+
+        }
+
         [TestMethod]
         public void TestCommandIs()
         {

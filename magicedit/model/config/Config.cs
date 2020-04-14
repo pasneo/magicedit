@@ -12,17 +12,25 @@ namespace magicedit
         public Map Map;
 
         public CharacterConfig CharacterConfig { get; set; } = new CharacterConfig();
-        private ItemSpellConfig ItemConfig;
-        private ItemSpellConfig SpellConfig;
+        private ItemSpellConfig ItemConfig { get; set; } = new ItemSpellConfig();
+        private ItemSpellConfig SpellConfig { get; set; } = new ItemSpellConfig();
 
-        private List<Visual> Visuals;
+        private List<Visual> Visuals = new List<Visual>();
         private Dictionary<string, Text> StringConsts = new Dictionary<string, Text>();
 
-        private List<ClassList> ClassLists = new List<ClassList>();
+        public List<ClassList> ClassLists = new List<ClassList>();
 
         private List<Scheme> Schemes = new List<Scheme>();
 
+        //All the predefined objects are stored here (but references to them may exist elsewhere too)
+        private List<Object> Objects = new List<Object>();
+
         /* *** */
+
+        public void AddClassList(ClassList classList)
+        {
+            ClassLists.Add(classList);
+        }
 
         public Scheme GetSchemeByName(string name)
         {

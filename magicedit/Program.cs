@@ -12,10 +12,13 @@ namespace magicedit
         static void Main(string[] args)
         {
 
+            Program program = new Program();
+            program.Test();
+
             try
             {
-                Program program = new Program();
-                program.GameTest();
+                //program = new Program();
+                //program.Test();
             }
             catch (GameException ex)
             {
@@ -147,34 +150,38 @@ namespace magicedit
 
         private void Test()
         {
-            
-            //Create function, add commands to it
-            SchemeFunction function = new SchemeFunction();
 
-            function.AddCommand(new CommandCreateVariable("number", "i"));
-            function.AddCommand(new CommandSetOf("x", "object2", "30"));
-            function.AddCommand(new CommandOf("x", "object2", "_0"));
-            function.AddCommand(new CommandSetVariable("i", "_0"));
+            ClassList races = new ClassList("races");
+            races.AddClass(new Class("dwarf"));
+            races.AddClass(new Class("elf"));
 
-            function.AddCommand(new CommandPrintValue("i"));
+            SchemeFunction f = new SchemeFunction();
+            f.AddCommand(new CommandOf("race", "actor", "_0"));
+            f.AddCommand(new CommandEquals("_0", "dwarf", "isDwarf"));
+            f.AddCommand(new CommandOf("race", "actor", "_0"));
+            f.AddCommand(new CommandEquals("_0", "elf", "isElf"));
+            f.AddCommand(new CommandPrintValue("isDwarf"));
+            f.AddCommand(new CommandPrintValue("isElf"));
 
-            //Print full code of function
-            function.Print();
-
-            //Create sample object
             MapObject @object = new MapObject();
-
-            MapObject object2 = new MapObject();
-            object2.Id = "object2";
-            object2.Variables.Add(new ObjectVariable("number", "x", 15));   //x of object = 15
+            @object.Name = "some_object";
+            @object.Scheme = new Scheme("some_scheme");
+            @object.Variables.Add(new ObjectVariable("logical", "isDwarf", false));
+            @object.Variables.Add(new ObjectVariable("logical", "isElf", false));
 
             Config config = new Config();
-            Game game = new Game(config);
+            config.AddScheme(@object.Scheme);
+            config.AddClassList(races);
 
-            game._AddObject(object2);
+            Game game = new Game(config);
+            game._AddObject(@object);
+
+            Character actor = new Character();
+            actor.Scheme = new Scheme("character");
+            actor.Variables.Add(new ObjectVariable("races", "race", races.GetClassByName("dwarf")));
 
             //Execute function on object
-            function.Execute(@object, new Character(), game);
+            f.Execute(@object, actor, game);
 
         }
 

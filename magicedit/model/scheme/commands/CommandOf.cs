@@ -21,7 +21,7 @@ namespace magicedit
         public void Execute(SchemeExecutor executor)
         {
             ObjectVariable property = executor.GetPropertyOf(propertyName, objectName);
-            executor.SetVariable(target, property.Value.ToString());
+            executor.SetVariable(target, property);
         }
 
         public string GetAsString()

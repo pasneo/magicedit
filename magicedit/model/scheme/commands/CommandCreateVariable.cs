@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace magicedit
 {
-    class CommandCreateVariable : ISchemeCommand
+    public class CommandCreateVariable : ISchemeCommand
     {
 
         string type, varName;

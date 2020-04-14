@@ -32,7 +32,7 @@ namespace magicedit
 
             bool result = GetResult(value1_bool, value2_bool);
 
-            executor.SetVariable(target, result.ToString());
+            executor.SetVariable(target, new ObjectVariable(VariableTypes.Logical, "", result));
         }
 
         protected abstract bool GetResult(bool value1, bool value2);

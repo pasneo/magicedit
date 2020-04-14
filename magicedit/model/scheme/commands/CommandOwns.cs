@@ -37,7 +37,7 @@ namespace magicedit
 
             bool owns = ownedNumber >= requiredNumber;
 
-            executor.SetVariable(targetName, owns.ToString());
+            executor.SetVariable(targetName, new ObjectVariable(VariableTypes.Logical, "", owns));
         }
 
         public string GetAsString()

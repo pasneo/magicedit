@@ -8,5 +8,7 @@ namespace magicedit
 {
     public class ItemSpellConfig
     {
+        //This scheme is used for all items or spells
+        public Scheme CommonScheme { get; set; }
     }
 }

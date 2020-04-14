@@ -43,7 +43,7 @@ namespace magicedit
             if (@object.Name == propertyName) value = true;
             else if (@object.HasAttribute(propertyName)) value = true;
 
-            executor.SetVariable(target, value.ToString());
+            executor.SetVariable(target, new ObjectVariable(VariableTypes.Logical, "", value));
 
         }
 

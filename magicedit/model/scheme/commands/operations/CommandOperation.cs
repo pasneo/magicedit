@@ -32,7 +32,7 @@ namespace magicedit
 
             int result = GetResult(value1_int, value2_int);
 
-            executor.SetVariable(target, result.ToString());
+            executor.SetVariable(target, new ObjectVariable(VariableTypes.Number, "", result));
         }
 
         protected abstract int GetResult(int value1, int value2);

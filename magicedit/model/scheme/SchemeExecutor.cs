@@ -50,7 +50,7 @@ namespace magicedit
         {
             CommandIndex = 0;
 
-            while(CommandIndex < Commands.Count)
+            while (CommandIndex < Commands.Count)
             {
                 CommandIndexChanged = false;
 
@@ -131,6 +131,16 @@ namespace magicedit
             }
 
             //TODO: check if variable is a classvar constant
+            foreach(ClassList classlist in Game.Config.ClassLists)
+            {
+                foreach(Class @class in classlist.Classes)
+                {
+                    if (@class.Name == name)
+                    {
+                        return new ObjectVariable(classlist.Name, name, @class);
+                    }
+                }
+            }
 
             return null;
         }
@@ -227,6 +237,31 @@ namespace magicedit
                 else
                     throw CreateException($"Unidentifyable variable '{variableName}'");
             }
+        }
+
+        public void SetVariable(string variableName, ObjectVariable value)
+        {
+            //Check if variable is a register
+            if (IsRegister(variableName))
+            {
+                //First we get value, and create register with same type and value
+                Registers[variableName] = new ObjectVariable(value.Type, variableName, value.Value);
+            }
+            else
+            {
+                ObjectVariable variable = GetVariableByName(variableName);
+
+                if (variable != null)
+                {
+                    if (!CheckTypeCompatibility(variable.Type, value.Type))
+                        throw CreateException("Incompatible types");
+
+                    variable.Value = value.Value;
+                }
+                else
+                    throw CreateException($"Unidentifyable variable '{variableName}'");
+            }
+
         }
 
         //Returns the given property (as reference) of the object identified by objectName

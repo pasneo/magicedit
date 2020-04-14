@@ -22,6 +22,8 @@ namespace magicedit
         public List<ObjectAttribute> Attributes = new List<ObjectAttribute>();
         public List<ObjectVariable> Parameters = new List<ObjectVariable>();
 
+        public HashSet<string> AvailableActions = new HashSet<string>();
+
         /* *** */
 
         public Object() { }
@@ -64,6 +66,17 @@ namespace magicedit
                 if (attr.Type == ObjectAttributeType.Set && attr.Name == attributeName) return true;
             }
             return false;
+        }
+
+        public void AddAction(string actionName)
+        {
+            if (Scheme.GetFunctionByName(actionName) == null) throw new GameException($"Action '{actionName}' not found");
+            AvailableActions.Add(actionName);
+        }
+
+        public void RemoveAction(string actionName)
+        {
+            AvailableActions.Remove(actionName);
         }
 
     }

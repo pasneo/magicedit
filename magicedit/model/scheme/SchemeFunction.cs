@@ -12,6 +12,12 @@ namespace magicedit
         private List<ISchemeCommand> Commands = new List<ISchemeCommand>();
         public int ActionPoints { get; set; }
 
+        /* *** */
+
+        public SchemeFunction() { }
+
+        public SchemeFunction(string name) { Name = name; }
+
         //Executes function and returns the action points to be removed from current player
         public int Execute(Object @object, Object actor, Game game)
         {

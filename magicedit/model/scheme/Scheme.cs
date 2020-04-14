@@ -23,7 +23,7 @@ namespace magicedit
             }
         }
 
-        private List<Scheme> Parents;
+        private List<Scheme> Parents = new List<Scheme>();
 
         private CompiledScheme compiledScheme;
         public CompiledScheme CompiledScheme
@@ -37,7 +37,7 @@ namespace magicedit
             set
             {
                 compiledScheme = value;
-                IsCompiledValid = true;
+                IsCompiledValid = (compiledScheme != null);
             }
         }
 
@@ -47,15 +47,20 @@ namespace magicedit
 
         public Scheme() { }
 
-        public Scheme(string name) { Name = name; }
+        public Scheme(string name)
+        {
+            Name = name;
+            //IsCompiledValid = false;
+        }
 
         public void Compile()
         {
             //If compiled scheme is up to date, we don't need compiling
             if (IsCompiledValid) return;
-            
+
             // compile
             //TODO: compile scheme
+            CompiledScheme = new CompiledScheme();
             IsCompiledValid = true;
 
             // compile parents

@@ -151,37 +151,32 @@ namespace magicedit
         private void Test()
         {
 
-            ClassList races = new ClassList("races");
-            races.AddClass(new Class("dwarf"));
-            races.AddClass(new Class("elf"));
-
             SchemeFunction f = new SchemeFunction();
-            f.AddCommand(new CommandOf("race", "actor", "_0"));
-            f.AddCommand(new CommandEquals("_0", "dwarf", "isDwarf"));
-            f.AddCommand(new CommandOf("race", "actor", "_0"));
-            f.AddCommand(new CommandEquals("_0", "elf", "isElf"));
-            f.AddCommand(new CommandPrintValue("isDwarf"));
-            f.AddCommand(new CommandPrintValue("isElf"));
+            f.AddCommand(new CommandAddAction("grab"));
+            f.AddCommand(new CommandAddAction("examine"));
+
+            f.AddCommand(new CommandRemoveAction("grab"));
+            f.AddCommand(new CommandAddAction("drop"));
 
             MapObject @object = new MapObject();
             @object.Name = "some_object";
-            @object.Scheme = new Scheme("some_scheme");
             @object.Variables.Add(new ObjectVariable("logical", "isDwarf", false));
             @object.Variables.Add(new ObjectVariable("logical", "isElf", false));
 
+            @object.Scheme = new Scheme("some_scheme");
+            @object.Scheme.CompiledScheme = new CompiledScheme();
+            @object.Scheme.CompiledScheme.AddAction(new SchemeFunction("grab"));
+            @object.Scheme.CompiledScheme.AddAction(new SchemeFunction("examine"));
+            @object.Scheme.CompiledScheme.AddAction(new SchemeFunction("drop"));
+
             Config config = new Config();
             config.AddScheme(@object.Scheme);
-            config.AddClassList(races);
 
             Game game = new Game(config);
             game._AddObject(@object);
 
-            Character actor = new Character();
-            actor.Scheme = new Scheme("character");
-            actor.Variables.Add(new ObjectVariable("races", "race", races.GetClassByName("dwarf")));
-
             //Execute function on object
-            f.Execute(@object, actor, game);
+            f.Execute(@object, new Character(), game);
 
         }
 

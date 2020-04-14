@@ -9,6 +9,43 @@ namespace Test
     {
 
         [TestMethod]
+        public void TestActionHandling()
+        {
+
+            SchemeFunction f = new SchemeFunction();
+            f.AddCommand(new CommandAddAction("grab"));
+            f.AddCommand(new CommandAddAction("examine"));
+
+            f.AddCommand(new CommandRemoveAction("grab"));
+            f.AddCommand(new CommandAddAction("drop"));
+
+            MapObject @object = new MapObject();
+            @object.Name = "some_object";
+            @object.Variables.Add(new ObjectVariable("logical", "isDwarf", false));
+            @object.Variables.Add(new ObjectVariable("logical", "isElf", false));
+
+            @object.Scheme = new Scheme("some_scheme");
+            @object.Scheme.CompiledScheme = new CompiledScheme();
+            @object.Scheme.CompiledScheme.AddAction(new SchemeFunction("grab"));
+            @object.Scheme.CompiledScheme.AddAction(new SchemeFunction("examine"));
+            @object.Scheme.CompiledScheme.AddAction(new SchemeFunction("drop"));
+
+            Config config = new Config();
+            config.AddScheme(@object.Scheme);
+
+            Game game = new Game(config);
+            game._AddObject(@object);
+
+            //Execute function on object
+            f.Execute(@object, new Character(), game);
+
+            Assert.IsFalse(@object.AvailableActions.Contains("grab"));
+            Assert.IsTrue(@object.AvailableActions.Contains("examine"));
+            Assert.IsTrue(@object.AvailableActions.Contains("drop"));
+
+        }
+
+        [TestMethod]
         public void TestClasslistHandling()
         {
 

@@ -56,14 +56,33 @@ namespace magicedit
             return false;
         }
 
-        public void AddItem(Item item)
+        public void AddItem(Item item, int number = 1)
         {
-            Items.Add(item);
+            for(int i = 0; i < number; ++i)
+                Items.Add(item.Copy());
+        }
+
+        //This method chooses "randomly" which items to remove, so should only be used for items that can't have unique states
+        public void RemoveItem(string itemName, int number)
+        {
+            for(int i = Items.Count - 1; (i >= 0) && (number > 0); --i)
+            {
+                if (Items[i].Name == itemName)
+                {
+                    Items.RemoveAt(i);
+                    --number;
+                }
+            }
         }
 
         public void AddSpell(Spell spell)
         {
             Spells.Add(spell);
+        }
+
+        public void RemoveSpell(Spell spell)
+        {
+            Spells.Remove(spell);
         }
 
     }

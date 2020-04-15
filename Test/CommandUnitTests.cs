@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using magicedit;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -7,6 +7,76 @@ namespace Test
     [TestClass]
     public class CommandUnitTests
     {
+
+        [TestMethod]
+        public void TestSpellHandling()
+        {
+            SchemeFunction f = new SchemeFunction();
+            f.AddCommand(new CommandAddSpell("actor", "fireball"));
+            f.AddCommand(new CommandRemoveSpell("actor", "snowstorm"));
+            f.AddCommand(new CommandAddSpell("actor", "snowstorm"));
+            f.AddCommand(new CommandRemoveSpell("actor", "fireball"));
+
+            Object fireball = new Object("fireball", "fireball");
+            Object snowstorm = new Object("snowstorm", "snowstorm");
+
+            MapObject @object = new MapObject();
+            @object.Name = "some_object";
+            @object.Scheme = new Scheme("some_scheme");
+
+            Character actor = new Character();
+            actor.Scheme = new Scheme();
+            actor.AddSpell(fireball);
+
+            Config config = new Config();
+            config.AddScheme(@object.Scheme);
+
+            Game game = new Game(config);
+            game._AddObject(@object);
+            game._AddObject(fireball);
+            game._AddObject(snowstorm);
+
+            //Execute function on object
+            f.Execute(@object, actor, game);
+
+            Assert.IsTrue(actor.KnowsSpell("snowstorm"));
+            Assert.IsFalse(actor.KnowsSpell("fireball"));
+        }
+
+        [TestMethod]
+        public void TestCommandAddItem()
+        {
+            SchemeFunction f = new SchemeFunction();
+            f.AddCommand(new CommandAddItem("actor", "1", "sword"));
+            f.AddCommand(new CommandCreateVariable("number", "n"));
+            f.AddCommand(new CommandSetVariable("n", "3"));
+            f.AddCommand(new CommandAddItem("actor", "n", "apple"));
+
+            Object sword = new Object("sword", "sword");
+            Object apple = new Object("apple", "apple");
+
+            MapObject @object = new MapObject();
+            @object.Name = "some_object";
+            @object.Scheme = new Scheme("some_scheme");
+
+            Character actor = new Character();
+            actor.Scheme = new Scheme();
+            actor.AddItem(sword);
+
+            Config config = new Config();
+            config.AddScheme(@object.Scheme);
+
+            Game game = new Game(config);
+            game._AddObject(@object);
+            game._AddObject(sword);
+            game._AddObject(apple);
+
+            //Execute function on object
+            f.Execute(@object, actor, game);
+
+            Assert.AreEqual(2, actor.CountItem("sword"));
+            Assert.AreEqual(3, actor.CountItem("apple"));
+        }
 
         [TestMethod]
         public void TestActionHandling()

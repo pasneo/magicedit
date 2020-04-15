@@ -8,10 +8,22 @@ namespace magicedit
 {
     public class Object
     {
-        
-        public string Id { get; set; }      //A unique identifier (eg. "sword (1)", "sword (2)")
+     
+        /*
+         * TODO: the Name property might be renamed to OriginalId or something similar to highlight to following:
+         * 
+         * 'Id' is a unique identifier, but it is used mainly (or only?) to identify pre-defined (in-editor) objects from code.
+         * Eg. we define a sword item, and want to use it in code as 'add sword to actor'. In this case the Id of the item
+         * will be 'sword'. But we also want to write code like 'actor has 2 sword'. In this case we want all the sword items
+         * to be counted, thus we must use their Name, which will be 'sword' for each.
+         * 
+         * Conclusion: the Name must be the same as the Id of the original object. Copies of the original can (or must) have
+         * newly defined Ids (eg. sword_1, sword_2 ...)
+         */
+
+        public string Id { get; set; }      //A unique identifier (eg. "sword", "sword (2)")
         public string Name { get; set; }    //The name the creator gave in the editor (eg. "sword")
-        public Text ShwonName { get; set; } //The name displayed during game (eg. "Sword of Death")
+        public Text ShownName { get; set; } //The name displayed during game (eg. "Sword of Death")
 
         public Scheme Scheme { get; set; }
         public Visual Visual { get; set; }
@@ -32,6 +44,28 @@ namespace magicedit
         {
             Id = id;
             Name = name;
+        }
+
+        public Object Copy()
+        {
+            Object copy = new Object();
+
+            copy.Id = Id;
+            copy.Name = Name;
+            copy.ShownName = ShownName;
+
+            //Reference vars (copy only reference):
+            copy.Scheme = Scheme;
+            copy.Visual = Visual;
+            copy.Description = Description;
+            copy.Parameters = Parameters;
+
+            //Contained vars (copy values):
+            foreach (ObjectVariable variable in Variables) copy.Variables.Add(variable.Copy());
+            foreach (ObjectAttribute attr in Attributes) copy.Attributes.Add(attr);
+            foreach (string action in AvailableActions) copy.AvailableActions.Add(action);
+
+            return copy;
         }
 
         public void Create(Game game)

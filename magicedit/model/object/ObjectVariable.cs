@@ -14,7 +14,6 @@
     {
         public string Type;
         public string Name;
-        public string FullName;
         public object Value;
 
         public ObjectVariable(string type, string name, object value)
@@ -22,6 +21,12 @@
             Type = type;
             Name = name;
             Value = value;
+        }
+
+        public ObjectVariable Copy()
+        {
+            ObjectVariable copy = new ObjectVariable(Type, Name, Value);
+            return copy;
         }
 
     }

@@ -57,6 +57,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\scheme\commands\object\CommandAddSpell.cs" />
+    <Compile Include="model\scheme\commands\object\CommandRemoveItem.cs" />
+    <Compile Include="model\scheme\commands\object\CommandRemoveSpell.cs" />
+    <Compile Include="model\scheme\commands\object\CommandAddItem.cs" />
     <Compile Include="model\scheme\commands\object\CommandForbidAttribute.cs" />
     <Compile Include="model\scheme\commands\object\CommandRemoveAttribute.cs" />
     <Compile Include="model\scheme\commands\object\CommandSetAttribute.cs" />

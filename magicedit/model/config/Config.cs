@@ -32,6 +32,15 @@ namespace magicedit
             ClassLists.Add(classList);
         }
 
+        public bool IsClassType(string name)
+        {
+            foreach(ClassList classList in ClassLists)
+            {
+                if (classList.Name == name) return true;
+            }
+            return false;
+        }
+
         public Scheme GetSchemeByName(string name)
         {
             foreach(Scheme scheme in Schemes)

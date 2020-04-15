@@ -84,11 +84,32 @@ namespace magicedit
             return action.Execute(this, actor, game);
         }
 
-        public ObjectVariable GetVariableByName(string name)
+        //Calculates actual value of ability, and returns it as a (nameless) number variable
+        private ObjectVariable CalculateAbility(ObjectVariable ability, Config config)
+        {
+            int modifValue = 0;
+            foreach (ObjectVariable var in Variables)
+            {
+                if (config.IsClassType(var.Type))
+                {
+                    Class @class = (Class)var.Value;
+                    modifValue += @class.GetAbilityModifier(ability.Name).Value;
+                }
+            }
+            ObjectVariable actualVar = new ObjectVariable(VariableTypes.Number, "", modifValue + (int)ability.Value);
+            return actualVar;
+        }
+
+        public ObjectVariable GetVariableByName(string name, Config config)
         {
             foreach(var variable in Variables)
             {
-                if (variable.Name == name) return variable;
+                if (variable.Name == name)
+                {
+                    //ability variables should be returned with their actual (calculated) value
+                    if (variable.Type == VariableTypes.Ability) return CalculateAbility(variable, config);
+                    return variable;
+                }
             }
             return null;
         }

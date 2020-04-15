@@ -25,9 +25,10 @@ namespace magicedit
         public int Value { get; set; } = 0;
 
         public AbilityModifier() { }
-        public AbilityModifier(string abilityName)
+        public AbilityModifier(string abilityName, int value = 0)
         {
             this.AbilityName = abilityName;
+            Value = value;
         }
 
         public override string GetCode()

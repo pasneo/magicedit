@@ -8,6 +8,7 @@
         public static string Text = "text";         //class Text, not string
         public static string Unknown = "unknown";
         public static string Object = "object";
+        public static string Ability = "ability";
     }
 
     public class ObjectVariable

@@ -110,7 +110,7 @@ namespace magicedit
             }
 
             //Check if object (me) has such variable
-            ObjectVariable objectVariable = Object.GetVariableByName(name);
+            ObjectVariable objectVariable = Object.GetVariableByName(name, Game.Config);
             if (objectVariable != null) return objectVariable;
 
             //Check local variables
@@ -190,11 +190,15 @@ namespace magicedit
         }
 
         // Finds the type and value represented by the given string (including variables; and constants like 11, 5, true, $STRING etc.)
+        // This method calculates the current value of abilities and return that value (thus cannot be used to change ability values)
         public ObjectVariable FindValueByString(string s)
         {
             //If there is a variable with the name s, we return its value
             ObjectVariable variable = GetVariableByName(s);
-            if (variable != null) return variable;
+            if (variable != null)
+            {
+                return variable;
+            }
 
             //If s is a number const we return it as a new number variable
             int number;
@@ -277,7 +281,7 @@ namespace magicedit
 
             @object = (Object)objectVariable.Value;
 
-            return @object.GetVariableByName(propertyName);
+            return @object.GetVariableByName(propertyName, Game.Config);
         }
 
     }

@@ -46,7 +46,15 @@ namespace magicedit
         {
             Config = config;
             Map = config.Map;
-            //TODO: copy map from config (instead of ref copy), collect all objects into the list Objects, construct and init objects
+            
+            //Collect all objects into the list Objects, construct and init objects
+            Objects = Config.CopyObjects();
+
+            foreach(Object obj in Objects)
+            {
+                obj.Create(this);
+            }
+
         }
 
         public void SetupPlayers(int numberOfPlayers)
@@ -153,10 +161,13 @@ namespace magicedit
             }
             else if (SelectedObject != null)
             {
-                int actionPointsToRemove = SelectedObject.ExecuteAction(actionName, CurrentPlayer.Character, this);
-
+                //Get action points to be removed on a successful action
+                int actionPointsToRemove = SelectedObject.Scheme.GetFunctionByName(actionName).ActionPoints;
+                
                 if (actionPointsToRemove > CurrentPlayer.AvailableActionPoints)
                     throw new GameException("Too few action points");
+
+                actionPointsToRemove = SelectedObject.ExecuteAction(actionName, CurrentPlayer.Character, this);
 
                 CurrentPlayer.AvailableActionPoints -= actionPointsToRemove;
             }

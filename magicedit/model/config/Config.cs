@@ -26,6 +26,16 @@ namespace magicedit
         private List<Object> Objects = new List<Object>();
 
         /* *** */
+        
+        public List<Object> CopyObjects()
+        {
+            List<Object> objects = new List<Object>();
+            foreach(Object obj in Objects)
+            {
+                objects.Add(obj.Copy());
+            }
+            return objects;
+        }
 
         public void AddClassList(ClassList classList)
         {

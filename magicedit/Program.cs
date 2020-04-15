@@ -13,12 +13,11 @@ namespace magicedit
         {
 
             Program program = new Program();
-            program.Test();
+            //program.GameTest();
 
             try
             {
-                //program = new Program();
-                //program.Test();
+                program.GameTest();
             }
             catch (GameException ex)
             {
@@ -57,6 +56,7 @@ namespace magicedit
 
             SchemeFunction pickup = new SchemeFunction();
             pickup.Name = "pickup";
+            pickup.ActionPoints = 1;
             pickup.AddCommand(new CommandJumpIfFalse("ready", 3));
             pickup.AddCommand(new CommandPrint("Picked up"));
             pickup.AddCommand(new CommandJump(4));
@@ -142,7 +142,8 @@ namespace magicedit
             game.DoAction(Game.BasicActions.Movement, Game.MovementParameters.East);
             //'pickup' the box with id 'box'
             game.SelectObject("box");
-            game.DoAction("pickup");
+            for (int i = 0; i < 20; ++i)
+                game.DoAction("pickup");
 
             //... check outcomes
 

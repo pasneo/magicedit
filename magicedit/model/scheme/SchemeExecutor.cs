@@ -130,7 +130,7 @@ namespace magicedit
                 return new ObjectVariable("unknown", name, @object);
             }
 
-            //TODO: check if variable is a classvar constant
+            //Check if variable is a classvar constant
             foreach(ClassList classlist in Game.Config.ClassLists)
             {
                 foreach(Class @class in classlist.Classes)

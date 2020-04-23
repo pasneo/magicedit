@@ -19,6 +19,13 @@ namespace magicedit
 
         /* *** */
 
+        public CompiledScheme() { }
+
+        public CompiledScheme(string code)
+        {
+            var ast = SchemeLang.GetAST(code);
+        }
+
         public void AddVariable(ObjectVariable variable)
         {
             Variables.Add(variable);

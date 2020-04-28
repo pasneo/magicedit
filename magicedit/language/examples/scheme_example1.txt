@@ -1,0 +1,9 @@
+﻿scheme MyScheme : ParentScheme {
+
+	param number i
+
+	init {
+		x of field of obj = 10
+	}
+
+}

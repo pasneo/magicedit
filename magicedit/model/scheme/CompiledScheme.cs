@@ -14,17 +14,12 @@ namespace magicedit
         //Parameters that are created and set when constructing object
         private List<ObjectVariable> Parameters = new List<ObjectVariable>();
 
-        private SchemeFunction InitFunction;
+        private SchemeFunction InitFunction = null;
         private List<SchemeFunction> ActionFunctions = new List<SchemeFunction>();
 
         /* *** */
 
         public CompiledScheme() { }
-
-        public CompiledScheme(string code)
-        {
-            var ast = SchemeLang.GetAST(code);
-        }
 
         public void AddVariable(ObjectVariable variable)
         {
@@ -34,6 +29,11 @@ namespace magicedit
         public void AddParameter(ObjectVariable parameter)
         {
             Parameters.Add(parameter);
+        }
+
+        public void SetInit(SchemeFunction init)
+        {
+            InitFunction = init;
         }
 
         public void AddAction(SchemeFunction action)

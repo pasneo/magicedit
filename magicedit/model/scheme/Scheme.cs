@@ -16,30 +16,16 @@ namespace magicedit
         {
             get { return code; }
             //Modifying the code will invalidate the compiled scheme
-            private set
+            set
             {
-                code = Code;
+                code = value;
                 IsCompiledValid = false;
             }
         }
 
         private List<Scheme> Parents = new List<Scheme>();
-
-        private CompiledScheme compiledScheme;
-        public CompiledScheme CompiledScheme
-        {
-            //Accessing CompiledScheme causes a recompilation if it is out of date
-            get
-            {
-                if (!IsCompiledValid) Compile();
-                return compiledScheme;
-            }
-            set
-            {
-                compiledScheme = value;
-                IsCompiledValid = (compiledScheme != null);
-            }
-        }
+        
+        public CompiledScheme CompiledScheme { get; set; }
 
         public bool IsCompiledValid { get; set; } = false;
 
@@ -50,23 +36,23 @@ namespace magicedit
         public Scheme(string name)
         {
             Name = name;
-            //IsCompiledValid = false;
         }
 
-        public void Compile()
+        public void AddParent(Scheme parent)
         {
-            //If compiled scheme is up to date, we don't need compiling
-            if (IsCompiledValid) return;
+            Parents.Add(parent);
+        }
 
-            // compile
-            //TODO: compile scheme
-            CompiledScheme = new CompiledScheme();
+        public void Compile(Config config)
+        {
+            // compile self
+            SchemeLang.Compile(this, config);
             IsCompiledValid = true;
 
             // compile parents
             foreach (var parent in Parents)
             {
-                parent.Compile();
+                parent.Compile(config);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,19 +15,18 @@ namespace magicedit
 
             Program program = new Program();
             //program.GameTest();
+            
+            Config config = new Config();
 
-            try
-            {
-                program.GameTest();
-            }
-            catch (GameException ex)
-            {
-                Console.WriteLine($"Game error: {ex.Message}");
-            }
-            catch (SchemeExecutionException ex)
-            {
-                Console.WriteLine($"Error at [{ex.CommandIndex}]: {ex.Message}");
-            }
+            Scheme parentScheme = new Scheme("ParentScheme");
+            config.AddScheme(parentScheme);
+
+            Scheme scheme = new Scheme("MyScheme");
+            scheme.Code = File.ReadAllText("language/examples/scheme_example1.txt");
+
+            SchemeLang.Compile(scheme, config);
+
+            scheme.CompiledScheme.GetFunctionByName("init").Print();
 
             Console.ReadKey();
 

@@ -63,6 +63,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="language\scheme\scheme_lang.g4.lexer.cs">
+      <DependentUpon>scheme_lang.g4</DependentUpon>
+    </Compile>
+    <Compile Include="language\scheme\scheme_lang.g4.parser.cs">
+      <DependentUpon>scheme_lang.g4</DependentUpon>
+    </Compile>
     <Compile Include="model\scheme\commands\object\CommandAddSpell.cs" />
     <Compile Include="model\scheme\commands\object\CommandRemoveItem.cs" />
     <Compile Include="model\scheme\commands\object\CommandRemoveSpell.cs" />
@@ -106,8 +112,6 @@
     <Compile Include="model\scheme\SchemeExecutor.cs" />
     <Compile Include="model\scheme\SchemeExecutionException.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="language\scheme\scheme_lang.g4.lexer.cs" />
-    <Compile Include="language\scheme\scheme_lang.g4.parser.cs" />
     <Compile Include="language\scheme\SchemeLang.cs" />
     <Compile Include="windows\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
@@ -165,21 +169,26 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="ADL spec.docx" />
+    <Antlr4 Include="language\scheme\scheme_lang.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>magicedit.language.scheme</CustomToolNamespace>
+    </Antlr4>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Antlr4 Include="language\scheme\scheme_lang.g4">
-      <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>magicedit</CustomToolNamespace>
-    </Antlr4>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="model\scheme\compilation\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="language\examples\scheme_example1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

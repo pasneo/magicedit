@@ -20,7 +20,7 @@ scheme_body_element :   body_variable_definition |
 
 body_variable_definition : variable_definition ;
 
-variable_definition : variable_type variable_name (EQUALS expression) ;
+variable_definition : variable_type variable_name (EQUALS expression)? ;
     variable_type : identifier ;
     variable_name : identifier;
     
@@ -44,10 +44,11 @@ command : cmd_report |
           cmd_create_var |
           cmd_create_classvar |
           cmd_set_var |         // a = b
+		  cmd_set_of |
           cmd_modify_var |      // for += -= *= /=
           cmd_if |
           cmd_fail |
-          cmd_destroy |
+          //cmd_destroy |
           cmd_set_attr |
           cmd_add_item |
           cmd_remove_item |
@@ -72,17 +73,21 @@ cmd_create_classvar : CLASS variable_name FROM classlist_name ;
     
 cmd_set_var : variable_name EQUALS expression ;
 
+cmd_set_of : property_name OF object EQUALS expression ;
+
 cmd_modify_var : variable_name modif_operator numeric_expression ;
     modif_operator : MOD_ADD | MOD_SUB | MOD_MUL | MOD_DIV ;
     
-cmd_if : IF logical_expression L_BRACE
+cmd_if : IF logical_expression
             function_body
-         R_BRACE (ELSE L_BRACE function_body R_BRACE)? ;
+         (ELSE function_body)?
+		 ENDIF ;
     
 cmd_fail : FAIL ;
 
-cmd_destroy : DESTROY object ;
-    object : object_name | property_of ;
+//cmd_destroy : DESTROY object ;
+    object : object_atom | property_of ;
+	object_atom : object_name ;
     object_name : identifier ;
     property_of : property_name OF object ;
 
@@ -120,9 +125,11 @@ expression
 
 /* Numeric expressions */
 
-numeric_expression : multiplying_expr ((PLUS|MINUS) multiplying_expr)*;
+numeric_expression : multiplying_expr | complex_numeric_expr;
+	complex_numeric_expr : multiplying_expr (PLUS|MINUS) numeric_expression ;
 
-multiplying_expr : atom ((MUL|DIV) atom)* ;
+multiplying_expr : atom | complex_multiplying_expr ;
+    complex_multiplying_expr : atom (MUL|DIV) multiplying_expr ;
 
 atom
     : inverted_atom
@@ -135,11 +142,13 @@ inverted_atom : MINUS atom ;
 
 //numeric_value : változó ('of' is), szám
 numeric_value
-    : variable
-    | integer
+    : variable_expr
+    | integer_expr
     ;
 
-variable
+integer_expr : integer ;
+
+variable_expr
     : variable_name
     | property_of
     ;
@@ -205,6 +214,7 @@ CLEAR : 'clear' ;
 DESC: 'desc' ;
 DESTROY : 'destroy' ;
 ELSE : 'else' ;
+ENDIF : 'endif' ;
 FAIL : 'fail' ;
 FORBID : 'forbid' ;
 FROM : 'from' ;
@@ -243,5 +253,6 @@ L_BRACE : '{' ; R_BRACE : '}' ;
 L_PAREN : '(' ; R_PAREN : ')' ;
 
 WS
-	:	' ' -> channel(HIDDEN)
+	:	(' '|'\n'|'\t'|'\r') -> channel(HIDDEN)
 	;
+

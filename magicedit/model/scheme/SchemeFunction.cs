@@ -10,13 +10,15 @@ namespace magicedit
     {
         public string Name { get; set; }
         private List<ISchemeCommand> Commands = new List<ISchemeCommand>();
-        public int ActionPoints { get; set; }
+        public int ActionPoints { get; set; } = 0;
 
         /* *** */
 
         public SchemeFunction() { }
 
         public SchemeFunction(string name) { Name = name; }
+
+        public SchemeFunction(string name, int actionPoints) { Name = name; ActionPoints = actionPoints; }
 
         //Executes function and returns the action points to be removed from current player
         public int Execute(Object @object, Object actor, Game game)
@@ -29,6 +31,16 @@ namespace magicedit
         public void AddCommand(ISchemeCommand command)
         {
             Commands.Add(command);
+        }
+
+        public void AddCommand(ISchemeCommand command, int commandIndex)
+        {
+            Commands.Insert(commandIndex, command);
+        }
+
+        public int GetCommandCount()
+        {
+            return Commands.Count;
         }
 
         public void Print()

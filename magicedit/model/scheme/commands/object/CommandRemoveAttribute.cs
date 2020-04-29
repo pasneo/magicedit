@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace magicedit
 {
-    class CommandRemoveAttribute : ISchemeCommand
+    public class CommandRemoveAttribute : ISchemeCommand
     {
 
         string objectName, attributeName;

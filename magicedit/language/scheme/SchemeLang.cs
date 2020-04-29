@@ -140,6 +140,18 @@ namespace magicedit
 
             public override object VisitCmd_add_item([NotNull] scheme_langParser.Cmd_add_itemContext context)
             {
+
+                string characterName = context.character_name().GetText();
+                string itemName = context.item_name().GetText();
+                string itemNumber = "1";
+
+                if (context.item_number() != null) itemNumber = GetRegName(0);
+
+                CommandAddItem cmd = new CommandAddItem(characterName, itemNumber, itemName);
+                currentFunc.AddCommand(cmd);
+
+                if (context.item_number() != null) SetNewExpression(1);
+
                 return base.VisitCmd_add_item(context);
             }
 
@@ -155,6 +167,12 @@ namespace magicedit
 
             public override object VisitCmd_desc([NotNull] scheme_langParser.Cmd_descContext context)
             {
+
+                string string_const_name = context.content().GetText();
+
+                CommandDesc cmd = new CommandDesc(string_const_name);
+                currentFunc.AddCommand(cmd);
+
                 return base.VisitCmd_desc(context);
             }
 
@@ -163,43 +181,106 @@ namespace magicedit
             //    return base.VisitCmd_destroy(context);
             //}
 
+            public override object VisitCmd_end([NotNull] scheme_langParser.Cmd_endContext context)
+            {
+                CommandEnd cmd = new CommandEnd();
+                currentFunc.AddCommand(cmd);
+                return base.VisitCmd_end(context);
+            }
+
             public override object VisitCmd_fail([NotNull] scheme_langParser.Cmd_failContext context)
             {
+                CommandFail cmd = new CommandFail();
+                currentFunc.AddCommand(cmd);
                 return base.VisitCmd_fail(context);
             }
-
-            public override object VisitCmd_if([NotNull] scheme_langParser.Cmd_ifContext context)
+            
+            public override object VisitAdd_action([NotNull] scheme_langParser.Add_actionContext context)
             {
-                return base.VisitCmd_if(context);
+                CommandAddAction cmd = new CommandAddAction(context.action_name().GetText());
+                currentFunc.AddCommand(cmd);
+                return base.VisitAdd_action(context);
             }
 
-            public override object VisitCmd_manage_actions([NotNull] scheme_langParser.Cmd_manage_actionsContext context)
+            public override object VisitRemove_action([NotNull] scheme_langParser.Remove_actionContext context)
             {
-                return base.VisitCmd_manage_actions(context);
+                CommandRemoveAction cmd = new CommandRemoveAction(context.action_name().GetText());
+                currentFunc.AddCommand(cmd);
+                return base.VisitRemove_action(context);
+            }
+
+            public override object VisitClear_actions([NotNull] scheme_langParser.Clear_actionsContext context)
+            {
+                CommandClearActions cmd = new CommandClearActions();
+                currentFunc.AddCommand(cmd);
+                return base.VisitClear_actions(context);
             }
 
             public override object VisitCmd_modify_var([NotNull] scheme_langParser.Cmd_modify_varContext context)
             {
+
+                //TODO: create commands like CommandIncrease, CommandDecrease... so we dont have to do magic here
+
                 return base.VisitCmd_modify_var(context);
             }
 
             public override object VisitCmd_remove_item([NotNull] scheme_langParser.Cmd_remove_itemContext context)
             {
+
+                string characterName = context.character_name().GetText();
+                string itemName = context.item_name().GetText();
+                string itemNumber = "1";
+
+                if (context.item_number() != null) itemNumber = GetRegName(0);
+
+                CommandRemoveItem cmd = new CommandRemoveItem(characterName, itemNumber, itemName);
+                currentFunc.AddCommand(cmd);
+
+                if (context.item_number() != null) SetNewExpression(1);
+
                 return base.VisitCmd_remove_item(context);
             }
 
             public override object VisitCmd_remove_spell([NotNull] scheme_langParser.Cmd_remove_spellContext context)
             {
+
+                string characterName = context.character_name().GetText();
+                string spellName = context.spell_name().GetText();
+                CommandRemoveSpell cmd = new CommandRemoveSpell(characterName, spellName);
+                currentFunc.AddCommand(cmd);
+
                 return base.VisitCmd_remove_spell(context);
             }
 
             public override object VisitCmd_report([NotNull] scheme_langParser.Cmd_reportContext context)
             {
+
+                string string_const_name = context.content().GetText();
+
+                CommandReport cmd = new CommandReport(string_const_name);
+                currentFunc.AddCommand(cmd);
+
                 return base.VisitCmd_report(context);
             }
 
             public override object VisitCmd_set_attr([NotNull] scheme_langParser.Cmd_set_attrContext context)
             {
+
+                string attr_name = context.attr_name().GetText();
+                string attr_type = context.attr_type().GetText();
+
+                int objectReg = 0;
+
+                ISchemeCommand cmd = null;
+
+                if (attr_type == "set") cmd = new CommandSetAttribute(GetRegName(objectReg), attr_name);
+                else if (attr_type == "remove") cmd = new CommandRemoveAttribute(GetRegName(objectReg), attr_name);
+                else if (attr_type == "forbid") cmd = new CommandForbidAttribute(GetRegName(objectReg), attr_name);
+
+                currentFunc.AddCommand(cmd);
+
+                SetNewExpression(1);
+
                 return base.VisitCmd_set_attr(context);
             }
 
@@ -232,7 +313,56 @@ namespace magicedit
 
             public override object VisitCmd_teach_spell([NotNull] scheme_langParser.Cmd_teach_spellContext context)
             {
+
+                CommandAddSpell cmd = new CommandAddSpell(context.character_name().GetText(), context.spell_name().GetText());
+                currentFunc.AddCommand(cmd);
+
                 return base.VisitCmd_teach_spell(context);
+            }
+
+            /* If-expression */
+
+            private List<CommandJumpBase> jump_cmds = new List<CommandJumpBase>();
+
+            private void SetLatestJumpPosition(int line)
+            {
+                jump_cmds.Last().SetLine(line);
+                jump_cmds.RemoveAt(jump_cmds.Count - 1);
+            }
+
+            public override object VisitCmd_if([NotNull] scheme_langParser.Cmd_ifContext context)
+            {
+
+                string value = GetRegName(0);
+                CommandJumpIfFalse cmd = new CommandJumpIfFalse(value,-1);
+                currentFunc.AddCommand(cmd);
+
+                jump_cmds.Add(cmd);
+
+                SetNewExpression(1);
+
+                return base.VisitCmd_if(context);
+            }
+
+            public override object VisitElse([NotNull] scheme_langParser.ElseContext context)
+            {
+
+
+                CommandJump jump = new CommandJump(-1);
+                currentFunc.AddCommand(jump);
+
+                //we must set jump position of latest if (jump-if-false command)
+                SetLatestJumpPosition(currentFunc.GetCommandCount());
+
+                jump_cmds.Add(jump);
+
+                return base.VisitElse(context);
+            }
+
+            public override object VisitEndif([NotNull] scheme_langParser.EndifContext context)
+            {
+                SetLatestJumpPosition(currentFunc.GetCommandCount());
+                return base.VisitEndif(context);
             }
 
             /* Expressions */
@@ -337,6 +467,20 @@ namespace magicedit
                 currentFunc.AddCommand(cmd, expression_index);
 
                 return base.VisitInteger_expr(context);
+            }
+
+            public override object VisitVariable_expr([NotNull] scheme_langParser.Variable_exprContext context)
+            {
+
+                //variable_expr can also be 'of' expression, in that case we do nothing here
+                if (context.variable_name() != null)
+                {
+                    int result_reg = PopLastParamReg();
+                    CommandSetVariable cmd = new CommandSetVariable(GetRegName(result_reg), context.variable_name().GetText());
+                    currentFunc.AddCommand(cmd, expression_index);
+                }
+
+                return base.VisitVariable_expr(context);
             }
 
             public override object VisitProperty_of([NotNull] scheme_langParser.Property_ofContext context)

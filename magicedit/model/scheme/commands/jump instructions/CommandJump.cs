@@ -6,22 +6,19 @@ using System.Threading.Tasks;
 
 namespace magicedit
 {
-    public class CommandJump : ISchemeCommand
+    public class CommandJump : CommandJumpBase
     {
 
-        int line;
-
-        public CommandJump(int line)
+        public CommandJump(int line) : base(line)
         {
-            this.line = line;
         }
 
-        public void Execute(SchemeExecutor executor)
+        protected override bool Evaluate(SchemeExecutor executor)
         {
-            executor.Jump(line);
+            return true;
         }
 
-        public string GetAsString()
+        public override string GetAsString()
         {
             return $"JUMP ( {line} )";
         }

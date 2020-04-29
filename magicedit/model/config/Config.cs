@@ -62,6 +62,7 @@ namespace magicedit
 
         public Text GetStringConstByName(string name)
         {
+            if (name.Length > 0 && name[0] == '$') name = name.Substring(1);
             if (StringConsts.ContainsKey(name)) return StringConsts[name];
             return null;
         }

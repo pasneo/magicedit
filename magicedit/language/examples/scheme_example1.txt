@@ -3,7 +3,20 @@
 	param number i
 
 	init {
-		x of field of obj = 10
+
+		if true
+			a = 10
+			if true
+				d = 1
+			else
+				e = 9
+			endif
+		else
+			b = 5
+		endif
+
+		c = 3
+
 	}
 
 }

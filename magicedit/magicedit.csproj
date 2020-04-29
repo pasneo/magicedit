@@ -63,6 +63,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\scheme\commands\object\CommandClearActions.cs" />
+    <Compile Include="model\scheme\commands\CommandEnd.cs" />
+    <Compile Include="model\scheme\commands\CommandFail.cs" />
+    <Compile Include="model\scheme\commands\jump instructions\CommandJumpBase.cs" />
     <Compile Include="language\scheme\scheme_lang.g4.lexer.cs">
       <DependentUpon>scheme_lang.g4</DependentUpon>
     </Compile>
@@ -78,13 +82,13 @@
     <Compile Include="model\scheme\commands\object\CommandSetAttribute.cs" />
     <Compile Include="model\scheme\commands\object\CommandAddAction.cs" />
     <Compile Include="model\scheme\commands\object\CommandRemoveAction.cs" />
-    <Compile Include="model\scheme\commands\CommandReport.cs" />
+    <Compile Include="model\scheme\commands\object\CommandReport.cs" />
     <Compile Include="model\object\Class.cs" />
     <Compile Include="model\scheme\commands\CommandIs.cs" />
     <Compile Include="model\scheme\commands\object\CommandKnows.cs" />
     <Compile Include="model\scheme\commands\object\CommandOwns.cs" />
     <Compile Include="model\scheme\commands\CommandPrint.cs" />
-    <Compile Include="model\scheme\commands\CommandDesc.cs" />
+    <Compile Include="model\scheme\commands\object\CommandDesc.cs" />
     <Compile Include="model\game\GameException.cs" />
     <Compile Include="model\Log.cs" />
     <Compile Include="model\scheme\commands\jump instructions\CommandJumpIfFalse.cs" />

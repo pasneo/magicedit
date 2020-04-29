@@ -6,24 +6,16 @@ using System.Threading.Tasks;
 
 namespace magicedit
 {
-    public class CommandReport : ISchemeCommand
+    public class CommandEnd : ISchemeCommand
     {
-
-        Text message;
-
-        public CommandReport(Text message)
-        {
-            this.message = message;
-        }
-
         public void Execute(SchemeExecutor executor)
         {
-            Console.WriteLine(message.Content);
+            executor.End();
         }
 
         public string GetAsString()
         {
-            return $"REPORT ( {message} )";
+            return $"END ( )";
         }
     }
 }

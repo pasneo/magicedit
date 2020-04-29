@@ -48,6 +48,7 @@ command : cmd_report |
           cmd_modify_var |      // for += -= *= /=
           cmd_if |
           cmd_fail |
+		  cmd_end |
           //cmd_destroy |
           cmd_set_attr |
           cmd_add_item |
@@ -80,10 +81,15 @@ cmd_modify_var : variable_name modif_operator numeric_expression ;
     
 cmd_if : IF logical_expression
             function_body
-         (ELSE function_body)?
-		 ENDIF ;
+         else?
+		 endif ;
     
+	else : (ELSE function_body) ;
+	endif : ENDIF ;
+
 cmd_fail : FAIL ;
+
+cmd_end : END ;
 
 //cmd_destroy : DESTROY object ;
     object : object_atom | property_of ;
@@ -93,15 +99,16 @@ cmd_fail : FAIL ;
 
 property_name : identifier ;
 
-cmd_set_attr : attr_type attr_name OF object_name ;
+cmd_set_attr : attr_type attr_name OF object ;
     attr_type : SET|FORBID|REMOVE ;
     attr_name : identifier ;
 
-cmd_add_item : ADD item_name TO character_name ;
+cmd_add_item : ADD item_number? item_name TO character_name ;
+	item_number : numeric_expression ;
     item_name : identifier ;
     character_name : identifier ;
     
-cmd_remove_item : REMOVE item_name FROM character_name ;
+cmd_remove_item : REMOVE item_number? item_name FROM character_name ;
 
 cmd_teach_spell : TEACH spell_name TO character_name;
     spell_name : identifier ;
@@ -134,7 +141,6 @@ multiplying_expr : atom | complex_multiplying_expr ;
 atom
     : inverted_atom
     | numeric_value
-    | variable_name
     | L_PAREN numeric_expression R_PAREN
     ;
 
@@ -186,7 +192,6 @@ relational_operator
     ;
 
 has_item : character_name HAS NOT? item_number? item_name ;
-    item_number : integer ;
     
 knows_spell : character_name KNOWS NOT? spell_name ;
 
@@ -214,6 +219,7 @@ CLEAR : 'clear' ;
 DESC: 'desc' ;
 DESTROY : 'destroy' ;
 ELSE : 'else' ;
+END : 'end' ;
 ENDIF : 'endif' ;
 FAIL : 'fail' ;
 FORBID : 'forbid' ;

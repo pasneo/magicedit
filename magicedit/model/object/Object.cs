@@ -134,6 +134,11 @@ namespace magicedit
             AvailableActions.Remove(actionName);
         }
 
+        public void ClearActions()
+        {
+            AvailableActions.Clear();
+        }
+
         public void SetAttribute(string attributeName)
         {
             foreach(ObjectAttribute attr in Attributes)

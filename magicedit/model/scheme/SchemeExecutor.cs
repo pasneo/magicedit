@@ -26,6 +26,8 @@ namespace magicedit
         public static int GlobalCommandIndex { get; private set; }  //command index for exception creation
         public int CommandIndex { get; private set; }           //no. of current command
         private bool CommandIndexChanged;   //Indicates wether a jump instruction changed current cmd index
+
+        private bool ExecutionEnded = false;
         private bool ExecutionFailed = false;
 
         private Dictionary<string, ObjectVariable> Registers = new Dictionary<string, ObjectVariable>();
@@ -46,6 +48,7 @@ namespace magicedit
             return new SchemeExecutionException(GlobalCommandIndex, message);
         }
 
+        //Executes the contained function. Returns TRUE if actions is successful (and thus action points must be removed from actor)
         public bool Execute()
         {
             CommandIndex = 0;
@@ -57,7 +60,7 @@ namespace magicedit
                 GlobalCommandIndex = CommandIndex;
                 Commands[CommandIndex].Execute(this);
 
-                if (ExecutionFailed) return false;
+                if (ExecutionEnded) return !ExecutionFailed;
 
                 //If command index was NOT changed by a jump instruction, we go to the next instruction
                 if (!CommandIndexChanged)
@@ -72,7 +75,13 @@ namespace magicedit
 
         public void Fail()
         {
+            ExecutionEnded = true;
             ExecutionFailed = true;
+        }
+
+        public void End()
+        {
+            ExecutionEnded = true;
         }
 
         public void Jump(int index)

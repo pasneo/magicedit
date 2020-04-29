@@ -6,19 +6,17 @@ using System.Threading.Tasks;
 
 namespace magicedit
 {
-    public class CommandJumpIfFalse : ISchemeCommand
+    public class CommandJumpIfFalse : CommandJumpBase
     {
 
         string value;
-        int line;
 
-        public CommandJumpIfFalse(string value, int line)
+        public CommandJumpIfFalse(string value, int line) : base(line)
         {
             this.value = value;
-            this.line = line;
         }
 
-        public void Execute(SchemeExecutor executor)
+        protected override bool Evaluate(SchemeExecutor executor)
         {
             ObjectVariable variable = executor.FindValueByString(value);
 
@@ -26,11 +24,10 @@ namespace magicedit
 
             bool value_bool = (bool)variable.Value;
 
-            if (!value_bool)
-                executor.Jump(line);
+            return !value_bool;
         }
 
-        public string GetAsString()
+        public override string GetAsString()
         {
             return $"JF ( {value}, {line} )";
         }

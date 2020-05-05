@@ -25,6 +25,7 @@ namespace magicedit
             public Config Config { get; set; }
             public CompiledScheme CompiledScheme { get; set; } = new CompiledScheme();
 
+            private SchemeFunction bodyFunction;
             private SchemeFunction currentFunc;
 
 
@@ -35,6 +36,11 @@ namespace magicedit
                 Scheme = scheme;
                 Config = config;
                 Scheme.CompiledScheme = CompiledScheme;
+
+                bodyFunction = new SchemeFunction("_body");
+                CompiledScheme.SetBody(bodyFunction);
+
+                currentFunc = bodyFunction;
             }
 
             private ObjectVariable CreateVariableFromContext(scheme_langParser.Variable_definitionContext context)
@@ -43,35 +49,7 @@ namespace magicedit
                 string name = context.variable_name().GetText();
                 object value = null;
 
-                if (context.expression() != null)
-                {
-                    value = EvaluateExpression(context.expression());
-                }
-
                 return new ObjectVariable(type, name, value);
-            }
-
-            private int EvaluateNumericExpression(scheme_langParser.Numeric_expressionContext expr)
-            {
-                return 0;   //TODO
-            }
-
-            private object EvaluateExpression(scheme_langParser.ExpressionContext expression)
-            {
-                //TODO: evaluate expression's value
-                if (expression.string_const() != null)
-                {
-
-                }
-                else if (expression.logical_expression() != null)
-                {
-
-                }
-                else if (expression.numeric_expression() != null)
-                {
-                    return EvaluateNumericExpression(expression.numeric_expression());
-                }
-                return null;
             }
 
             /* Scheme building */
@@ -91,6 +69,11 @@ namespace magicedit
                 var variable_definition = context.variable_definition();
                 ObjectVariable variable = CreateVariableFromContext(variable_definition);
                 CompiledScheme.AddVariable(variable);
+
+                CommandSetVariable cmd = new CommandSetVariable(variable_definition.variable_name().GetText(), GetRegName(0));
+                currentFunc.AddCommand(cmd);
+                SetNewExpression(1);
+
                 return base.VisitBody_variable_definition(context);
             }
 
@@ -162,6 +145,22 @@ namespace magicedit
 
             public override object VisitCmd_create_var([NotNull] scheme_langParser.Cmd_create_varContext context)
             {
+                
+                var var_def = context.variable_definition();
+
+                string var_type = var_def.variable_type().GetText();
+                string var_name = var_def.variable_name().GetText();
+
+                CommandCreateVariable create_cmd = new CommandCreateVariable(var_type, var_name);
+                currentFunc.AddCommand(create_cmd);
+
+                if (var_def.EQUALS() != null)
+                {
+                    CommandSetVariable cmd = new CommandSetVariable(var_name, GetRegName(0));
+                    currentFunc.AddCommand(cmd);
+                    SetNewExpression(1);
+                }
+
                 return base.VisitCmd_create_var(context);
             }
 
@@ -410,7 +409,23 @@ namespace magicedit
                 for(int i = paramNum - 1; i >= 0; --i)
                     param_regs.Add(i);
                 expression_index = currentFunc.GetCommandCount() - 1;
+                if (expression_index < 0) expression_index = 0;
             }
+
+            /* String const expression */
+
+            public override object VisitString_const_expr([NotNull] scheme_langParser.String_const_exprContext context)
+            {
+
+                int result_reg = PopLastParamReg();
+
+                CommandSetVariable cmd = new CommandSetVariable(GetRegName(result_reg), context.string_const().GetText());
+                currentFunc.AddCommand(cmd, expression_index);
+
+                return base.VisitString_const_expr(context);
+            }
+
+            /* Numeric expressions */
 
             public override object VisitComplex_numeric_expr([NotNull] scheme_langParser.Complex_numeric_exprContext context)
             {
@@ -456,6 +471,17 @@ namespace magicedit
                 currentFunc.AddCommand(cmd, expression_index);
 
                 return base.VisitComplex_multiplying_expr(context);
+            }
+
+            public override object VisitInverted_atom([NotNull] scheme_langParser.Inverted_atomContext context)
+            {
+
+                int param = GetLastParamReg();
+
+                CommandSubtract cmd = new CommandSubtract("0", GetRegName(param), GetRegName(param));
+                currentFunc.AddCommand(cmd, expression_index);
+
+                return base.VisitInverted_atom(context);
             }
 
             public override object VisitInteger_expr([NotNull] scheme_langParser.Integer_exprContext context)
@@ -505,6 +531,148 @@ namespace magicedit
                 currentFunc.AddCommand(cmd, expression_index);
 
                 return base.VisitObject_atom(context);
+            }
+
+            /* Logical expressions */
+
+            public override object VisitComplex_logical_expr([NotNull] scheme_langParser.Complex_logical_exprContext context)
+            {
+
+                //add OR-expression
+
+                int param2 = GetFirstFreeReg();
+                int param1 = PopLastParamReg();
+                PushParamRegs(param2, param1);
+
+                CommandOr cmd = new CommandOr(GetRegName(param1), GetRegName(param2), GetRegName(param1));
+                currentFunc.AddCommand(cmd, expression_index);
+
+                return base.VisitComplex_logical_expr(context);
+            }
+
+            public override object VisitComplex_and_expr([NotNull] scheme_langParser.Complex_and_exprContext context)
+            {
+
+                //add AND-expression
+
+                int param2 = GetFirstFreeReg();
+                int param1 = PopLastParamReg();
+                PushParamRegs(param2, param1);
+
+                CommandAnd cmd = new CommandAnd(GetRegName(param1), GetRegName(param2), GetRegName(param1));
+                currentFunc.AddCommand(cmd, expression_index);
+
+                return base.VisitComplex_and_expr(context);
+            }
+
+            public override object VisitInverted_logical_atom([NotNull] scheme_langParser.Inverted_logical_atomContext context)
+            {
+
+                int param = GetLastParamReg();
+
+                CommandNot cmd = new CommandNot(GetRegName(param), GetRegName(param));
+                currentFunc.AddCommand(cmd, expression_index);
+
+                return base.VisitInverted_logical_atom(context);
+            }
+
+            public override object VisitLogical_const_expr([NotNull] scheme_langParser.Logical_const_exprContext context)
+            {
+
+                int param = PopLastParamReg();
+
+                CommandSetVariable cmd = new CommandSetVariable(GetRegName(param), context.logical_const().GetText());
+                currentFunc.AddCommand(cmd, expression_index);
+
+                return base.VisitLogical_const_expr(context);
+            }
+
+            public override object VisitHas_item([NotNull] scheme_langParser.Has_itemContext context)
+            {
+
+                int param = PopLastParamReg();
+
+                string character_name = context.character_name().GetText();
+                string item_name = context.item_name().GetText();
+                string number = "1";
+
+                if (context.item_number() != null)
+                {
+                    int reg = GetFirstFreeReg();
+                    PushParamRegs(reg);
+                    number = GetRegName(reg);
+                }
+
+                if (context.NOT() != null)
+                {
+                    currentFunc.AddCommand(new CommandNot(GetRegName(param), GetRegName(param)), expression_index);
+                }
+
+                CommandOwns cmd = new CommandOwns(character_name, number, item_name, GetRegName(param));
+                currentFunc.AddCommand(cmd, expression_index);
+
+                return base.VisitHas_item(context);
+            }
+
+            public override object VisitKnows_spell([NotNull] scheme_langParser.Knows_spellContext context)
+            {
+
+                int param = PopLastParamReg();
+
+                string character_name = context.character_name().GetText();
+                string spell_name = context.spell_name().GetText();
+
+                if (context.NOT() != null)
+                {
+                    currentFunc.AddCommand(new CommandNot(GetRegName(param), GetRegName(param)), expression_index);
+                }
+
+                CommandKnows cmd = new CommandKnows(character_name, spell_name, GetRegName(param));
+                currentFunc.AddCommand(cmd, expression_index);
+
+                return base.VisitKnows_spell(context);
+            }
+
+            public override object VisitIs([NotNull] scheme_langParser.IsContext context)
+            {
+
+                int param = GetLastParamReg();
+
+                CommandIs cmd = new CommandIs(GetRegName(param), context.identifier().GetText(), GetRegName(param));
+                currentFunc.AddCommand(cmd, expression_index);
+
+                return base.VisitIs(context);
+            }
+
+            public override object VisitComparison([NotNull] scheme_langParser.ComparisonContext context)
+            {
+
+                int param2 = GetFirstFreeReg();
+                int param1 = PopLastParamReg();
+                PushParamRegs(param2, param1);
+
+                if (context.relational_operator().EQUALS() != null)
+                {
+                    currentFunc.AddCommand(new CommandEquals(GetRegName(param1), GetRegName(param2), GetRegName(param1)), expression_index);
+                }
+                else if (context.relational_operator().GREATER() != null)
+                {
+                    currentFunc.AddCommand(new CommandCmp(GetRegName(param1), ">", GetRegName(param2), GetRegName(param1)), expression_index);
+                }
+                else if (context.relational_operator().GREATER_EQUALS() != null)
+                {
+                    currentFunc.AddCommand(new CommandCmp(GetRegName(param1), ">=", GetRegName(param2), GetRegName(param1)), expression_index);
+                }
+                else if (context.relational_operator().LOWER() != null)
+                {
+                    currentFunc.AddCommand(new CommandCmp(GetRegName(param1), "<", GetRegName(param2), GetRegName(param1)), expression_index);
+                }
+                else if (context.relational_operator().LOWER_EQUALS() != null)
+                {
+                    currentFunc.AddCommand(new CommandCmp(GetRegName(param1), "<=", GetRegName(param2), GetRegName(param1)), expression_index);
+                }
+
+                return base.VisitComparison(context);
             }
 
         }

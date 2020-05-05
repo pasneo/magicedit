@@ -56,15 +56,15 @@ namespace magicedit
             }
         }
 
-        public void Construct(Object @object, List<ObjectVariable> parameters)
+        public void Construct(Object @object, List<ObjectVariable> parameters, Game game)
         {
             //construct object based on this scheme
-            CompiledScheme.Construct(@object, parameters);
+            CompiledScheme.Construct(@object, parameters, game);
 
             //call parents
             foreach (var parent in Parents)
             {
-                parent.Construct(@object, parameters);
+                parent.Construct(@object, parameters, game);
             }
 
         }

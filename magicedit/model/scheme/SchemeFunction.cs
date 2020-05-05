@@ -43,6 +43,18 @@ namespace magicedit
             return Commands.Count;
         }
 
+        public string GetCode(int tab = 0)
+        {
+            string code = "";
+            int line = 0;
+            foreach (var command in Commands)
+            {
+                for (int t = 0; t < tab; ++t) code += "\t";
+                code += $"{line++}\t {command.GetAsString()}\r\n";
+            }
+            return code;
+        }
+
         public void Print()
         {
             int line = 0;

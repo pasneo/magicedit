@@ -71,7 +71,7 @@ namespace magicedit
         public void Create(Game game)
         {
             //Compile scheme and call its constructor
-            Scheme.Construct(this, Parameters);
+            Scheme.Construct(this, Parameters, game);
             Scheme.Init(this, game);
         }
 

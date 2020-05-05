@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommandCmp.cs" />
     <Compile Include="model\scheme\commands\object\CommandClearActions.cs" />
     <Compile Include="model\scheme\commands\CommandEnd.cs" />
     <Compile Include="model\scheme\commands\CommandFail.cs" />

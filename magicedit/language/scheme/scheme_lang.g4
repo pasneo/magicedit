@@ -125,10 +125,14 @@ cmd_remove_spell : REMOVE spell_name FROM character_name ;
 */
 
 expression
-    : string_const
+    : string_const_expr
     | numeric_expression
     | logical_expression
     ;
+
+/* String const expression */
+
+string_const_expr : string_const ;
 
 /* Numeric expressions */
 
@@ -161,15 +165,15 @@ variable_expr
 
 /* Logical expressions */
 
-logical_expression : and_expression (OR and_expression)* ;
+logical_expression : and_expression | complex_logical_expr ;
+	complex_logical_expr : and_expression OR logical_expression ;
 
-and_expression
-    : logical_atom (AND logical_atom)* ;
+and_expression : logical_atom | complex_and_expr ;
+	complex_and_expr : logical_atom AND and_expression ;
 
 logical_atom
     : inverted_logical_atom
-    | logical_const
-    | logical_variable
+    | logical_value
     | comparison
     | has_item
     | knows_spell
@@ -180,6 +184,13 @@ logical_atom
 inverted_logical_atom : NOT logical_atom ;
 
 logical_variable : identifier ;
+
+logical_value
+	: logical_const_expr
+	| variable_expr
+	;
+
+logical_const_expr : logical_const ;
 
 comparison : numeric_expression relational_operator numeric_expression ;
 

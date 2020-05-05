@@ -26,9 +26,10 @@ namespace magicedit
 
             SchemeLang.Compile(scheme, config);
 
-            scheme.CompiledScheme.GetFunctionByName("init").Print();
+            string code = scheme.CompiledScheme.GetFullCode();
+            File.WriteAllText("output.txt", code);
 
-            Console.ReadKey();
+            //Console.ReadKey();
 
         }
 

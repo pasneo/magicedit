@@ -42,7 +42,7 @@ namespace magicedit
 
         public string GetAsString()
         {
-            return $"HAS ( {objectName}, {numberName}, {itemName} )";
+            return $"HAS ( {objectName}, {numberName}, {itemName}, {targetName} )";
         }
 
     }

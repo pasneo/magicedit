@@ -9,7 +9,7 @@ namespace magicedit
     public class SchemeFunction
     {
         public string Name { get; set; }
-        private List<ISchemeCommand> Commands = new List<ISchemeCommand>();
+        public List<ISchemeCommand> Commands = new List<ISchemeCommand>();
         public int ActionPoints { get; set; } = 0;
 
         /* *** */

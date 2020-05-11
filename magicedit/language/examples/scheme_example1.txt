@@ -1,24 +1,16 @@
 ﻿scheme MyScheme : ParentScheme {
 
-	param number str
+	init {
 
-	action Do (2) {
+		x = 10 + 3
 
-		number x = str + 1
-
-		if (x > base_str of base_ch)
-			add app_cnt of actor + 2 apple to actor
-			set owner of actor
+		if (x > 5)
+			x = x + 1
 		else
-			if (x > low_str of base_ch and x < base_str of base_ch - 1)
-				add app_cnt of actor + n of base_ch apple to actor
-				app_cnt of actor -= 1
-			else
-				add app_cnt of actor apple to actor
-				remove 2 pear from actor
-			endif
-			app_cnt of actor -= 1
+			x = x - 1
 		endif
+
+		x = x + y
 
 	}
 

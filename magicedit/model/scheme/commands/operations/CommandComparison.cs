@@ -32,5 +32,26 @@ namespace magicedit
         protected abstract bool GetResult(ObjectVariable variable1, ObjectVariable variable2);
         public abstract string GetAsString();
 
+        public void ChangeInputs(string current_val, string new_val)
+        {
+            if (value1 == current_val) value1 = new_val;
+            if (value2 == current_val) value2 = new_val;
+        }
+
+        public bool HasOutput(string output_name)
+        {
+            return target == output_name;
+        }
+
+        public void ChangeOutput(string current_val, string new_val)
+        {
+            if (target == current_val) target = new_val;
+        }
+
+        public bool HasInput(string input_name)
+        {
+            return (value1 == input_name) || (value2 == input_name);
+        }
+
     }
 }

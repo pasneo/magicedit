@@ -26,5 +26,29 @@ namespace magicedit
         {
             return "SET ( " + variable + ", " + value + " )";
         }
+
+        public string GetVariableName() { return variable; }
+        public string GetValue() { return value; }
+
+        public void ChangeInputs(string current_val, string new_val)
+        {
+            if (value == current_val) value = new_val;
+        }
+
+        public void ChangeOutput(string current_val, string new_val)
+        {
+            if (variable == current_val) variable = new_val;
+        }
+
+        public bool HasOutput(string output_name)
+        {
+            return variable == output_name;
+        }
+
+        public bool HasInput(string input_name)
+        {
+            return value == input_name;
+        }
+
     }
 }

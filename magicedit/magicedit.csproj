@@ -63,7 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CommandCmp.cs" />
+    <Compile Include="model\scheme\commands\operations\CommandCmp.cs" />
     <Compile Include="model\scheme\commands\object\CommandClearActions.cs" />
     <Compile Include="model\scheme\commands\CommandEnd.cs" />
     <Compile Include="model\scheme\commands\CommandFail.cs" />
@@ -118,6 +118,7 @@
     <Compile Include="model\scheme\SchemeExecutionException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="language\scheme\SchemeLang.cs" />
+    <Compile Include="language\scheme\SchemeLangOptimizer.cs" />
     <Compile Include="windows\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
@@ -173,11 +174,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ADL spec.docx" />
+    <None Include="doc\ADL spec.docx" />
     <Antlr4 Include="language\scheme\scheme_lang.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>magicedit.language.scheme</CustomToolNamespace>
     </Antlr4>
+    <None Include="doc\Optimization.docx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -25,5 +25,23 @@ namespace magicedit
         {
             return $"REPORT ( {messageStringConstName} )";
         }
+
+        public void ChangeInputs(string current_val, string new_val)
+        {
+        }
+
+        public bool HasOutput(string output_name)
+        {
+            return false;
+        }
+
+        public void ChangeOutput(string current_val, string new_val)
+        {
+        }
+
+        public bool HasInput(string input_name)
+        {
+            return false;
+        }
     }
 }

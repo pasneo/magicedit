@@ -38,5 +38,24 @@ namespace magicedit
             return $"KNOWS ( {objectName}, {spellName} )";
         }
 
+        public void ChangeInputs(string current_val, string new_val)
+        {
+        }
+
+        public void ChangeOutput(string current_val, string new_val)
+        {
+            if (targetName == current_val) targetName = new_val;
+        }
+
+        public bool HasOutput(string output_name)
+        {
+            return targetName == output_name;
+        }
+
+        public bool HasInput(string input_name)
+        {
+            return false;
+        }
+
     }
 }

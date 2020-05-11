@@ -25,11 +25,17 @@ namespace magicedit
             scheme.Code = File.ReadAllText("language/examples/scheme_example1.txt");
 
             SchemeLang.Compile(scheme, config);
-
+            
             string code = scheme.CompiledScheme.GetFullCode();
-            File.WriteAllText("output.txt", code);
 
-            //Console.ReadKey();
+            SchemeLangOptimizer.Optimize(scheme.CompiledScheme.GetFunctionByName("init"));
+
+            string optimizedCode = scheme.CompiledScheme.GetFullCode();
+            //File.WriteAllText("output.txt", code);
+
+            Console.WriteLine(code);
+            Console.Write(optimizedCode);
+            Console.ReadKey();
 
         }
 

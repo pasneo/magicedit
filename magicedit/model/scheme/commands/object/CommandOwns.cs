@@ -45,5 +45,25 @@ namespace magicedit
             return $"HAS ( {objectName}, {numberName}, {itemName}, {targetName} )";
         }
 
+        public void ChangeInputs(string current_val, string new_val)
+        {
+            if (numberName == current_val) numberName = new_val;
+        }
+
+        public bool HasOutput(string output_name)
+        {
+            return targetName == output_name;
+        }
+
+        public void ChangeOutput(string current_val, string new_val)
+        {
+            if (targetName == current_val) targetName = new_val;
+        }
+
+        public bool HasInput(string input_name)
+        {
+            return numberName == input_name;
+        }
+
     }
 }

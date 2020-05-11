@@ -99,7 +99,7 @@ namespace magicedit
             LocalVariables.Add(variable);
         }
 
-        private bool IsRegister(string variableName)
+        public static bool IsRegister(string variableName)
         {
             return variableName.Length > 0 && variableName[0] == '_';
         }

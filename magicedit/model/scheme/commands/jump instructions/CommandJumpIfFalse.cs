@@ -29,7 +29,7 @@ namespace magicedit
 
         public override string GetAsString()
         {
-            return $"JF ( {value}, {line} )";
+            return $"JF ( {value}, {Line} )";
         }
 
     }

@@ -76,7 +76,10 @@ cmd_set_var : variable_name EQUALS expression ;
 
 cmd_set_of : property_name OF object EQUALS expression ;
 
-cmd_modify_var : variable_name modif_operator numeric_expression ;
+cmd_modify_var : modif_variable modif_operator numeric_expression ;
+	modif_variable
+		: variable_name
+		| property_name OF object ;
     modif_operator : MOD_ADD | MOD_SUB | MOD_MUL | MOD_DIV ;
     
 cmd_if : IF logical_expression

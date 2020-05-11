@@ -30,5 +30,25 @@ namespace magicedit
         {
             return $"NOT ( {value}, {target} )";
         }
+
+        public void ChangeInputs(string current_val, string new_val)
+        {
+            if (value == current_val) value = new_val;
+        }
+
+        public bool HasOutput(string output_name)
+        {
+            return target == output_name;
+        }
+
+        public void ChangeOutput(string current_val, string new_val)
+        {
+            if (target == current_val) target = new_val;
+        }
+
+        public bool HasInput(string input_name)
+        {
+            return (value == input_name);
+        }
     }
 }

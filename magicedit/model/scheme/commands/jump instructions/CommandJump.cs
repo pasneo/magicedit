@@ -20,7 +20,7 @@ namespace magicedit
 
         public override string GetAsString()
         {
-            return $"JUMP ( {line} )";
+            return $"JUMP ( {Line} )";
         }
 
     }

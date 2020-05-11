@@ -27,5 +27,24 @@ namespace magicedit
             return "PRINT ( " + valueName + " )";
         }
 
+        public void ChangeInputs(string current_val, string new_val)
+        {
+            if (valueName == current_val) valueName = new_val;
+        }
+
+        public void ChangeOutput(string current_val, string new_val)
+        {
+        }
+
+        public bool HasInput(string input_name)
+        {
+            return valueName == input_name;
+        }
+
+        public bool HasOutput(string output_name)
+        {
+            return false;
+        }
+
     }
 }

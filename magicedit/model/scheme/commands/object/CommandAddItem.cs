@@ -44,5 +44,24 @@ namespace magicedit
         {
             return $"ADD ITEM ( {characterName}, {numberName}, {itemName} )";
         }
+
+        public void ChangeInputs(string current_val, string new_val)
+        {
+            if (numberName == current_val) numberName = new_val;
+        }
+
+        public void ChangeOutput(string current_val, string new_val)
+        {
+        }
+
+        public bool HasOutput(string output_name)
+        {
+            return false;
+        }
+
+        public bool HasInput(string input_name)
+        {
+            return numberName == input_name;
+        }
     }
 }

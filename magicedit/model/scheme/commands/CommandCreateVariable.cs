@@ -40,5 +40,18 @@ namespace magicedit
         {
             return false;
         }
+
+        public string GetVariableName() { return varName; }
+
+        public List<string> GetInputs()
+        {
+            return null;
+        }
+
+        public List<string> GetOutputs()
+        {
+            return new List<string> { varName };
+        }
+
     }
 }

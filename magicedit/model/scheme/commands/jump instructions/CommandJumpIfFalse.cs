@@ -32,5 +32,20 @@ namespace magicedit
             return $"JF ( {value}, {Line} )";
         }
 
+        public override bool HasInput(string input_name)
+        {
+            return value == input_name;
+        }
+
+        public override void ChangeInputs(string current_val, string new_val)
+        {
+            if (value == current_val) value = new_val;
+        }
+
+        public override List<string> GetInputs()
+        {
+            return new List<string> { value };
+        }
+
     }
 }

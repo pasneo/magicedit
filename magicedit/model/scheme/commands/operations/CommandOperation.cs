@@ -59,5 +59,15 @@ namespace magicedit
             return (value1 == input_name) || (value2 == input_name);
         }
 
+        public List<string> GetInputs()
+        {
+            return new List<string> { value1, value2 };
+        }
+
+        public List<string> GetOutputs()
+        {
+            return new List<string> { target };
+        }
+
     }
 }

@@ -73,12 +73,36 @@ namespace magicedit
             }
         }
 
+        //Returns starting position of each basic block in the given function's code
+        private static HashSet<int> GetBlockPositions(SchemeFunction function)
+        {
+            HashSet<int> positions = new HashSet<int>();
+
+            var commands = function.Commands;
+
+            for (int i = 0; i < commands.Count; ++i)
+            {
+                ISchemeCommand cmd = commands[i];
+
+                if (cmd is CommandJumpBase)
+                {
+                    int line = ((CommandJumpBase)cmd).Line;
+                    positions.Add(line);
+                    positions.Add(i + 1);
+                }
+
+            }
+
+            return positions;
+
+        }
+
         public static void SolveSimpleValueRegs(SchemeFunction function)
         {
 
             //We iterate commands
             //If we find a SET(<reg>, <simple value>) command, we
-            //    //TODO: remove this SET command
+            //    //remove this SET command
             //    //Iterate over the subsequent commands in the base block
             //    //If we find any command with input <reg> we change it to <simple value>
             //    //If we find any command with output <reg> we stop and goto 1. (continuing from the SET command we found)
@@ -113,10 +137,80 @@ namespace magicedit
 
         }
 
+        public static void SolveDeadCode(SchemeFunction function)
+        {
+
+            //For each command C:
+            //. If C uses local variable X that is in V, as input, we remove X from V and the corresponding line from L
+            //. If C has local variable output X that is in V, then we remove the line of code that is connected to X (found in L)
+            //. If C has local variable output, we store the output variable's name in array V, and the code line in L
+            //. If we reach new basic block, we clear V and L
+
+            bool changed = true;
+            while (changed)
+            {
+                changed = false;
+
+                HashSet<int> blocks = GetBlockPositions(function);
+
+                var commands = function.Commands;
+                HashSet<int> removableIndexes = new HashSet<int>();
+                
+                Dictionary<string, int> lastSetLines = new Dictionary<string, int>();
+
+                for (int i = 0; i < commands.Count; ++i)
+                {
+
+                    if (blocks.Contains(i)) lastSetLines.Clear();
+
+                    ISchemeCommand cmd = commands[i];
+
+                    if (cmd is CommandCreateVariable) continue; //We don't want to remove CREATE commands
+
+                    List<string> inputs = cmd.GetInputs();
+                    List<string> outputs = cmd.GetOutputs();
+
+                    if (inputs != null)
+                    {
+                        foreach(string input in inputs)
+                        {
+                            if (SchemeExecutor.IsVariable(input))
+                                lastSetLines.Remove(input);
+                        }
+                    }
+
+                    if (outputs != null)
+                    {
+                        foreach (string output in outputs)
+                        {
+                            if (SchemeExecutor.IsVariable(output))
+                            {
+                                if (lastSetLines.ContainsKey(output))
+                                {
+                                    removableIndexes.Add(lastSetLines[output]);
+                                }
+                                lastSetLines[output] = i;
+                            }
+                        }
+                    }
+
+                }
+
+                if (removableIndexes.Count > 0)
+                {
+                    changed = true;
+                    RemoveCommandsAt(function, removableIndexes);
+                }
+
+            }
+
+        }
+
         public static void Optimize(SchemeFunction function)
         {
             SolveDoubleJumps(function);
             SolveSimpleValueRegs(function);
+            SolveDeadCode(function);
         }
 
     }

@@ -28,7 +28,7 @@ namespace magicedit
             
             string code = scheme.CompiledScheme.GetFullCode();
 
-            SchemeLangOptimizer.Optimize(scheme.CompiledScheme.GetFunctionByName("init"));
+            SchemeLangOptimizer.Optimize(scheme.CompiledScheme.GetFunctionByName("MyAction"));
 
             string optimizedCode = scheme.CompiledScheme.GetFullCode();
             //File.WriteAllText("output.txt", code);

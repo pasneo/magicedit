@@ -1,17 +1,12 @@
-﻿scheme MyScheme : ParentScheme {
+﻿scheme A {
+	
+	number x
 
-	init {
-
-		x = 10 + 3
-
-		if (x > 5)
-			x = x + 1
-		else
-			x = x - 1
-		endif
-
-		x = x + y
+	action MyAction (2) {
+		
+			number y = x + 5
 
 	}
 
 }
+

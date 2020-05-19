@@ -33,5 +33,8 @@ namespace magicedit
         bool HasOutput(string output_name);
         bool HasInput(string input_name);
 
+        List<string> GetInputs();
+        List<string> GetOutputs();
+
     }
 }

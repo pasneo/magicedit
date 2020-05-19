@@ -63,5 +63,15 @@ namespace magicedit
         {
             return numberName == input_name;
         }
+
+        public List<string> GetInputs()
+        {
+            return new List<string> { numberName };
+        }
+
+        public List<string> GetOutputs()
+        {
+            return null;
+        }
     }
 }

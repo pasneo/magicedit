@@ -33,6 +33,8 @@ namespace magicedit
         private Dictionary<string, ObjectVariable> Registers = new Dictionary<string, ObjectVariable>();
         private List<ObjectVariable> LocalVariables = new List<ObjectVariable>();
 
+        public static readonly string[] ConstNames = { "actor", "me", "true", "false" };
+
         /* *** */
 
         public SchemeExecutor(Object @object, Object actor, List<ISchemeCommand> commands, Game game)
@@ -102,6 +104,18 @@ namespace magicedit
         public static bool IsRegister(string variableName)
         {
             return variableName.Length > 0 && variableName[0] == '_';
+        }
+
+        public static bool IsConst(string valueName)
+        {
+            return (ConstNames.Contains(valueName.ToLower())) ;
+        }
+
+        public static bool IsVariable(string valueName)
+        {
+            if (valueName == null || valueName.Length == 0 || valueName[0] == '$' || Char.IsNumber(valueName[0])) return false;
+            if (IsConst(valueName)) return false;
+            return true;
         }
 
         public ObjectVariable GetVariableByName(string name)

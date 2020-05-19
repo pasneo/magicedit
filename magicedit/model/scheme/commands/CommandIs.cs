@@ -72,5 +72,15 @@ namespace magicedit
             return target == output_name;
         }
 
+        public List<string> GetInputs()
+        {
+            return new List<string> { objectName };
+        }
+
+        public List<string> GetOutputs()
+        {
+            return new List<string> { target };
+        }
+
     }
 }

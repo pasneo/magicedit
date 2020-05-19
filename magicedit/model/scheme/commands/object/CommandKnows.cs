@@ -40,6 +40,7 @@ namespace magicedit
 
         public void ChangeInputs(string current_val, string new_val)
         {
+            if (objectName == current_val) objectName = new_val;
         }
 
         public void ChangeOutput(string current_val, string new_val)
@@ -54,7 +55,17 @@ namespace magicedit
 
         public bool HasInput(string input_name)
         {
-            return false;
+            return objectName == input_name;
+        }
+
+        public List<string> GetInputs()
+        {
+            return new List<string> { objectName };
+        }
+
+        public List<string> GetOutputs()
+        {
+            return new List<string> { targetName };
         }
 
     }

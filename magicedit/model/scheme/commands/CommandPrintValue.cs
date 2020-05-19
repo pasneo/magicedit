@@ -45,6 +45,16 @@ namespace magicedit
         {
             return false;
         }
+        
+        public List<string> GetInputs()
+        {
+            return new List<string> { valueName };
+        }
+
+        public List<string> GetOutputs()
+        {
+            return null;
+        }
 
     }
 }

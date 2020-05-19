@@ -140,6 +140,7 @@ namespace magicedit
 
             public override object VisitCmd_create_classvar([NotNull] scheme_langParser.Cmd_create_classvarContext context)
             {
+                //TODO
                 return base.VisitCmd_create_classvar(context);
             }
 

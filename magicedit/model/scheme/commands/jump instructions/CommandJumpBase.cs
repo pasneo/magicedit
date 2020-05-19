@@ -31,22 +31,32 @@ namespace magicedit
 
         public abstract string GetAsString();
 
-        public void ChangeInputs(string current_val, string new_val)
+        public virtual void ChangeInputs(string current_val, string new_val)
         {
         }
 
-        public void ChangeOutput(string current_val, string new_val)
+        public virtual void ChangeOutput(string current_val, string new_val)
         {
         }
 
-        public bool HasOutput(string output_name)
+        public virtual bool HasOutput(string output_name)
         {
             return false;
         }
 
-        public bool HasInput(string input_name)
+        public virtual bool HasInput(string input_name)
         {
             return false;
+        }
+
+        public virtual List<string> GetInputs()
+        {
+            return null;
+        }
+
+        public virtual List<string> GetOutputs()
+        {
+            return null;
         }
 
     }

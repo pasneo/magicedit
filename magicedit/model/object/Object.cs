@@ -46,10 +46,17 @@ namespace magicedit
             Name = name;
         }
 
-        public Object Copy()
+        public virtual Object Copy()
         {
             Object copy = new Object();
 
+            CopyTo(copy);
+
+            return copy;
+        }
+
+        public virtual void CopyTo(Object copy)
+        {
             copy.Id = Id;
             copy.Name = Name;
             copy.ShownName = ShownName;
@@ -64,8 +71,6 @@ namespace magicedit
             foreach (ObjectVariable variable in Variables) copy.Variables.Add(variable.Copy());
             foreach (ObjectAttribute attr in Attributes) copy.Attributes.Add(attr);
             foreach (string action in AvailableActions) copy.AvailableActions.Add(action);
-
-            return copy;
         }
 
         public void Create(Game game)

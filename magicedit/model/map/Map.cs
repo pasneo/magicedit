@@ -38,6 +38,7 @@ namespace magicedit
         //Collects every MapObject from the given list, and stores them in Objects list
         public void RecollectMapObjects(List<Object> objects)
         {
+            Objects.Clear();
             foreach(Object obj in objects)
             {
                 if (obj is MapObject) Objects.Add((MapObject)obj);

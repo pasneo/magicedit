@@ -14,8 +14,8 @@ namespace magicedit
         {
 
             Program program = new Program();
-            //program.GameTest();
-            
+            program.GameTest();
+            /*
             Config config = new Config();
 
             Scheme parentScheme = new Scheme("ParentScheme");
@@ -28,13 +28,13 @@ namespace magicedit
             
             string code = scheme.CompiledScheme.GetFullCode();
 
-            SchemeLangOptimizer.Optimize(scheme.CompiledScheme.GetFunctionByName("MyAction"));
+            SchemeLangOptimizer.Optimize(scheme.CompiledScheme.GetFunctionByName("DoStuff"));
 
             string optimizedCode = scheme.CompiledScheme.GetFullCode();
             //File.WriteAllText("output.txt", code);
 
             Console.WriteLine(code);
-            Console.Write(optimizedCode);
+            Console.Write(optimizedCode);*/
             Console.ReadKey();
 
         }
@@ -105,6 +105,9 @@ namespace magicedit
             box.Position = new Position(4, 3);
             box.Variables.Add(new ObjectVariable("logical", "ready", false));   //ready of box = false
 
+            config.AddObject(lever);
+            config.AddObject(box);
+
             map._AddObject(lever);
             map._AddObject(box);
 
@@ -117,8 +120,8 @@ namespace magicedit
 
             //Create game based on config
             Game game = new Game(config);
-            game._AddObject(lever);
-            game._AddObject(box);
+            //game._AddObject(lever);
+            //game._AddObject(box);
 
             //Set up game with some players (eg. 2)
             game.SetupPlayers(2);
@@ -149,7 +152,7 @@ namespace magicedit
             game.DoAction(Game.BasicActions.Movement, Game.MovementParameters.East);
             //'pickup' the box with id 'box'
             game.SelectObject("box");
-            for (int i = 0; i < 20; ++i)
+            for (int i = 0; i < 3; ++i)
                 game.DoAction("pickup");
 
             //... check outcomes

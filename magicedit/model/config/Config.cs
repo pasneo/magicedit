@@ -77,5 +77,10 @@ namespace magicedit
             Schemes.Add(scheme);
         }
 
+        public void AddObject(Object @object)
+        {
+            Objects.Add(@object);
+        }
+
     }
 }

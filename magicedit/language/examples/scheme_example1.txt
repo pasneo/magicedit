@@ -1,10 +1,8 @@
-﻿scheme A {
+﻿scheme Door {
 	
-	number x
-
-	action MyAction (2) {
+	action DoStuff (0) {
 		
-			number y = x + 5
+		logical l = a and (b or x of ch)
 
 	}
 

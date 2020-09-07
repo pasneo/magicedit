@@ -35,6 +35,15 @@ namespace magicedit
                    (position.Y >= 0) && (position.Y < Height);
         }
 
+        //Collects every MapObject from the given list, and stores them in Objects list
+        public void RecollectMapObjects(List<Object> objects)
+        {
+            foreach(Object obj in objects)
+            {
+                if (obj is MapObject) Objects.Add((MapObject)obj);
+            }
+        }
+
         //If the given object is on this map, it is returned as MapObject (else null is returned)
         public MapObject GetMapObject(Object @object)
         {

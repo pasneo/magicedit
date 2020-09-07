@@ -55,6 +55,8 @@ namespace magicedit
                 obj.Create(this);
             }
 
+            Map.RecollectMapObjects(Objects);
+
         }
 
         public void SetupPlayers(int numberOfPlayers)

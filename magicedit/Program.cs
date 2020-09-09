@@ -13,9 +13,9 @@ namespace magicedit
         static void Main(string[] args)
         {
 
-            Program program = new Program();
-            program.GameTest();
-            /*
+            //Program program = new Program();
+            //program.GameTest();
+            
             Config config = new Config();
 
             Scheme parentScheme = new Scheme("ParentScheme");
@@ -34,7 +34,7 @@ namespace magicedit
             //File.WriteAllText("output.txt", code);
 
             Console.WriteLine(code);
-            Console.Write(optimizedCode);*/
+            Console.Write(optimizedCode);
             Console.ReadKey();
 
         }
@@ -46,7 +46,9 @@ namespace magicedit
 
             SchemeFunction use = new SchemeFunction();
             use.Name = "use";
-            use.AddCommand(new CommandSetOf("ready", "box", "true"));
+            use.AddCommand(new CommandOf("ready", "box", "_0"));
+            use.AddCommand(new CommandNot("_0", "_0"));
+            use.AddCommand(new CommandSetOf("ready", "box", "_0"));
             use.AddCommand(new CommandDesc("LEVER_DESC_2"));
 
             leverScheme.CompiledScheme.AddAction(use);
@@ -108,9 +110,6 @@ namespace magicedit
             config.AddObject(lever);
             config.AddObject(box);
 
-            map._AddObject(lever);
-            map._AddObject(box);
-
             //... create schemes for objects
             lever.Scheme = GetLeverScheme();
             box.Scheme = GetBoxScheme();
@@ -120,8 +119,6 @@ namespace magicedit
 
             //Create game based on config
             Game game = new Game(config);
-            //game._AddObject(lever);
-            //game._AddObject(box);
 
             //Set up game with some players (eg. 2)
             game.SetupPlayers(2);
@@ -138,7 +135,7 @@ namespace magicedit
             game.DoAction(Game.BasicActions.Movement, Game.MovementParameters.Norht);
             //'use' the lever with id 'lever'       # this makes it possible to pick up the box
             game.SelectObject("lever");
-            //game.DoAction("use");
+            game.DoAction("use");
 
             Console.WriteLine($"Lever desc: {lever.Description.Content}");
 

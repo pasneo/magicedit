@@ -2,7 +2,8 @@
 	
 	action DoStuff (0) {
 		
-		logical l = a and (b or x of ch)
+		object obj = friend of actor
+		strength of obj = 10
 
 	}
 

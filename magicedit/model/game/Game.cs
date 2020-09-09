@@ -54,8 +54,8 @@ namespace magicedit
             {
                 obj.Create(this);
             }
-
-            Map.RecollectMapObjects(Objects);
+            
+            Map?.RecollectMapObjects(Objects);
 
         }
 

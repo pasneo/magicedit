@@ -232,5 +232,40 @@ namespace Test
             Assert.AreEqual(@object.GetVariableByName("isForbidden", config).Value, false);
 
         }
+
+        [TestMethod]
+        public void TestSetOfMultiLevel()
+        {
+            SchemeFunction f = new SchemeFunction();
+            f.AddCommand(new CommandOf("friend", "Jack", "_0"));        // strength of friend of Jack = 10
+            f.AddCommand(new CommandSetOf("strength", "_0", "10"));
+
+            Object dummy = new Object();
+            dummy.Id = "dummy";
+
+            Object friend = new Object();
+            friend.Scheme = new Scheme("friend_scheme");
+            friend.Variables.Add(new ObjectVariable("number", "strength", "5"));
+
+            MapObject jack = new MapObject();
+            jack.Scheme = new Scheme("jack_scheme");
+            jack.Id = "Jack";
+            jack.Variables.Add(new ObjectVariable("object", "friend", friend));
+
+            Config config = new Config();
+            config.AddScheme(friend.Scheme);
+            config.AddScheme(jack.Scheme);
+
+            Game game = new Game(config);
+            game._AddObject(friend);
+            game._AddObject(jack);
+            game._AddObject(dummy);
+
+            f.Execute(dummy, new Character(), game);
+
+            Assert.AreEqual(10, friend.Variables[0].Value);
+
+        }
+
     }
 }

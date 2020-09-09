@@ -45,7 +45,7 @@ command : cmd_report |
           cmd_create_classvar |
           cmd_set_var |         // a = b
 		  cmd_set_of |
-          cmd_modify_var |      // for += -= *= /=
+          //cmd_modify_var |      // for += -= *= /=
           cmd_if |
           cmd_fail |
 		  cmd_end |
@@ -76,11 +76,11 @@ cmd_set_var : variable_name EQUALS expression ;
 
 cmd_set_of : property_name OF object EQUALS expression ;
 
-cmd_modify_var : modif_variable modif_operator numeric_expression ;
-	modif_variable
-		: variable_name
-		| property_name OF object ;
-    modif_operator : MOD_ADD | MOD_SUB | MOD_MUL | MOD_DIV ;
+//cmd_modify_var : modif_variable modif_operator numeric_expression ;
+	//modif_variable
+	//	: variable_name
+	//	| property_name OF object ;
+    //modif_operator : MOD_ADD | MOD_SUB | MOD_MUL | MOD_DIV ;
     
 cmd_if : IF logical_expression
             function_body
@@ -255,7 +255,7 @@ TEACH : 'teach' ;
 TO : 'to' ;
 
 PLUS: '+' ; MINUS : '-' ; MUL : '*' ; DIV : '/' ;
-MOD_ADD : '+=' ; MOD_SUB : '-=' ; MOD_MUL : '*=' ; MOD_DIV : '/=' ;
+//MOD_ADD : '+=' ; MOD_SUB : '-=' ; MOD_MUL : '*=' ; MOD_DIV : '/=' ;
 EQUALS : '=' ;
 GREATER : '>' ;
 LOWER : '<' ;

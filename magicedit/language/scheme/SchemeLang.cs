@@ -216,13 +216,13 @@ namespace magicedit
                 return base.VisitClear_actions(context);
             }
 
-            public override object VisitCmd_modify_var([NotNull] scheme_langParser.Cmd_modify_varContext context)
-            {
+            //public override object VisitCmd_modify_var([NotNull] scheme_langParser.Cmd_modify_varContext context)
+            //{
 
-                //TODO: create commands like CommandIncrease, CommandDecrease... so we dont have to do magic here
+            //    //TODO: create commands like CommandIncrease, CommandDecrease... so we dont have to do magic here
 
-                return base.VisitCmd_modify_var(context);
-            }
+            //    return base.VisitCmd_modify_var(context);
+            //}
 
             public override object VisitCmd_remove_item([NotNull] scheme_langParser.Cmd_remove_itemContext context)
             {

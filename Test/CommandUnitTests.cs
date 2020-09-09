@@ -234,6 +234,58 @@ namespace Test
         }
 
         [TestMethod]
+        public void TestClassvars()
+        {
+            SchemeFunction f = new SchemeFunction();
+            f.AddCommand(new CommandOf("race", "actor", "ThorinRace"));
+            f.AddCommand(new CommandIs("ThorinRace", "dwarf", "ThorinIsDwarf"));
+            f.AddCommand(new CommandOf("friend", "actor", "_0"));
+            f.AddCommand(new CommandOf("race", "_0", "ThorinsFriendRace"));
+            f.AddCommand(new CommandIs("ThorinsFriendRace", "elf", "ThorinsFriendIsElf"));
+            f.AddCommand(new CommandOf("race", "me", "LegolasRace"));
+            f.AddCommand(new CommandIs("LegolasRace", "elf", "LegolasIsElf"));
+
+            Character Thorin = new Character("Thorin", "Thorin");
+            Object Legolas = new Object("Legolas", "Legolas");
+
+            ClassList classList = new ClassList("races");
+            Class dwarf = new Class("dwarf");
+            Class elf = new Class("elf");
+            classList.AddClass(dwarf);
+            classList.AddClass(elf);
+
+            Thorin.Scheme = new Scheme("thorin_scheme");
+            Thorin.Variables.Add(new ObjectVariable("races", "race", dwarf));       //Thorin is dwarf
+            Thorin.Variables.Add(new ObjectVariable("object", "friend", Legolas));  //Legolas is Thorin's friend
+
+            Legolas.Scheme = new Scheme("legolas_scheme");
+            Legolas.Variables.Add(new ObjectVariable("races", "race", elf));        //Legolas is elf
+
+            Legolas.Variables.Add(new ObjectVariable("logical", "ThorinIsDwarf", false));
+            Legolas.Variables.Add(new ObjectVariable("logical", "ThorinsFriendIsElf", false));
+            Legolas.Variables.Add(new ObjectVariable("logical", "LegolasIsElf", false));
+            Legolas.Variables.Add(new ObjectVariable("races", "ThorinRace", false));
+            Legolas.Variables.Add(new ObjectVariable("races", "ThorinsFriendRace", false));
+            Legolas.Variables.Add(new ObjectVariable("races", "LegolasRace", false));
+
+            Config config = new Config();
+            config.AddClassList(classList);
+
+            Game game = new Game(config);
+
+            f.Execute(Legolas, Thorin, game);
+
+            Assert.AreEqual(true, Legolas.GetVariableByName("ThorinIsDwarf", config).Value);
+            Assert.AreEqual(true, Legolas.GetVariableByName("ThorinsFriendIsElf", config).Value);
+            Assert.AreEqual(true, Legolas.GetVariableByName("LegolasIsElf", config).Value);
+
+            Assert.AreEqual(dwarf, Legolas.GetVariableByName("ThorinRace", config).Value);
+            Assert.AreEqual(elf, Legolas.GetVariableByName("ThorinsFriendRace", config).Value);
+            Assert.AreEqual(elf, Legolas.GetVariableByName("LegolasRace", config).Value);
+
+        }
+
+        [TestMethod]
         public void TestSetOfMultiLevel()
         {
             SchemeFunction f = new SchemeFunction();

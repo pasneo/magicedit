@@ -138,12 +138,6 @@ namespace magicedit
                 return base.VisitCmd_add_item(context);
             }
 
-            public override object VisitCmd_create_classvar([NotNull] scheme_langParser.Cmd_create_classvarContext context)
-            {
-                //TODO
-                return base.VisitCmd_create_classvar(context);
-            }
-
             public override object VisitCmd_create_var([NotNull] scheme_langParser.Cmd_create_varContext context)
             {
                 
@@ -678,6 +672,8 @@ namespace magicedit
 
         }
         
+        /* Compilation */
+
         public static IParseTree GetAST(string code)
         {
             var inputStream = new AntlrInputStream(code);

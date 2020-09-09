@@ -1,9 +1,12 @@
 ﻿scheme Door {
-	
+
+	races race
+
 	action DoStuff (0) {
 		
-		object obj = friend of actor
-		strength of obj = 10
+		if (race = dwarf)
+			number a
+		endif
 
 	}
 

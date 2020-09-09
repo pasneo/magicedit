@@ -23,7 +23,7 @@ body_variable_definition : variable_definition ;
 variable_definition : variable_type variable_name (EQUALS expression)? ;
     variable_type : identifier ;
     variable_name : identifier;
-    
+
 parameter_definition : PARAM variable_type variable_name ;
 
 init_block : INIT L_BRACE function_body end_of_init ;
@@ -42,7 +42,6 @@ command : cmd_report |
           cmd_desc |
           cmd_manage_actions |
           cmd_create_var |
-          cmd_create_classvar |
           cmd_set_var |         // a = b
 		  cmd_set_of |
           //cmd_modify_var |      // for += -= *= /=
@@ -68,9 +67,6 @@ cmd_manage_actions : ACTIONS set_action+ ;
     remove_action : MINUS action_name ;
     
 cmd_create_var : variable_definition ;
-
-cmd_create_classvar : CLASS variable_name FROM classlist_name ;
-    classlist_name : identifier ;
     
 cmd_set_var : variable_name EQUALS expression ;
 

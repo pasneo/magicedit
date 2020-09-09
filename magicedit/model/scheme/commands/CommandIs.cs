@@ -34,14 +34,29 @@ namespace magicedit
              * 1. Check if object's name equals to propertyName
              * 2. Check if object has attribute named propertyName
              */
-
-            if (!executor.CheckTypeCompatibility(VariableTypes.Object, objectVariable.Type)) throw SchemeExecutor.CreateException("Object has to be compatible with 'object'");
-
-            Object @object = (Object)objectVariable.Value;
+            
             bool value = false;
 
-            if (@object.Name == propertyName) value = true;
-            else if (@object.HasAttribute(propertyName)) value = true;
+            //If we check class variable
+            if (executor.Game.Config.IsClassType(objectVariable.Type))
+            {
+                //we search for the required class
+                var c = executor.FindValueByString(propertyName);
+                //then we compare it to the classvar
+                value = objectVariable.Value == c.Value;
+            }
+            else
+            {
+                if (!executor.CheckTypeCompatibility(VariableTypes.Object, objectVariable.Type))
+                {
+                    throw SchemeExecutor.CreateException("Object has to be compatible with 'object'");
+                }
+
+                Object @object = (Object)objectVariable.Value;
+
+                if (@object.Name == propertyName) value = true;
+                else if (@object.HasAttribute(propertyName)) value = true;
+            }
 
             executor.SetVariable(target, new ObjectVariable(VariableTypes.Logical, "", value));
 

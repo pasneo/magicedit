@@ -190,6 +190,7 @@ namespace magicedit
                 return true;
             }
 
+            //if variable is of a scheme type
             Scheme variableScheme = Game.Config.GetSchemeByName(variableType);
 
             if (variableScheme != null)
@@ -207,6 +208,9 @@ namespace magicedit
                 //Check if the two (different) schemes are compatible (ie. variableType is the ancestor of valueType)
                 return valueScheme.HasAncestor(variableType);
             }
+
+            //if variable type is class type (classlist)
+            if (Game.Config.IsClassType(variableType)) return variableType == valueType;
 
             throw CreateException($"Unknown type '{variableType}'");
 
@@ -234,6 +238,13 @@ namespace magicedit
 
             //If s is a string const we return its content as a text variable
             if (s.Length >= 1 && s[0] == '$') return new ObjectVariable("text", "", Game.Config.GetStringConstByName(s));
+
+            //If s is a class variable we return it as class
+            var c = Game.Config.GetClassByName(s);
+            if (c != null)
+            {
+                return new ObjectVariable(c.Item1.Name, "", c.Item2);
+            }
 
             throw CreateException($"Unidentifyable value '{s}'");
         }

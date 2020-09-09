@@ -14,6 +14,12 @@ namespace magicedit
         public List<Item> Items = new List<Item>();
         public HashSet<Spell> Spells = new HashSet<Item>();
 
+        /* *** */
+
+        public Character() { }
+
+        public Character(string id, string name) : base(id, name) { }
+
         public bool CanReachObject(Game game, Object @object)
         {
 

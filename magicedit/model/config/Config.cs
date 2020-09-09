@@ -51,6 +51,17 @@ namespace magicedit
             return false;
         }
 
+        //Searches for given class in all classlists (returns null if not found), return both classlist and class in a tuple
+        public Tuple<ClassList, Class> GetClassByName(string name)
+        {
+            foreach(ClassList classList in ClassLists)
+            {
+                Class @class = classList.GetClassByName(name);
+                if (@class != null) return new Tuple<ClassList, Class>(classList, @class);
+            }
+            return null;
+        }
+
         public Scheme GetSchemeByName(string name)
         {
             foreach(Scheme scheme in Schemes)

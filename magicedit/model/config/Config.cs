@@ -1,32 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace magicedit
 {
+    
     public class Config
     {
 
         public Map Map;
 
         public CharacterConfig CharacterConfig { get; set; } = new CharacterConfig();
-        private ItemSpellConfig ItemConfig { get; set; } = new ItemSpellConfig();
-        private ItemSpellConfig SpellConfig { get; set; } = new ItemSpellConfig();
+        public ItemSpellConfig ItemConfig { get; set; } = new ItemSpellConfig();
+        public ItemSpellConfig SpellConfig { get; set; } = new ItemSpellConfig();
 
         private List<Visual> Visuals = new List<Visual>();
+
+        [JsonProperty]
         private Dictionary<string, Text> StringConsts = new Dictionary<string, Text>();
 
         public List<ClassList> ClassLists = new List<ClassList>();
 
+        [JsonProperty]
         private List<Scheme> Schemes = new List<Scheme>();
 
         //All the predefined objects are stored here (but references to them may exist elsewhere too)
+        [JsonProperty]
         private List<Object> Objects = new List<Object>();
 
         /* *** */
         
+        /* <PERSISTENCE> */
+
+        public static Config Load(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath);
+                return JsonConvert.DeserializeObject<Config>(json);
+            }
+
+            //TODO: after loading, there should be a 'reload' or 'recalculate' phase, in which non-loaded lists and references are set (eg. Map.RecollectMapObjects)
+
+            return null;
+        }
+
+        public void Save(string filePath)
+        {
+            string json = JsonConvert.SerializeObject(
+                this,
+                Formatting.Indented,
+                new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects }  //required for preserving references
+                );
+            File.WriteAllText(filePath, json);
+        }
+
+        /* </PERSISTENCE> */
+
         public List<Object> CopyObjects()
         {
             List<Object> objects = new List<Object>();
@@ -91,6 +125,11 @@ namespace magicedit
         public void AddObject(Object @object)
         {
             Objects.Add(@object);
+        }
+
+        public Object GetObjectById(string id)
+        {
+            return Objects.Where(o => o.Id == id).FirstOrDefault();
         }
 
     }

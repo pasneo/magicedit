@@ -91,6 +91,7 @@ namespace magicedit
             {
                 Player player = new Player(characters[i]);
                 player.Character.Position = Map.GetSpawnerByNo(i);
+                player.Character.EvaluateClassItemModifiers(Config);    //add items to character provided by its class modifiers
                 Players.Add(player);
             }
 

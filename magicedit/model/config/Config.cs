@@ -41,10 +41,10 @@ namespace magicedit
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
-                return JsonConvert.DeserializeObject<Config>(json);
+                Config config = JsonConvert.DeserializeObject<Config>(json);
+                config.AfterLoaded();
+                return config;
             }
-
-            //TODO: after loading, there should be a 'reload' or 'recalculate' phase, in which non-loaded lists and references are set (eg. Map.RecollectMapObjects)
 
             return null;
         }
@@ -57,6 +57,12 @@ namespace magicedit
                 new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects }  //required for preserving references
                 );
             File.WriteAllText(filePath, json);
+        }
+
+        // called after this config has been loaded from file
+        private void AfterLoaded()
+        {
+            Map?.RecollectMapObjects(Objects);
         }
 
         /* </PERSISTENCE> */

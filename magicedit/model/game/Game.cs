@@ -59,6 +59,7 @@ namespace magicedit
 
         }
 
+        //Sets up a game with empty characters (used mainly for test purposes)
         public void SetupPlayers(int numberOfPlayers)
         {
 
@@ -66,11 +67,30 @@ namespace magicedit
 
             Players = new List<Player>();
 
+            //characters are placed on spawn points 0-n
             for(int i=0; i<numberOfPlayers; ++i)
             {
                 Player player = new Player();
                 player.Character.Position = Map.GetSpawnerByNo(i);
-                //TODO: get details of player (character starting abilities, etc.)
+                Players.Add(player);
+            }
+
+        }
+
+        public void SetupPlayers(List<Character> characters)
+        {
+
+            int numberOfPlayers = characters.Count;
+
+            if (numberOfPlayers > Map.GetSpawnerCount()) throw new GameException("Number of players exceeds number of spawn points");
+
+            Players = new List<Player>();
+
+            //characters are placed on spawn points 0-n
+            for (int i = 0; i < numberOfPlayers; ++i)
+            {
+                Player player = new Player(characters[i]);
+                player.Character.Position = Map.GetSpawnerByNo(i);
                 Players.Add(player);
             }
 

@@ -14,5 +14,12 @@ namespace magicedit
 
         /* *** */
 
+        public Player() { }
+
+        public Player(Character character)
+        {
+            Character = character;
+        }
+
     }
 }

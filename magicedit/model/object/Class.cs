@@ -78,6 +78,7 @@ namespace magicedit
     public class ItemModifier : ClassModifier
     {
         public string ItemName { get; set; }
+        public readonly int ItemNumber = 1;
 
         public ItemModifier() { }
         public ItemModifier(string itemName)
@@ -218,6 +219,16 @@ namespace magicedit
         public void AddModifier(ClassModifier modifier)
         {
             Modifiers.Add(modifier);
+        }
+
+        public List<ItemModifier> GetItemModifiers()
+        {
+            List<ItemModifier> itemModifiers = new List<ItemModifier>();
+            foreach (ClassModifier modifier in Modifiers)
+            {
+                if (modifier is ItemModifier) itemModifiers.Add((ItemModifier)modifier);
+            }
+            return itemModifiers;
         }
 
     }

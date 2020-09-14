@@ -91,5 +91,23 @@ namespace magicedit
             Spells.Remove(spell);
         }
 
+        // used to evaluate classes that provide items for characters
+        public void EvaluateClassItemModifiers(Config config)
+        {
+            foreach (ObjectVariable var in Variables)
+            {
+                if (config.IsClassType(var.Type))
+                {
+                    Class @class = (Class)var.Value;
+                    List<ItemModifier> itemModifiers = @class.GetItemModifiers();
+                    foreach(ItemModifier im in itemModifiers)
+                    {
+                        Item item = config.GetItemById(im.ItemName);
+                        AddItem(item, im.ItemNumber);
+                    }
+                }
+            }
+        }
+
     }
 }

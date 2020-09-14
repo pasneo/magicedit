@@ -12,13 +12,29 @@ namespace magicedit
         public string Name { get; set; }
         public Visual Visual { get; set; }
 
-        //Code written in scheme lang. Executes when a character steps on the squre
-        private string StepFunctionCode;
+        //The action in the scheme 'map' that executes when a character steps on the squre (actor = character, object = <null>)
+        public string ActionName;
 
         //Only characters that bear all AllowedAttributes can step on square
-        private List<ObjectAttribute> AllowedAttributes;
+        public List<string> AllowedAttributes = new List<string>();
         //Only characters that do not bear any ForbiddenAttributes can step on square
-        private List<ObjectAttribute> ForbiddenAttributes;
+        public List<string> ForbiddenAttributes = new List<string>();
+
+        /* *** */
+
+        // returns true if given character is allowed to step on this type of square
+        public bool AllowsCharacter(Character character)
+        {
+            foreach(string attr in AllowedAttributes)
+            {
+                if (!character.HasAttribute(attr)) return false;
+            }
+            foreach(string attr in ForbiddenAttributes)
+            {
+                if (character.HasAttribute(attr)) return false;
+            }
+            return true;
+        }
 
     }
 }

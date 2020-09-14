@@ -57,6 +57,7 @@
     <Compile Include="CommandUnitTests.cs" />
     <Compile Include="SchemeLangOptimizerUnitTest.cs" />
     <Compile Include="SerializationTest.cs" />
+    <Compile Include="GameTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

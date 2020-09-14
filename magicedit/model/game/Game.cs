@@ -54,7 +54,8 @@ namespace magicedit
             {
                 obj.Create(this);
             }
-            
+
+            Map?.Scheme?.Compile(config);
             Map?.RecollectMapObjects(Objects);
 
         }
@@ -171,11 +172,22 @@ namespace magicedit
                 else if (actionParameters[0] == MovementParameters.South) newPosition.Y += 1;
                 else if (actionParameters[0] == MovementParameters.West) newPosition.X -= 1;
 
+                // check if new position is within map borders
                 if (!Map.IsPositionWithin(newPosition))
                     throw new GameException("Invalid movement");
 
+                // check square restrictions at new position
+                SquareType squareType = Map.GetSquareTypeAt(newPosition);
+                if (squareType != null)
+                {
+                    if (!squareType.AllowsCharacter(character)) throw new GameException("This character is not allowed to step on this square");
+                }
+
                 character.Position = newPosition;
                 CurrentPlayer.AvailableActionPoints -= Config.CharacterConfig.MovementActionPoints;
+
+                // if character stepped on a square, we may have to call an action
+                Map.CallSquareMethod(squareType, character, this);
 
             }
             else if (actionName == BasicActions.EndTurn)

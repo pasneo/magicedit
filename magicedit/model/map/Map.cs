@@ -12,7 +12,8 @@ namespace magicedit
         public int Width { get; set; }
         public int Height { get; set; }
 
-        private List<Square> Squares;
+        public Scheme Scheme { get; set; } //scheme for map, that contains actions used by Squares (see SquareType)
+        private List<Square> Squares = new List<Square>();
 
         private List<Position> SpawnerPositions = new List<Position>();
 
@@ -20,7 +21,20 @@ namespace magicedit
         private List<MapObject> Objects = new List<MapObject>();
 
         /* *** */
+
+        public Map() { }
+
+        public Map(int width, int height)
+        {
+            Width = width;
+            Height = height;
+        }
         
+        public void AddSquare(Square square)
+        {
+            Squares.Add(square);
+        }
+
         public void AddSpawner(Position position)
         {
             SpawnerPositions.Add(position);
@@ -54,6 +68,29 @@ namespace magicedit
             }
             return null;
         }
+
+        public SquareType GetSquareTypeAt(Position position)
+        {
+            foreach(Square square in Squares)
+            {
+                if (square.Position.Equals(position)) return square.Type;
+            }
+            return null;
+        }
+
+        public void CallSquareMethod(SquareType squareType, Character actor, Game game)
+        {
+            if (Scheme == null || squareType.ActionName == null || squareType.ActionName == "") return;
+
+            SchemeFunction action = Scheme.GetFunctionByName(squareType.ActionName);
+
+            if (action == null) throw new GameException($"No such action in map: {squareType.ActionName}");
+
+            action.Execute(new Object(), actor, game);
+        }
+
+
+
 
         public void _AddObject(MapObject @object) { Objects.Add(@object); }
 

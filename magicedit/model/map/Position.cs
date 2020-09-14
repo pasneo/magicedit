@@ -27,5 +27,17 @@ namespace magicedit
             return Math.Abs(diff.X) + Math.Abs(diff.Y);
         }
 
+        public override bool Equals(object obj)
+        {
+            if ((obj == null) || (!this.GetType().Equals(obj.GetType()))) return false;
+            Position position = (Position)obj;
+            return (X == position.X) && (Y == position.Y);
+        }
+
+        public override int GetHashCode()
+        {
+            return (X << 2) ^ Y;
+        }
+
     }
 }

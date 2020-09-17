@@ -24,13 +24,13 @@ namespace magicedit
         {
             InitializeComponent();
 
-            
+            Project project = new Project();
+            project.SetAsCurrent();
 
-        }
+            Project.Current.Config.Visuals.Add(new Visual("axe", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\axe.png"));
 
-        private void gsColSplitter_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
-        {
-            //tvExplorer.Width = gridExplorerContainer.ActualWidth;
+            ucVisualManager.RefreshList();
+
         }
 
         private void mRun_Click(object sender, RoutedEventArgs e)

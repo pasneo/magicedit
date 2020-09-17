@@ -18,7 +18,8 @@ namespace magicedit
         public ItemSpellConfig ItemConfig { get; set; } = new ItemSpellConfig();
         public ItemSpellConfig SpellConfig { get; set; } = new ItemSpellConfig();
 
-        private List<Visual> Visuals = new List<Visual>();
+        [JsonProperty]
+        public List<Visual> Visuals = new List<Visual>();
 
         [JsonProperty]
         private Dictionary<string, Text> StringConsts = new Dictionary<string, Text>();
@@ -66,6 +67,15 @@ namespace magicedit
         }
 
         /* </PERSISTENCE> */
+
+        public Visual GetVisualById(string id)
+        {
+            foreach(Visual visual in Visuals)
+            {
+                if (visual.ID == id) return visual;
+            }
+            return null;
+        }
 
         public List<Object> CopyObjects()
         {

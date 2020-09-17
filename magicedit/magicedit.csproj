@@ -37,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>magicedit.Program</StartupObject>
+    <StartupObject>magicedit.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr4.Runtime, Version=4.6.0.0, Culture=neutral, PublicKeyToken=09abb75b9ed49849, processorArchitecture=MSIL">
@@ -66,6 +66,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\config\IdGenerator.cs" />
     <Compile Include="model\object\CharacterSettings.cs" />
     <Compile Include="model\scheme\commands\operations\CommandCmp.cs" />
     <Compile Include="model\scheme\commands\object\CommandClearActions.cs" />
@@ -123,6 +124,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="language\scheme\SchemeLang.cs" />
     <Compile Include="language\scheme\SchemeLangOptimizer.cs" />
+    <Compile Include="model\Project.cs" />
+    <Compile Include="UCStringConstManager.xaml.cs">
+      <DependentUpon>UCStringConstManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\UCVisualManager.xaml.cs">
+      <DependentUpon>UCVisualManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="windows\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
@@ -136,6 +144,14 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
+    <Page Include="UCStringConstManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\UCVisualManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="windows\GameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -197,6 +213,9 @@
     <Folder Include="model\scheme\compilation\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\visual_placeholder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="language\examples\scheme_example1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

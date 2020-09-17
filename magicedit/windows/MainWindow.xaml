@@ -40,19 +40,19 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="5" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="100" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="200" />
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <Grid x:Name="gridExplorerContainer" Grid.Column="0">
-                    <TreeView x:Name="tvExplorer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="auto" Height="auto">
+                    <TreeView x:Name="tvExplorer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="auto">
                         <TreeViewItem Header="Resources">
                             <TreeViewItem Header="Visuals">
                             </TreeViewItem>
@@ -62,7 +62,7 @@
                         <TreeViewItem Header="Map">
                             <TreeViewItem Header="Square Types">
                             </TreeViewItem>
-                            <TreeViewItem Header="Squares">
+                            <TreeViewItem Header="Map">
                             </TreeViewItem>
                             <TreeViewItem Header="Objects">
                             </TreeViewItem>
@@ -71,6 +71,8 @@
                             <TreeViewItem Header="Abilities">
                             </TreeViewItem>
                             <TreeViewItem Header="Attributes">
+                            </TreeViewItem>
+                            <TreeViewItem Header="Classes">
                             </TreeViewItem>
                             <TreeViewItem Header="Inventory">
                             </TreeViewItem>
@@ -94,9 +96,9 @@
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Object">
-                            <TreeViewItem Header="Schemes">
-                            </TreeViewItem>
                             <TreeViewItem Header="Objects">
+                            </TreeViewItem>
+                            <TreeViewItem Header="Schemes">
                             </TreeViewItem>
                         </TreeViewItem>
                     </TreeView>
@@ -104,9 +106,18 @@
 
                 <GridSplitter x:Name="gsColSplitter"
                               Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
-                              Width="5" DragDelta="gsColSplitter_DragDelta"></GridSplitter>
+                              Width="5"></GridSplitter>
 
-                <Grid Grid.Column="2" Background="AntiqueWhite">
+                <Grid
+                    Grid.Column="2"
+                    Background="AntiqueWhite"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    >
+                    <local:UCVisualManager x:Name="ucVisualManager"
+                        Margin="0,0,0,0" 
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"></local:UCVisualManager>
                 </Grid>
                 
             </Grid>

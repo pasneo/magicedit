@@ -22,7 +22,8 @@ namespace magicedit
         public List<Visual> Visuals = new List<Visual>();
 
         [JsonProperty]
-        private Dictionary<string, Text> StringConsts = new Dictionary<string, Text>();
+        public Dictionary<string, Text> StringConsts = new Dictionary<string, Text>();
+        //public List<Text> StringConsts = new List<Text>();
 
         public List<ClassList> ClassLists = new List<ClassList>();
 

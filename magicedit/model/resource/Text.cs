@@ -8,6 +8,7 @@ namespace magicedit
 {
     public class Text
     {
+        public string ID { get; set; }
         public string Content { get; set; }
 
         public Text()

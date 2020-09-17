@@ -52,11 +52,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid x:Name="gridExplorerContainer" Grid.Column="0">
-                    <TreeView x:Name="tvExplorer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="auto">
+                    <TreeView x:Name="tvExplorer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="auto" SelectedItemChanged="tvExplorer_SelectedItemChanged">
                         <TreeViewItem Header="Resources">
-                            <TreeViewItem Header="Visuals">
+                            <TreeViewItem x:Name="tviVisuals" Header="Visuals" Tag="">
                             </TreeViewItem>
-                            <TreeViewItem Header="Texts">
+                            <TreeViewItem x:Name="tviTexts" Header="Texts">
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Map">
@@ -109,15 +109,13 @@
                               Width="5"></GridSplitter>
 
                 <Grid
+                    x:Name="gridMainUC"
                     Grid.Column="2"
                     Background="AntiqueWhite"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     >
-                    <local:UCVisualManager x:Name="ucVisualManager"
-                        Margin="0,0,0,0" 
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"></local:UCVisualManager>
+
                 </Grid>
                 
             </Grid>

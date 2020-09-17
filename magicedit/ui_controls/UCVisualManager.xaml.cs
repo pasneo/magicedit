@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,10 +20,9 @@ namespace magicedit
     /// <summary>
     /// Interaction logic for UCVisualManager.xaml
     /// </summary>
-    public partial class UCVisualManager : UserControl
+    public partial class UCVisualManager : MainUserControl
     {
-
-        private List<Visual> Visuals;
+        
         private BitmapFrame VisualPlaceholder;
 
         /* *** */
@@ -31,14 +31,20 @@ namespace magicedit
         {
             InitializeComponent();
 
-            VisualPlaceholder = BitmapFrame.Create(new System.Uri("images/visual_placeholder.png", UriKind.Relative));
+            if (File.Exists("images/visual_placeholder.png"))
+                VisualPlaceholder = BitmapFrame.Create(new System.Uri("images/visual_placeholder.png", UriKind.Relative));
+        }
+
+        public override void Open()
+        {
+            RefreshList();
         }
 
         public void RefreshList()
         {
             listVisuals.Items.Clear();
 
-            Visuals = Project.Current?.Config.Visuals;
+            List<Visual> Visuals = Project.Current?.Config.Visuals;
             if (Visuals == null) return;
 
             foreach (Visual visual in Visuals)

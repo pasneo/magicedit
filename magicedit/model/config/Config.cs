@@ -12,7 +12,7 @@ namespace magicedit
     public class Config
     {
 
-        public Map Map;
+        public Map Map = new Map();
 
         public CharacterConfig CharacterConfig { get; set; } = new CharacterConfig();
         public ItemSpellConfig ItemConfig { get; set; } = new ItemSpellConfig();
@@ -22,8 +22,7 @@ namespace magicedit
         public List<Visual> Visuals = new List<Visual>();
 
         [JsonProperty]
-        public Dictionary<string, Text> StringConsts = new Dictionary<string, Text>();
-        //public List<Text> StringConsts = new List<Text>();
+        public List<Text> StringConsts = new List<Text>();
 
         public List<ClassList> ClassLists = new List<ClassList>();
 
@@ -125,13 +124,13 @@ namespace magicedit
         public Text GetStringConstByName(string name)
         {
             if (name.Length > 0 && name[0] == '$') name = name.Substring(1);
-            if (StringConsts.ContainsKey(name)) return StringConsts[name];
-            return null;
+            return StringConsts.Where(sc => sc.ID == name).FirstOrDefault();
         }
 
         public void AddStringConst(string name, Text text)
         {
-            StringConsts[name] = text;
+            text.ID = name;
+            StringConsts.Add(text);
         }
 
         public void AddScheme(Scheme scheme)

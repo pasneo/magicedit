@@ -31,7 +31,7 @@ namespace magicedit
         {
             listTexts.Items.Clear();
 
-            Dictionary<string, Text> StringConsts = Project.Current?.Config.StringConsts;
+            List<Text> StringConsts = Project.Current?.Config.StringConsts;
             if (StringConsts == null) return;
 
             foreach (var text in StringConsts)
@@ -41,13 +41,13 @@ namespace magicedit
 
         }
 
-        private ListBoxItem AddListBoxItem(KeyValuePair<string, Text> pair)
+        private ListBoxItem AddListBoxItem(Text text)
         {
 
             ListBoxItem listBoxItem = new ListBoxItem();
-            listBoxItem.Tag = pair;
+            listBoxItem.Tag = text;
 
-            listBoxItem.Content = pair.Key;
+            listBoxItem.Content = text.ID;
 
             listTexts.Items.Add(listBoxItem);
 
@@ -71,10 +71,10 @@ namespace magicedit
                 tbTextContent.IsEnabled = true;
                 bDelete.IsEnabled = true;
 
-                KeyValuePair<string, Text> text = (KeyValuePair<string, Text>)((ListBoxItem)listTexts.SelectedItem).Tag;
+                Text text = (Text)((ListBoxItem)listTexts.SelectedItem).Tag;
 
-                tbTextID.Text = text.Key;
-                tbTextContent.Text = text.Value.Content;
+                tbTextID.Text = text.ID;
+                tbTextContent.Text = text.Content;
             }
             else ClearInfo();
         }
@@ -88,11 +88,11 @@ namespace magicedit
         {
             string newTextId = IdGenerator.Generate("text");
             while (Project.Current.Config.GetStringConstByName(newTextId) != null) newTextId = IdGenerator.Generate("text");
-            
-            Project.Current.Config.AddStringConst(newTextId, new Text());
-            var pair = Project.Current.Config.StringConsts.Where(p => p.Key == newTextId).FirstOrDefault();
 
-            var item = AddListBoxItem(pair);
+            Text text = new Text();
+            Project.Current.Config.AddStringConst(newTextId, text);
+
+            var item = AddListBoxItem(text);
 
             listTexts.SelectedItem = item;
         }
@@ -100,18 +100,28 @@ namespace magicedit
         private void tbTextID_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (listTexts.SelectedItem == null || ((ListBoxItem)listTexts.SelectedItem).Tag == null) return;
-            KeyValuePair<string, Text> pair = (KeyValuePair<string, Text>)((ListBoxItem)listTexts.SelectedItem).Tag;
-            //pair.key
+            var item = ((ListBoxItem)listTexts.SelectedItem);
+            Text text = (Text)item.Tag;
+            text.ID = tbTextID.Text;
+            item.Content = tbTextID.Text;
         }
 
         private void tbTextContent_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (listTexts.SelectedItem == null || ((ListBoxItem)listTexts.SelectedItem).Tag == null) return;
+            var item = ((ListBoxItem)listTexts.SelectedItem);
+            Text text = (Text)item.Tag;
+            text.Content = tbTextContent.Text;
         }
 
         private void bDelete_Click(object sender, RoutedEventArgs e)
         {
+            ListBoxItem item = (ListBoxItem)listTexts.SelectedItem;
+            Text text = (Text)item.Tag;
 
+            Project.Current.Config.StringConsts.Remove(text);
+            listTexts.SelectedItem = null;
+            listTexts.Items.Remove(item);
         }
     }
 }

@@ -23,16 +23,11 @@ namespace magicedit
     public partial class UCVisualManager : MainUserControl
     {
         
-        private BitmapFrame VisualPlaceholder;
-
         /* *** */
 
         public UCVisualManager()
         {
             InitializeComponent();
-
-            if (File.Exists("images/visual_placeholder.png"))
-                VisualPlaceholder = BitmapFrame.Create(new System.Uri("images/visual_placeholder.png", UriKind.Relative));
         }
 
         public override void Open()
@@ -84,7 +79,7 @@ namespace magicedit
                 Visual visual = (Visual)((ListBoxItem)listVisuals.SelectedItem).Tag;
 
                 tbVisualID.Text = visual.ID;
-                iVisualImage.Source = (visual.BitmapFrame == null) ? VisualPlaceholder : visual.BitmapFrame;
+                iVisualImage.Source = (visual.BitmapFrame == null) ? DefaultResources.VisualPlaceholder : visual.BitmapFrame;
             }
             else ClearInfo();
         }

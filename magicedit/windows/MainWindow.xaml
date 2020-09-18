@@ -60,7 +60,7 @@
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Map">
-                            <TreeViewItem Header="Square Types">
+                            <TreeViewItem x:Name="tviSquareTypes" Header="Square Types">
                             </TreeViewItem>
                             <TreeViewItem Header="Map">
                             </TreeViewItem>
@@ -68,15 +68,9 @@
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Character">
-                            <TreeViewItem Header="Abilities">
+                            <TreeViewItem x:Name="tviCharacterSettings" Header="Settings">
                             </TreeViewItem>
-                            <TreeViewItem Header="Attributes">
-                            </TreeViewItem>
-                            <TreeViewItem Header="Classes">
-                            </TreeViewItem>
-                            <TreeViewItem Header="Inventory">
-                            </TreeViewItem>
-                            <TreeViewItem Header="Schemes">
+                            <TreeViewItem Header="Scheme">
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Item">
@@ -117,7 +111,7 @@
                     >
 
                 </Grid>
-                
+
             </Grid>
 
             <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center"></GridSplitter>

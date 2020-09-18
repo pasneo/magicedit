@@ -22,6 +22,10 @@ namespace magicedit
 
         /* *** */
 
+        public SquareType() { }
+
+        public SquareType(string name) { Name = name; }
+
         // returns true if given character is allowed to step on this type of square
         public bool AllowsCharacter(Character character)
         {

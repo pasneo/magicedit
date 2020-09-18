@@ -13,6 +13,8 @@ namespace magicedit
         public int Height { get; set; }
 
         public Scheme Scheme { get; set; } //scheme for map, that contains actions used by Squares (see SquareType)
+
+        public List<SquareType> SquareTypes = new List<SquareType>();
         private List<Square> Squares = new List<Square>();
 
         private List<Position> SpawnerPositions = new List<Position>();
@@ -30,6 +32,11 @@ namespace magicedit
             Height = height;
         }
         
+        public SquareType GetSquareTypeByName(string name)
+        {
+            return SquareTypes.Where(sqt => sqt.Name == name).FirstOrDefault();
+        }
+
         public void AddSquare(Square square)
         {
             Squares.Add(square);

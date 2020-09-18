@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="magicedit.UCEVisualSelectorRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:magicedit"
+             mc:Ignorable="d"
+             Cursor="Hand"
+             MouseEnter="this_MouseEnter"
+             MouseLeave="this_MouseLeave">
+    
+    <Grid x:Name="grid" Width="200" Height="50" Background="LightGray">
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Image x:Name="iImage" MaxWidth="90" MaxHeight="190" Margin="5,5,5,5"></Image>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Label x:Name="lID" Content="ID" Margin="5,5,5,5" VerticalContentAlignment="Center"></Label>
+        </Grid>
+        
+    </Grid>
+    
+</UserControl>

@@ -25,16 +25,21 @@ namespace magicedit
 
         public MainWindow()
         {
-            InitializeComponent();
 
             Project project = new Project();
             project.SetAsCurrent();
-
             Project.Current.Config.Visuals.Add(new Visual("axe", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\axe.png"));
+            Project.Current.Config.Visuals.Add(new Visual("sword", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\sword.jpg"));
+            Project.Current.Config.Visuals.Add(new Visual("sword2", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\sword.jpg"));
+            Project.Current.Config.Visuals.Add(new Visual("sword3", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\sword.jpg"));
+
+            InitializeComponent();
 
             tviVisuals.Tag = new UCVisualManager();
             tviTexts.Tag = new UCStringConstManager();
-            
+            tviSquareTypes.Tag = new UCSquareTypeManager();
+            tviCharacterSettings.Tag = new UCCharacterManager();
+
         }
 
         private void mRun_Click(object sender, RoutedEventArgs e)

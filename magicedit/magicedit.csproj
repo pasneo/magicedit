@@ -66,9 +66,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MainUserControl.cs" />
+    <Compile Include="model\resource\DefaultResources.cs" />
+    <Compile Include="ui_controls\main_controls\UCCharacterManager.xaml.cs">
+      <DependentUpon>UCCharacterManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\MainUserControl.cs" />
     <Compile Include="model\config\IdGenerator.cs" />
-    <Compile Include="model\object\CharacterSettings.cs" />
     <Compile Include="model\scheme\commands\operations\CommandCmp.cs" />
     <Compile Include="model\scheme\commands\object\CommandClearActions.cs" />
     <Compile Include="model\scheme\commands\CommandEnd.cs" />
@@ -126,10 +129,19 @@
     <Compile Include="language\scheme\SchemeLang.cs" />
     <Compile Include="language\scheme\SchemeLangOptimizer.cs" />
     <Compile Include="model\Project.cs" />
-    <Compile Include="ui_controls\UCStringConstManager.xaml.cs">
+    <Compile Include="ui_controls\main_controls\UCSquareTypeManager.xaml.cs">
+      <DependentUpon>UCSquareTypeManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\selectors\UCEVisualSelectorRow.xaml.cs">
+      <DependentUpon>UCEVisualSelectorRow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\selectors\UCVisualSelector.xaml.cs">
+      <DependentUpon>UCVisualSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\main_controls\UCStringConstManager.xaml.cs">
       <DependentUpon>UCStringConstManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\UCVisualManager.xaml.cs">
+    <Compile Include="ui_controls\main_controls\UCVisualManager.xaml.cs">
       <DependentUpon>UCVisualManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="windows\GameWindow.xaml.cs">
@@ -145,11 +157,27 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
-    <Page Include="ui_controls\UCStringConstManager.xaml">
+    <Page Include="ui_controls\main_controls\UCCharacterManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\UCVisualManager.xaml">
+    <Page Include="ui_controls\main_controls\UCSquareTypeManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\selectors\UCEVisualSelectorRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\selectors\UCVisualSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\main_controls\UCStringConstManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\main_controls\UCVisualManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

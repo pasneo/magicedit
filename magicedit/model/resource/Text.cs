@@ -21,5 +21,11 @@ namespace magicedit
             Content = content;
         }
 
+        public Text(string id, string content)
+        {
+            ID = id;
+            Content = content;
+        }
+
     }
 }

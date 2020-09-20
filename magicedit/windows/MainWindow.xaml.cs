@@ -21,10 +21,13 @@ namespace magicedit
     public partial class MainWindow : Window
     {
 
+        public static MainWindow Current { get; private set; }
+
         MainUserControl currentMainUC = null;
 
         public MainWindow()
         {
+            Current = this;
 
             Project project = new Project();
             project.SetAsCurrent();
@@ -39,6 +42,7 @@ namespace magicedit
             tviTexts.Tag = new UCStringConstManager();
             tviSquareTypes.Tag = new UCSquareTypeManager();
             tviCharacterSettings.Tag = new UCCharacterManager();
+            tviMap.Tag = new UCMapManager();
 
         }
 

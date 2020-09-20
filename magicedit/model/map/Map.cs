@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,8 @@ namespace magicedit
         private List<Position> SpawnerPositions = new List<Position>();
 
         //References to the objects on the map (these are not stored here)
-        private List<MapObject> Objects = new List<MapObject>();
+        [JsonIgnore]
+        public List<MapObject> Objects = new List<MapObject>();
 
         /* *** */
 

@@ -67,6 +67,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="model\resource\DefaultResources.cs" />
+    <Compile Include="ui_controls\main_controls\UCMapManager.xaml.cs">
+      <DependentUpon>UCMapManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\UCMapEditor.xaml.cs">
+      <DependentUpon>UCMapEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui_controls\main_controls\UCCharacterManager.xaml.cs">
       <DependentUpon>UCCharacterManager.xaml</DependentUpon>
     </Compile>
@@ -157,6 +163,14 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
+    <Page Include="ui_controls\main_controls\UCMapManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\UCMapEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ui_controls\main_controls\UCCharacterManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

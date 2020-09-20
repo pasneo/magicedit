@@ -23,6 +23,15 @@ namespace magicedit
 
         public Visual Visual { get; private set; }
 
+        private bool Hovered { get; set; } = false;
+
+        private bool selected = false;
+        public bool Selected
+        {
+            get { return selected; }
+            set { selected = value; RefreshBackground(); }
+        }
+
         public UCEVisualSelectorRow(Visual visual)
         {
             InitializeComponent();
@@ -33,14 +42,24 @@ namespace magicedit
             lID.Content = visual.ID;
         }
 
+        private void RefreshBackground()
+        {
+            if (Hovered)
+                grid.Background = Brushes.DarkGray;
+            else if (Selected)
+                grid.Background = Brushes.PowderBlue;
+            else
+                grid.Background = Brushes.LightGray;
+        }
+
         private void this_MouseEnter(object sender, MouseEventArgs e)
         {
-            grid.Background = Brushes.DarkGray;
+            Hovered = true;
         }
 
         private void this_MouseLeave(object sender, MouseEventArgs e)
         {
-            grid.Background = Brushes.LightGray;
+            Hovered = false;
         }
     }
 }

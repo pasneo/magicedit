@@ -62,7 +62,7 @@
                         <TreeViewItem Header="Map">
                             <TreeViewItem x:Name="tviSquareTypes" Header="Square Types">
                             </TreeViewItem>
-                            <TreeViewItem Header="Map">
+                            <TreeViewItem x:Name="tviMap" Header="Map">
                             </TreeViewItem>
                             <TreeViewItem Header="Objects">
                             </TreeViewItem>

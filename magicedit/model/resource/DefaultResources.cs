@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace magicedit
@@ -23,6 +24,12 @@ namespace magicedit
                 }
                 return visualPlaceholder;
             }
+        }
+
+        public static BitmapFrame GetVisualImageOrDefault(Visual visual)
+        {
+            if (visual.BitmapFrame != null) return visual.BitmapFrame;
+            return VisualPlaceholder;
         }
 
     }

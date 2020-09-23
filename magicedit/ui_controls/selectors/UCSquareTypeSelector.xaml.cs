@@ -35,8 +35,8 @@ namespace magicedit
             }
         }
 
-        public SquareType SelectedSquareType { get; set; }
-        public UCEVisualSelectorRow SelectedRow { get; set; }
+        public UCEVisualSelectorRow SelectedRow { get; private set; }
+        public SquareType SelectedSquareType { get; private set; }
 
         // subscribe to this event to get notification when a square type had been selected
         public event SquareTypeSelectorOnSquareTypeSelectedDelegate OnSquareTypeSelected;
@@ -70,17 +70,35 @@ namespace magicedit
             }
         }
 
-        public void SelectByTag(object tag)
+        public void SelectBySquareType(SquareType squareType)
         {
+
+            if (SelectedRow != null)
+                SelectedRow.Selected = false;
+            
             foreach(var row_obj in spContainer.Children)
             {
                 var row = (UCEVisualSelectorRow)row_obj;
-                if (row.Tag == tag)
+                if (row.Tag == squareType)
                 {
+                    SelectedRow = row;
+                    SelectedRow.Selected = true;
+                    SelectedSquareType = squareType;
                     row.BringIntoView();
                     return;
                 }
             }
+
+            SelectedRow = null;
+            SelectedSquareType = null;
+        }
+
+        public void DeselectAll()
+        {
+            if (SelectedRow != null)
+                SelectedRow.Selected = false;
+            SelectedRow = null;
+            SelectedSquareType = null;
         }
 
         private void Row_MouseDown(object sender, MouseButtonEventArgs e)

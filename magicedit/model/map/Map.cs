@@ -16,7 +16,8 @@ namespace magicedit
         public Scheme Scheme { get; set; } //scheme for map, that contains actions used by Squares (see SquareType)
 
         public List<SquareType> SquareTypes = new List<SquareType>();
-        private List<Square> Squares = new List<Square>();
+        //private List<Square> Squares = new List<Square>();
+        public Dictionary<Position, SquareType> Squares = new Dictionary<Position, SquareType>();
 
         private List<Position> SpawnerPositions = new List<Position>();
 
@@ -39,9 +40,26 @@ namespace magicedit
             return SquareTypes.Where(sqt => sqt.Name == name).FirstOrDefault();
         }
 
-        public void AddSquare(Square square)
+        public void RemoveSquareTypeAt(Position position)
         {
-            Squares.Add(square);
+            Squares.Remove(position);
+        }
+
+        public void SetSquareTypeAt(Position position, SquareType squareType)
+        {
+            Squares[position] = squareType;
+        }
+
+        public void SetOrRemoveSquareTypeAt(Position position, SquareType squareType)
+        {
+            if (GetSquareTypeAt(position) == squareType) Squares.Remove(position);
+            else Squares[position] = squareType;
+        }
+        
+        public SquareType GetSquareTypeAt(Position position)
+        {
+            if (Squares.ContainsKey(position)) return Squares[position];
+            return null;
         }
 
         public void AddSpawner(Position position)
@@ -74,15 +92,6 @@ namespace magicedit
             foreach(MapObject obj in Objects)
             {
                 if (obj == @object) return obj;
-            }
-            return null;
-        }
-
-        public SquareType GetSquareTypeAt(Position position)
-        {
-            foreach(Square square in Squares)
-            {
-                if (square.Position.Equals(position)) return square.Type;
             }
             return null;
         }

@@ -10,5 +10,14 @@ namespace magicedit
     {
         public SquareType Type { get; set; }
         public Position Position { get; set; }
+
+        public Square() { }
+
+        public Square(SquareType type, Position position)
+        {
+            Type = type;
+            Position = position;
+        }
+
     }
 }

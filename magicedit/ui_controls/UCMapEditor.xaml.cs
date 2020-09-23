@@ -15,6 +15,10 @@ using System.Windows.Shapes;
 
 namespace magicedit
 {
+
+    public delegate void OnMapPositionSelectionChangedDelegate(UCMapEditor mapEditor);
+
+
     /// <summary>
     /// Interaction logic for UCMapEditor.xaml
     /// </summary>
@@ -41,17 +45,20 @@ namespace magicedit
         private double translateX = 0.0;
         private double translateY = 0.0;
 
-        private int hoveredX = -1;
-        private int hoveredY = -1;
+        //private int hoveredX = -1;
+        //private int hoveredY = -1;
 
-        private int selectX = -1;
-        private int selectY = -1;
-        private MapObject selectedMapObject = null;
+        //private int selectX = -1;
+        //private int selectY = -1;
+        //private MapObject selectedMapObject = null;
 
+        public bool Multiselect { get; set; } = false;
 
+        public HashSet<MapObject> SelectedMapObjects = new HashSet<MapObject>();
         public Position HoveredPosition { get; set; }
-        public List<Position> SelectedPositions { get; set; } = new List<Position>();
+        public HashSet<Position> SelectedPositions { get; set; } = new HashSet<Position>();
 
+        public event OnMapPositionSelectionChangedDelegate OnMapPositionSelectionChanged;
 
         private Map Map
         {
@@ -76,7 +83,7 @@ namespace magicedit
         protected double GetWidth() { return cols * CellSize; }
         protected double GetHeight() { return rows * CellSize; }
 
-        protected void Redraw()
+        public void Redraw()
         {
             canvas.Children.Clear();
 
@@ -86,6 +93,15 @@ namespace magicedit
                 image.Width = image.Height = CellSize;
                 image.Margin = new Thickness(TranslateX(mapObject.Position.X * CellSize), TranslateY(mapObject.Position.Y * CellSize), 0.0, 0.0);
                 image.Source = DefaultResources.GetVisualImageOrDefault(mapObject.Visual);
+                canvas.Children.Add(image);
+            }
+
+            foreach (var square in Map.Squares)
+            {
+                Image image = new Image();
+                image.Width = image.Height = CellSize;
+                image.Margin = new Thickness(TranslateX(square.Key.X * CellSize), TranslateY(square.Key.Y * CellSize), 0.0, 0.0);
+                image.Source = DefaultResources.GetVisualImageOrDefault(square.Value.Visual);
                 canvas.Children.Add(image);
             }
 
@@ -109,21 +125,21 @@ namespace magicedit
                 canvas.Children.Add(line);
             }
 
-            if (selectX != -1)
+            foreach (Position selectedPosition in SelectedPositions)
             {
                 Rectangle rect = new Rectangle();
                 rect.Stroke = Brushes.GreenYellow;
                 rect.StrokeThickness = 3.0;
-                rect.Margin = new Thickness(TranslateX(selectX * CellSize) + 4.0, TranslateY(selectY * CellSize) + 4.0, 0.0, 0.0);
+                rect.Margin = new Thickness(TranslateX(selectedPosition.X * CellSize) + 4.0, TranslateY(selectedPosition.Y * CellSize) + 4.0, 0.0, 0.0);
                 rect.Width = rect.Height = CellSize - 8.0;
                 canvas.Children.Add(rect);
             }
 
-            if (hoveredX != -1)
+            if (HoveredPosition != null)
             {
                 Rectangle rect = new Rectangle();
                 rect.Stroke = Brushes.DarkCyan;
-                rect.Margin = new Thickness(TranslateX(hoveredX * CellSize) + 4.0, TranslateY(hoveredY * CellSize) + 4.0, 0.0, 0.0);
+                rect.Margin = new Thickness(TranslateX(HoveredPosition.X * CellSize) + 4.0, TranslateY(HoveredPosition.Y * CellSize) + 4.0, 0.0, 0.0);
                 rect.Width = rect.Height = CellSize - 8.0;
                 canvas.Children.Add(rect);
             }
@@ -133,26 +149,26 @@ namespace magicedit
 
         private void CheckMouseHover(double mX, double mY)
         {
+            //todo: if clicked outside of map, there is an exception somewhere
 
             double tmX = TranslateMouseX(mX);
             double tmY = TranslateMouseY(mY);
 
-            int newHoveredX = -1;
-            int newHoveredY = -1;
+            Position newHoveredPosition = null;
 
             if (tmX > 0 && tmX < GetWidth() && tmY > 0 && tmY < GetHeight())
             {
-                newHoveredX = (int)(tmX / CellSize);
-                newHoveredY = (int)(tmY / CellSize);
+                int newHoveredX = (int)(tmX / CellSize);
+                int newHoveredY = (int)(tmY / CellSize);
+                newHoveredPosition = new Position(newHoveredX, newHoveredY);
             }
 
             bool redraw = false;
 
-            if (newHoveredX != hoveredX || newHoveredY != hoveredY)
+            if (HoveredPosition == null || !HoveredPosition.Equals(newHoveredPosition))
                 redraw = true;
 
-            hoveredX = newHoveredX;
-            hoveredY = newHoveredY;
+            HoveredPosition = newHoveredPosition;
 
             if (redraw) Redraw();
 
@@ -161,21 +177,28 @@ namespace magicedit
         private bool pan = false;
         private double panX, panY;  //Position of mouse's drag point when panning
 
-        public MapObject GetSelectedMapObject()
+        public HashSet<MapObject> GetSelectedMapObjects()
         {
+
+            HashSet<MapObject> selectedMapObjects = new HashSet<MapObject>();
+
             foreach (MapObject mapObject in Map.Objects)
             {
-                if (mapObject.Position.X == selectX && mapObject.Position.Y == selectY) return mapObject;
+                foreach (var selectedPosition in SelectedPositions)
+                {
+                    if (mapObject.Position.Equals(selectedPosition))
+                    {
+                        selectedMapObjects.Add(mapObject);
+                        break;
+                    }
+                }
             }
-            return null;
+            return selectedMapObjects;
         }
 
         private void CheckMapObjectSelection()
         {
-            if (selectX == -1 || selectY == -1)
-                selectedMapObject = null;
-            else
-                selectedMapObject = GetSelectedMapObject();
+            SelectedMapObjects = GetSelectedMapObjects();
         }
 
         private void canvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -190,21 +213,27 @@ namespace magicedit
             }
             else if (e.ChangedButton == MouseButton.Left)
             {
-                selectX = hoveredX;
-                selectY = hoveredY;
 
-                CheckMapObjectSelection();
+                Multiselect = Keyboard.IsKeyDown(Key.LeftCtrl);
 
-                if (selectX != -1)
+                // if an already selected cell is clicked again, deselect it
+                if (HoveredPosition == null)
                 {
-                    //mNewObject.IsEnabled = true;
-                    //if (selectedMapObject != null) mDeleteObject.IsEnabled = true;
-                    //else mDeleteObject.IsEnabled = false;
+                    SelectedPositions.Clear();
+                }
+                else if (SelectedPositions.Where(pos => pos.Equals(HoveredPosition)).Count() > 0)
+                {
+                    SelectedPositions.RemoveWhere(pos => pos.Equals(HoveredPosition));
                 }
                 else
                 {
-                    //mNewObject.IsEnabled = mDeleteObject.IsEnabled = false;
+                    if (!Multiselect) SelectedPositions.Clear();
+                    SelectedPositions.Add(HoveredPosition);
                 }
+
+                CheckMapObjectSelection();
+
+                OnMapPositionSelectionChanged?.Invoke(this);
 
                 Redraw();
                 e.Handled = true;

@@ -28,7 +28,7 @@ namespace magicedit
 
         public static BitmapFrame GetVisualImageOrDefault(Visual visual)
         {
-            if (visual.BitmapFrame != null) return visual.BitmapFrame;
+            if (visual?.BitmapFrame != null) return visual.BitmapFrame;
             return VisualPlaceholder;
         }
 

@@ -73,7 +73,7 @@ namespace magicedit
             if (e.ChangedButton == MouseButton.Left)
             {
                 UCEVisualSelectorRow row = (UCEVisualSelectorRow)sender;
-                SelectedVisual = row.Visual;
+                SelectedVisual = (Visual)row.Tag;
                 OnVisualSelected?.Invoke(SelectedVisual);
             }
         }

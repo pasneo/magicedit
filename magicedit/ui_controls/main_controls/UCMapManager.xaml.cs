@@ -24,5 +24,15 @@ namespace magicedit
         {
             InitializeComponent();
         }
+
+        public override void Open()
+        {
+            squareTypeSelector.RefreshList();
+        }
+
+        private void squareTypeSelector_OnSquareTypeSelected(SquareType selectedSquareType)
+        {
+
+        }
     }
 }

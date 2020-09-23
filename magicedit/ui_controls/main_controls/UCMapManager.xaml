@@ -11,20 +11,23 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" Background="#afafaf">
-            <TextBlock Width="auto" Height="auto" Margin="10,10,85.067,416.151"><Hyperlink>Go to square types</Hyperlink></TextBlock>
+            <TextBlock VerticalAlignment="Top" Margin="5, 5, 0, 0"><Hyperlink>Go to square types</Hyperlink></TextBlock>
+
+            <local:UCSquareTypeSelector x:Name="squareTypeSelector" Margin="5,26,0,0" OnSquareTypeSelected="squareTypeSelector_OnSquareTypeSelected"/>
+
         </Grid>
 
         <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
                            Width="5"/>
 
         <Grid Grid.Column="2">
-            <local:UCMapEditor></local:UCMapEditor>
+            <local:UCMapEditor x:Name="mapEditor"></local:UCMapEditor>
         </Grid>
         
     </Grid>

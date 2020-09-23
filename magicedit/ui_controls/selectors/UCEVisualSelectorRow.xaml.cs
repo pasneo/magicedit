@@ -21,9 +21,14 @@ namespace magicedit
     public partial class UCEVisualSelectorRow : UserControl
     {
 
-        public Visual Visual { get; private set; }
+        //public object Tag { get; set; }
 
-        private bool Hovered { get; set; } = false;
+        private bool hovered = false;
+        public bool Hovered
+        {
+            get { return hovered; }
+            set { hovered = value; RefreshBackground(); }
+        }
 
         private bool selected = false;
         public bool Selected
@@ -34,12 +39,22 @@ namespace magicedit
 
         public UCEVisualSelectorRow(Visual visual)
         {
+            Initialize(visual, visual.ID, visual);
+        }
+
+        public UCEVisualSelectorRow(Visual visual, string id, object tag = null)
+        {
+            Initialize(visual, id, tag);
+        }
+
+        private void Initialize(Visual visual, string id, object tag = null)
+        {
             InitializeComponent();
 
-            Visual = visual;
+            Tag = tag;
 
-            iImage.Source = visual.BitmapFrame;
-            lID.Content = visual.ID;
+            iImage.Source = DefaultResources.GetVisualImageOrDefault(visual);
+            lID.Text = id;
         }
 
         private void RefreshBackground()

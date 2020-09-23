@@ -48,6 +48,11 @@ namespace magicedit
         private int selectY = -1;
         private MapObject selectedMapObject = null;
 
+
+        public Position HoveredPosition { get; set; }
+        public List<Position> SelectedPositions { get; set; } = new List<Position>();
+
+
         private Map Map
         {
             get

@@ -24,19 +24,19 @@ namespace magicedit
     /// </summary>
     public partial class UCMapEditor : UserControl
     {
-        private int rows = 12;
-        private int cols = 12;
+        //private int rows = 12;
+        //private int cols = 12;
         
         public int Rows
         {
-            get { return rows; }
-            set { rows = value; Redraw(); }
+            get { return Map.Height; }
+            set { Map.Height = value; Redraw(); }
         }
         
         public int Cols
         {
-            get { return cols; }
-            set { cols = value; Redraw(); }
+            get { return Map.Width; }
+            set { Map.Width = value; Redraw(); }
         }
 
         private const double DefaultCellSize = 40.0;
@@ -80,8 +80,8 @@ namespace magicedit
         protected double TranslateMouseX(double mX) { return mX - translateX; }
         protected double TranslateMouseY(double mY) { return mY - translateY; }
 
-        protected double GetWidth() { return cols * CellSize; }
-        protected double GetHeight() { return rows * CellSize; }
+        protected double GetWidth() { return Cols * CellSize; }
+        protected double GetHeight() { return Rows * CellSize; }
 
         public void Redraw()
         {
@@ -105,23 +105,23 @@ namespace magicedit
                 canvas.Children.Add(image);
             }
 
-            for (int row = 0; row <= rows; ++row)
+            for (int row = 0; row <= Rows; ++row)
             {
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
                 line.Y1 = line.Y2 = TranslateY(row * CellSize);
                 line.X1 = TranslateX(0);
-                line.X2 = TranslateX(cols * CellSize);
+                line.X2 = TranslateX(Cols * CellSize);
                 canvas.Children.Add(line);
             }
 
-            for (int col = 0; col <= cols; ++col)
+            for (int col = 0; col <= Cols; ++col)
             {
                 Line line = new Line();
                 line.Stroke = Brushes.Black;
                 line.X1 = line.X2 = TranslateX(col * CellSize);
                 line.Y1 = TranslateY(0);
-                line.Y2 = TranslateY(rows * CellSize);
+                line.Y2 = TranslateY(Rows * CellSize);
                 canvas.Children.Add(line);
             }
 
@@ -149,8 +149,6 @@ namespace magicedit
 
         private void CheckMouseHover(double mX, double mY)
         {
-            //todo: if clicked outside of map, there is an exception somewhere
-
             double tmX = TranslateMouseX(mX);
             double tmY = TranslateMouseY(mY);
 
@@ -169,6 +167,11 @@ namespace magicedit
                 redraw = true;
 
             HoveredPosition = newHoveredPosition;
+
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                SelectHoveredPosition(true);
+            }
 
             if (redraw) Redraw();
 
@@ -201,6 +204,46 @@ namespace magicedit
             SelectedMapObjects = GetSelectedMapObjects();
         }
 
+        // selects the hovered position.
+        private void SelectHoveredPosition(bool drag)
+        {
+            Multiselect = Keyboard.IsKeyDown(Key.LeftCtrl);
+
+            /****************/
+
+            if (Multiselect)
+            {
+                if (HoveredPosition != null && Map.IsPositionWithin(HoveredPosition))
+                {
+                    if (!drag)
+                    {
+                        if (SelectedPositions.RemoveWhere(pos => pos.Equals(HoveredPosition)) == 0)
+                            SelectedPositions.Add(HoveredPosition);
+                    }
+                    else
+                        SelectedPositions.Add(HoveredPosition);
+                }
+            }
+            else
+            {
+                bool positionAlreadySelected = SelectedPositions.Where(pos => pos.Equals(HoveredPosition)).Count() > 0;
+
+                SelectedPositions.Clear();
+                if (HoveredPosition != null && Map.IsPositionWithin(HoveredPosition) && (drag || !positionAlreadySelected))
+                {
+                    SelectedPositions.Add(HoveredPosition);
+                }
+            }
+
+            /****************/
+
+            CheckMapObjectSelection();
+
+            OnMapPositionSelectionChanged?.Invoke(this);
+
+            Redraw();
+        }
+
         private void canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Middle)
@@ -213,29 +256,7 @@ namespace magicedit
             }
             else if (e.ChangedButton == MouseButton.Left)
             {
-
-                Multiselect = Keyboard.IsKeyDown(Key.LeftCtrl);
-
-                // if an already selected cell is clicked again, deselect it
-                if (HoveredPosition == null)
-                {
-                    SelectedPositions.Clear();
-                }
-                else if (SelectedPositions.Where(pos => pos.Equals(HoveredPosition)).Count() > 0)
-                {
-                    SelectedPositions.RemoveWhere(pos => pos.Equals(HoveredPosition));
-                }
-                else
-                {
-                    if (!Multiselect) SelectedPositions.Clear();
-                    SelectedPositions.Add(HoveredPosition);
-                }
-
-                CheckMapObjectSelection();
-
-                OnMapPositionSelectionChanged?.Invoke(this);
-
-                Redraw();
+                SelectHoveredPosition(false);
                 e.Handled = true;
             }
         }

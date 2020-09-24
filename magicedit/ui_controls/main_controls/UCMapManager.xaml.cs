@@ -82,7 +82,9 @@ namespace magicedit
 
         public override void Open()
         {
+            //todo: check if objects or square types have been deleted (in this case remove from map these objects and squares)
             squareTypeSelector.RefreshList();
+            mapEditor.Redraw();
         }
 
         private void squareTypeSelector_OnSquareTypeSelected(SquareType selectedSquareType)

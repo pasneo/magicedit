@@ -81,6 +81,7 @@
                     x:Name="tbAllowedAttributes"
                     VerticalContentAlignment="Center"
                     HorizontalAlignment="Left" Height="23" Margin="242,67,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="243"
+                    IsEnabled="False"
                     TextChanged="tbAllowedAttributes_TextChanged"/>
                 
                 <Label Content="Forbidden attributes" HorizontalAlignment="Left" Margin="242,95,0,0" VerticalAlignment="Top"/>
@@ -88,6 +89,7 @@
                     x:Name="tbForbiddenAttributes"
                     VerticalContentAlignment="Center"
                     HorizontalAlignment="Left" Height="23" Margin="242,121,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="243"
+                    IsEnabled="False"
                     TextChanged="tbForbiddenAttributes_TextChanged"/>
 
                 <Label Content="Action name" HorizontalAlignment="Left" Margin="242,149,0,0" VerticalAlignment="Top"/>

@@ -10,8 +10,8 @@ namespace magicedit
     public class Map
     {
 
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; set; } = 10;
+        public int Height { get; set; } = 10;
 
         public Scheme Scheme { get; set; } //scheme for map, that contains actions used by Squares (see SquareType)
 

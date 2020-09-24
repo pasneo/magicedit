@@ -125,6 +125,15 @@ namespace magicedit
                 canvas.Children.Add(line);
             }
 
+            foreach(Position spawner in Map.SpawnerPositions)
+            {
+                Image spawnerSymbol = new Image();
+                spawnerSymbol.Width = spawnerSymbol.Height = CellSize / 3;
+                spawnerSymbol.Source = DefaultResources.PlusSymbolImage;
+                spawnerSymbol.Margin = new Thickness(TranslateX(spawner.X * CellSize) + 4.0, TranslateY(spawner.Y * CellSize) + 4.0, 0.0, 0.0);
+                canvas.Children.Add(spawnerSymbol);
+            }
+
             foreach (Position selectedPosition in SelectedPositions)
             {
                 Rectangle rect = new Rectangle();
@@ -227,9 +236,10 @@ namespace magicedit
             else
             {
                 bool positionAlreadySelected = SelectedPositions.Where(pos => pos.Equals(HoveredPosition)).Count() > 0;
+                bool multiplePositionsSelected = SelectedPositions.Count > 1;
 
                 SelectedPositions.Clear();
-                if (HoveredPosition != null && Map.IsPositionWithin(HoveredPosition) && (drag || !positionAlreadySelected))
+                if (HoveredPosition != null && Map.IsPositionWithin(HoveredPosition) && (drag || !positionAlreadySelected || multiplePositionsSelected))
                 {
                     SelectedPositions.Add(HoveredPosition);
                 }

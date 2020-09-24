@@ -21,10 +21,10 @@ namespace Test
             SquareType fireland = new SquareType();
             fireland.AllowedAttributes.Add("firey");
             fireland.ForbiddenAttributes.Add("holy");
-            
-            map.AddSquare(new Square { Type = fireland, Position = new Position(0, 1) });
-            map.AddSquare(new Square { Type = fireland, Position = new Position(1, 1) });
-            map.AddSquare(new Square { Type = fireland, Position = new Position(2, 1) });
+
+            map.SetSquareTypeAt(new Position(0, 1), fireland);
+            map.SetSquareTypeAt(new Position(1, 1), fireland);
+            map.SetSquareTypeAt(new Position(2, 1), fireland);
 
             Character normal_beast = new Character("normal_beast", "normal_beast");
             Character firey_beast = new Character("firey_beast", "firey_beast");
@@ -96,7 +96,7 @@ namespace Test
 
             SquareType squareType = new SquareType();
             squareType.ActionName = "Step";
-            map.AddSquare(new Square { Type = squareType, Position = new Position(1, 0) });
+            map.SetSquareTypeAt(new Position(1, 0), squareType);
 
             Config config = new Config();
             config.Map = map;

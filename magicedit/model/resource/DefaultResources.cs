@@ -26,6 +26,20 @@ namespace magicedit
             }
         }
 
+        private static BitmapFrame plusSymbolImage;
+        public static BitmapFrame PlusSymbolImage
+        {
+            get
+            {
+                if (plusSymbolImage == null)
+                {
+                    if (File.Exists("images/plus_symbol.png"))
+                        plusSymbolImage = BitmapFrame.Create(new System.Uri("images/plus_symbol.png", UriKind.Relative));
+                }
+                return plusSymbolImage;
+            }
+        }
+
         public static BitmapFrame GetVisualImageOrDefault(Visual visual)
         {
             if (visual?.BitmapFrame != null) return visual.BitmapFrame;

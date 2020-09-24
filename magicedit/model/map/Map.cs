@@ -19,7 +19,7 @@ namespace magicedit
         //private List<Square> Squares = new List<Square>();
         public Dictionary<Position, SquareType> Squares = new Dictionary<Position, SquareType>();
 
-        private List<Position> SpawnerPositions = new List<Position>();
+        public List<Position> SpawnerPositions = new List<Position>();
 
         //References to the objects on the map (these are not stored here)
         [JsonIgnore]
@@ -69,6 +69,20 @@ namespace magicedit
 
         public int GetSpawnerCount() { return SpawnerPositions.Count; }
         public Position GetSpawnerByNo(int no) { return SpawnerPositions[no]; }
+
+        public bool HasSpawnerAt(Position position)
+        {
+            foreach(var spawner in SpawnerPositions)
+            {
+                if (spawner.Equals(position)) return true;
+            }
+            return false;
+        }
+
+        public void RemoveSpawnerAt(Position position)
+        {
+            SpawnerPositions.RemoveAll(spawner => spawner.Equals(position));
+        }
 
         public bool IsPositionWithin(Position position)
         {

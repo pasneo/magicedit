@@ -44,6 +44,7 @@ namespace magicedit
         private void MapEditor_OnMapPositionSelectionChanged(UCMapEditor mapEditor)
         {
             RefreshSquareTypeSelector();
+            RefreshSpawnerIndicator();
         }
 
         private void RefreshSquareTypeSelector()
@@ -80,6 +81,24 @@ namespace magicedit
             }
         }
 
+        private void RefreshSpawnerIndicator()
+        {
+            var selectedPositions = mapEditor.SelectedPositions;
+
+            if (selectedPositions.Count != 1)
+            {
+                cbSpawner.IsChecked = false;
+                cbSpawner.IsEnabled = false;
+            }
+            else
+            {
+                Position selectedPosition = selectedPositions.FirstOrDefault();
+                cbSpawner.IsChecked = Map.HasSpawnerAt(selectedPosition);
+                cbSpawner.IsEnabled = true;
+            }
+
+        }
+
         public override void Open()
         {
             //todo: check if objects or square types have been deleted (in this case remove from map these objects and squares)
@@ -113,6 +132,24 @@ namespace magicedit
 
             RefreshSquareTypeSelector();
             mapEditor.Redraw();
+        }
+
+        private void cbSpawner_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            var selectedPositions = mapEditor.SelectedPositions;
+
+            if (selectedPositions == null || selectedPositions.Count != 1)
+            {
+                cbSpawner.IsEnabled = false;
+            }
+            else
+            {
+                var selectedPosition = selectedPositions.FirstOrDefault();
+                if (cbSpawner.IsChecked.HasValue && cbSpawner.IsChecked.Value) Map.AddSpawner(selectedPosition);
+                else Map.RemoveSpawnerAt(selectedPosition);
+                mapEditor.Redraw();
+            }
+
         }
     }
 }

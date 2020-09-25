@@ -10,8 +10,19 @@ namespace magicedit
     public class Map
     {
 
-        public int Width { get; set; } = 10;
-        public int Height { get; set; } = 10;
+        private int width = 10;
+        public int Width
+        {
+            get { return width; }
+            set { width = value; SizeChanged(); }
+        }
+
+        private int height = 10;
+        public int Height
+        {
+            get { return height; }
+            set { height = value; SizeChanged(); }
+        }
 
         public Scheme Scheme { get; set; } //scheme for map, that contains actions used by Squares (see SquareType)
 
@@ -121,7 +132,11 @@ namespace magicedit
             action.Execute(new Object(), actor, game);
         }
 
-
+        private void SizeChanged()
+        {
+            //check squares
+            Squares = Squares.Where(p => IsPositionWithin(p.Key)).ToDictionary(p => p.Key, p => p.Value);
+        }
 
 
         public void _AddObject(MapObject @object) { Objects.Add(@object); }

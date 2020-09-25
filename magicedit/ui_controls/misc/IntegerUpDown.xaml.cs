@@ -21,6 +21,31 @@ namespace magicedit
     public partial class IntegerUpDown : UserControl
     {
 
+        public delegate void IntegerUpDownValueChangedDelegate(IntegerUpDown sender);
+
+        private int _minValue = int.MinValue;
+        public int MinValue {
+            get { return _minValue; }
+            set
+            {
+                _minValue = value;
+                if (NumValue < MinValue) NumValue = MinValue;
+            }
+        }
+
+        private int _maxValue = int.MaxValue;
+        public int MaxValue
+        {
+            get { return _maxValue; }
+            set
+            {
+                _maxValue = value;
+                if (NumValue > MaxValue) NumValue = MaxValue;
+            }
+        }
+
+        public event IntegerUpDownValueChangedDelegate ValueChanged;
+
         private int _numValue = 0;
 
         public int NumValue
@@ -28,8 +53,11 @@ namespace magicedit
             get { return _numValue; }
             set
             {
+                txtNum.Background = Brushes.LightGreen;
                 _numValue = value;
-                txtNum.Text = value.ToString();
+                if (_numValue < MinValue) _numValue = MinValue;
+                if (_numValue > MaxValue) _numValue = MaxValue;
+                txtNum.Text = _numValue.ToString();
             }
         }
 
@@ -41,12 +69,16 @@ namespace magicedit
 
         private void cmdUp_Click(object sender, RoutedEventArgs e)
         {
+            int lastValue = NumValue;
             NumValue++;
+            if (lastValue != NumValue) ValueChanged?.Invoke(this);
         }
 
         private void cmdDown_Click(object sender, RoutedEventArgs e)
         {
+            int lastValue = NumValue;
             NumValue--;
+            if (lastValue != NumValue) ValueChanged?.Invoke(this);
         }
 
         private void txtNum_TextChanged(object sender, TextChangedEventArgs e)
@@ -56,8 +88,22 @@ namespace magicedit
                 return;
             }
 
-            if (!int.TryParse(txtNum.Text, out _numValue))
-                txtNum.Text = _numValue.ToString();
+            txtNum.Text = new string(txtNum.Text.Where(c => char.IsDigit(c)).ToArray());
+
+            int lastValue = NumValue;
+            int value = 0;
+
+            if (int.TryParse(txtNum.Text, out value))
+            {
+                if (value < MinValue || value > MaxValue)
+                    txtNum.Background = Brushes.PaleVioletRed;
+                else
+                {
+                    NumValue = value;
+                    txtNum.Background = Brushes.LightGreen;
+                    if (NumValue != lastValue) ValueChanged?.Invoke(this);
+                }
+            }
         }
 
     }

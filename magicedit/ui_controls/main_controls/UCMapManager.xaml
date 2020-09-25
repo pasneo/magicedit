@@ -24,9 +24,17 @@
 
                     <Grid Margin="10,10,0,0">
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Width" VerticalAlignment="Top"/>
-                        <local:IntegerUpDown Width="100" HorizontalAlignment="left" VerticalAlignment="Top" Margin="102,0,0,0"/>
+                        <local:IntegerUpDown
+                            x:Name="nMapWidth"
+                            MinValue="1"
+                            Width="100" HorizontalAlignment="left" VerticalAlignment="Top" Margin="102,0,0,0"
+                            ValueChanged="nMapSize_ValueChanged"/>
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Height" VerticalAlignment="Top" Margin="0,21,0,0"/>
-                        <local:IntegerUpDown Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="102,21,0,0"/>
+                        <local:IntegerUpDown
+                            x:Name="nMapHeight"
+                            MinValue="1"
+                            Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="102,21,0,0"
+                            ValueChanged="nMapSize_ValueChanged"/>
                     </Grid>
 
                     <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Squares" VerticalAlignment="Top"/>

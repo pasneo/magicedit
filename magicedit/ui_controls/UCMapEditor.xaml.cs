@@ -227,10 +227,14 @@ namespace magicedit
                     if (!drag)
                     {
                         if (SelectedPositions.RemoveWhere(pos => pos.Equals(HoveredPosition)) == 0)
+                        {
                             SelectedPositions.Add(HoveredPosition);
+                        }
                     }
                     else
+                    {
                         SelectedPositions.Add(HoveredPosition);
+                    }
                 }
             }
             else
@@ -251,6 +255,15 @@ namespace magicedit
 
             OnMapPositionSelectionChanged?.Invoke(this);
 
+            Redraw();
+        }
+
+        public void CheckSelection()
+        {
+            //check if any selected position is now out of map
+            SelectedPositions.RemoveWhere(pos => !Map.IsPositionWithin(pos));
+            CheckMapObjectSelection();
+            OnMapPositionSelectionChanged?.Invoke(this);
             Redraw();
         }
 

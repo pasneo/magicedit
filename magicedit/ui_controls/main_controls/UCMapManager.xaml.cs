@@ -104,6 +104,9 @@ namespace magicedit
             //todo: check if objects or square types have been deleted (in this case remove from map these objects and squares)
             squareTypeSelector.RefreshList();
             mapEditor.Redraw();
+
+            nMapWidth.NumValue = Map.Width;
+            nMapHeight.NumValue = Map.Height;
         }
 
         private void squareTypeSelector_OnSquareTypeSelected(SquareType selectedSquareType)
@@ -150,6 +153,13 @@ namespace magicedit
                 mapEditor.Redraw();
             }
 
+        }
+
+        private void nMapSize_ValueChanged(IntegerUpDown sender)
+        {
+            if (nMapWidth != null) Map.Width = nMapWidth.NumValue;
+            if (nMapWidth != null) Map.Height = nMapHeight.NumValue;
+            mapEditor.CheckSelection();
         }
     }
 }

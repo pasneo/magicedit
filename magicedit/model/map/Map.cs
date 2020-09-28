@@ -136,6 +136,8 @@ namespace magicedit
         {
             //check squares
             Squares = Squares.Where(p => IsPositionWithin(p.Key)).ToDictionary(p => p.Key, p => p.Value);
+            //check spawners
+            SpawnerPositions.RemoveAll(sp => !IsPositionWithin(sp));
         }
 
 

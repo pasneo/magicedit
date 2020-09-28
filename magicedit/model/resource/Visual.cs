@@ -19,22 +19,25 @@ namespace magicedit
 
         /* *** */
 
-        public Visual(string id, string imagePath)
+        public Visual(string id, string imagePath, bool relative = false)
         {
             ID = id;
             ImagePath = imagePath;
             if (File.Exists(imagePath))
-                LoadImage(imagePath);
+                LoadImage(imagePath, relative);
         }
 
-        private void LoadImage(string imagePath)
+        private void LoadImage(string imagePath, bool relative = false)
         {
-            BitmapFrame = BitmapFrame.Create(new System.Uri(imagePath));
+            if (relative)
+                BitmapFrame = BitmapFrame.Create(new System.Uri(imagePath, UriKind.Relative));
+            else
+                BitmapFrame = BitmapFrame.Create(new System.Uri(imagePath));
         }
 
-        public void SetImagePath(string imagePath)
+        public void SetImagePath(string imagePath, bool relative = false)
         {
-            LoadImage(imagePath);
+            LoadImage(imagePath, relative);
             ImagePath = imagePath;
         }
 

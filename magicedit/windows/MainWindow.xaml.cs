@@ -21,6 +21,15 @@ namespace magicedit
     public partial class MainWindow : Window
     {
 
+        public enum Menus
+        {
+            Visuals,
+            StringConsts,
+            SquareTypes,
+            Character,
+            Map
+        }
+
         public static MainWindow Current { get; private set; }
 
         MainUserControl currentMainUC = null;
@@ -33,9 +42,9 @@ namespace magicedit
             project.SetAsCurrent();
             Project.Current.Config.Visuals.Add(new Visual("axe", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\axe.png"));
             Project.Current.Config.Visuals.Add(new Visual("sword", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\sword.jpg"));
-            Project.Current.Config.Visuals.Add(new Visual("sword2", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\sword.jpg"));
-            Project.Current.Config.Visuals.Add(new Visual("sword3", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\sword.jpg"));
 
+            InitResources();
+            
             InitializeComponent();
 
             tviVisuals.Tag = new UCVisualManager();
@@ -43,7 +52,23 @@ namespace magicedit
             tviSquareTypes.Tag = new UCSquareTypeManager();
             tviCharacterSettings.Tag = new UCCharacterManager();
             tviMap.Tag = new UCMapManager();
+            tviObjectSchemes.Tag = new UCObjectSchemeManager();
 
+        }
+
+        private void InitResources()
+        {
+            Config config = Project.Current.Config;
+
+            config.Visuals.Add(new Visual("forest", "images/terrain/forest.png", true));
+            config.Visuals.Add(new Visual("grass", "images/terrain/grass.png", true));
+            config.Visuals.Add(new Visual("village", "images/terrain/village.png", true));
+            config.Visuals.Add(new Visual("desert", "images/terrain/desert.png", true));
+
+            Project.Current.Config.Map.SquareTypes.Add(new SquareType("forest", config.GetVisualById("forest")));
+            Project.Current.Config.Map.SquareTypes.Add(new SquareType("grass", config.GetVisualById("grass")));
+            Project.Current.Config.Map.SquareTypes.Add(new SquareType("village", config.GetVisualById("village")));
+            Project.Current.Config.Map.SquareTypes.Add(new SquareType("desert", config.GetVisualById("desert")));
         }
 
         private void mRun_Click(object sender, RoutedEventArgs e)
@@ -69,5 +94,16 @@ namespace magicedit
             }
 
         }
+
+        public void SelectMenu(Menus menu)
+        {
+            switch(menu)
+            {
+                case Menus.SquareTypes:
+                    tviSquareTypes.IsSelected = true;
+                    break;
+            }
+        }
+
     }
 }

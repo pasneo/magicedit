@@ -92,7 +92,7 @@
                         <TreeViewItem Header="Object">
                             <TreeViewItem Header="Objects">
                             </TreeViewItem>
-                            <TreeViewItem Header="Schemes">
+                            <TreeViewItem x:Name="tviObjectSchemes" Header="Schemes">
                             </TreeViewItem>
                         </TreeViewItem>
                     </TreeView>

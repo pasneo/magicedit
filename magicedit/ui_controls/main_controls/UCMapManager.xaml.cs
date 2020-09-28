@@ -161,5 +161,10 @@ namespace magicedit
             if (nMapWidth != null) Map.Height = nMapHeight.NumValue;
             mapEditor.CheckSelection();
         }
+
+        private void hySquareTypes_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.Current.SelectMenu(MainWindow.Menus.SquareTypes);
+        }
     }
 }

@@ -39,7 +39,9 @@
 
                     <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Squares" VerticalAlignment="Top"/>
                     <local:UCSquareTypeSelector x:Name="squareTypeSelector" Margin="10,5,0,0" OnSquareTypeSelected="squareTypeSelector_OnSquareTypeSelected"/>
-                    <TextBlock VerticalAlignment="Top" Margin="10,0,0,0"><Hyperlink><Run Text="Go to square types"/></Hyperlink></TextBlock>
+                    <TextBlock VerticalAlignment="Top" Margin="10,0,0,0">
+                        <Hyperlink x:Name="hySquareTypes" Click="hySquareTypes_Click"><Run Text="Go to square types"/></Hyperlink>
+                    </TextBlock>
 
                     <TextBlock HorizontalAlignment="Left" Margin="10,20,0,0" TextWrapping="Wrap" Text="Objects" VerticalAlignment="Top"/>
 

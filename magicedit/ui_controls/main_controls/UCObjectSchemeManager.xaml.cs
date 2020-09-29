@@ -31,23 +31,23 @@ namespace magicedit
         {
             list.Items.Clear();
 
-            List<Text> StringConsts = Project.Current?.Config.StringConsts;
-            if (StringConsts == null) return;
+            var schemes = Project.Current?.Config.Schemes;
+            if (schemes == null) return;
 
-            foreach (var text in StringConsts)
+            foreach (var scheme in schemes)
             {
-                AddListBoxItem(text);
+                AddListBoxItem(scheme);
             }
 
         }
 
-        private ListBoxItem AddListBoxItem(Text text)
+        private ListBoxItem AddListBoxItem(Scheme scheme)
         {
 
             ListBoxItem listBoxItem = new ListBoxItem();
-            listBoxItem.Tag = text;
+            listBoxItem.Tag = scheme;
 
-            listBoxItem.Content = text.ID;
+            listBoxItem.Content = scheme.Name;
 
             list.Items.Add(listBoxItem);
 
@@ -71,10 +71,10 @@ namespace magicedit
                 tbCode.IsEnabled = true;
                 bDelete.IsEnabled = true;
 
-                Text text = (Text)((ListBoxItem)list.SelectedItem).Tag;
+                Scheme scheme = (Scheme)((ListBoxItem)list.SelectedItem).Tag;
 
-                tbID.Text = text.ID;
-                tbCode.Text = text.Content;
+                tbID.Text = scheme.Name;
+                tbCode.Text = scheme.Code;
             }
             else ClearInfo();
         }
@@ -84,42 +84,42 @@ namespace magicedit
             RefreshInfo();
         }
 
-        private void bAddText_Click(object sender, RoutedEventArgs e)
+        private void bAdd_Click(object sender, RoutedEventArgs e)
         {
-            string newTextId = IdGenerator.Generate("text");
-            while (Project.Current.Config.GetStringConstByName(newTextId) != null) newTextId = IdGenerator.Generate("text");
+            string newId = IdGenerator.Generate("scheme");
+            while (Project.Current.Config.GetSchemeByName(newId) != null) newId = IdGenerator.Generate("scheme");
 
-            Text text = new Text();
-            Project.Current.Config.AddStringConst(newTextId, text);
+            Scheme scheme = new Scheme(newId);
+            Project.Current.Config.AddScheme(scheme);
 
-            var item = AddListBoxItem(text);
+            var item = AddListBoxItem(scheme);
 
             list.SelectedItem = item;
         }
 
-        private void tbTextID_TextChanged(object sender, TextChangedEventArgs e)
+        private void tbID_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (list.SelectedItem == null || ((ListBoxItem)list.SelectedItem).Tag == null) return;
             var item = ((ListBoxItem)list.SelectedItem);
-            Text text = (Text)item.Tag;
-            text.ID = tbID.Text;
+            Scheme scheme = (Scheme)item.Tag;
+            scheme.Name = tbID.Text;
             item.Content = tbID.Text;
         }
 
-        private void tbTextContent_TextChanged(object sender, TextChangedEventArgs e)
+        private void tbCode_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (list.SelectedItem == null || ((ListBoxItem)list.SelectedItem).Tag == null) return;
             var item = ((ListBoxItem)list.SelectedItem);
-            Text text = (Text)item.Tag;
-            text.Content = tbCode.Text;
+            Scheme scheme = (Scheme)item.Tag;
+            scheme.Code = tbCode.Text;
         }
 
         private void bDelete_Click(object sender, RoutedEventArgs e)
         {
             ListBoxItem item = (ListBoxItem)list.SelectedItem;
-            Text text = (Text)item.Tag;
+            Scheme scheme = (Scheme)item.Tag;
 
-            Project.Current.Config.StringConsts.Remove(text);
+            Project.Current.Config.Schemes.Remove(scheme);
             list.SelectedItem = null;
             list.Items.Remove(item);
         }

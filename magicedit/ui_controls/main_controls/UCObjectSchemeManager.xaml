@@ -33,7 +33,7 @@
 
                 <Button x:Name="bAdd"
                     Content="Add" HorizontalAlignment="Right" Margin="0,13,10,0" VerticalAlignment="Top" Width="53"
-                    Click="bAddText_Click"/>
+                    Click="bAdd_Click"/>
 
             </Grid>
 
@@ -47,9 +47,10 @@
                 <TextBox x:Name="tbID"
                     VerticalContentAlignment="Center"
                     VerticalAlignment="Top"
-                    HorizontalAlignment="Stretch" Height="23" Margin="75,10,10,0" TextWrapping="Wrap"
+                    HorizontalAlignment="Stretch" Height="23" Margin="75,10,10,0"
                     Text=""
-                    IsEnabled="False"/>
+                    IsEnabled="False"
+                         TextChanged="tbID_TextChanged"/>
 
                 <Label Content="Code" Width="60" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
 
@@ -61,7 +62,7 @@
                     Margin="75,41,10.328,34.151"
                     VerticalAlignment="Stretch"
                     VerticalScrollBarVisibility="Visible"
-                    TextChanged="tbTextContent_TextChanged"/>
+                    TextChanged="tbCode_TextChanged"/>
 
                 <Button x:Name="bDelete" Content="Delete" HorizontalAlignment="Right" Margin="0,0,10.328,10.151" VerticalAlignment="Bottom" Width="75"
                         IsEnabled="False"

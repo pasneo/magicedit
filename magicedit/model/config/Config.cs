@@ -27,7 +27,7 @@ namespace magicedit
         public List<ClassList> ClassLists = new List<ClassList>();
 
         [JsonProperty]
-        private List<Scheme> Schemes = new List<Scheme>();
+        public List<Scheme> Schemes = new List<Scheme>();
 
         //All the predefined objects are stored here (but references to them may exist elsewhere too)
         [JsonProperty]

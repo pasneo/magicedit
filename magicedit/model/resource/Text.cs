@@ -27,5 +27,12 @@ namespace magicedit
             Content = content;
         }
 
+        public string CropContent(int n)
+        {
+            if (Content == null) return "";
+            if (Content.Length <= n) return Content.Replace("\n", " ").Replace("\r", "");
+            return Content.Replace("\n", " ").Replace("\r", "").Substring(0, n) + "...";
+        }
+
     }
 }

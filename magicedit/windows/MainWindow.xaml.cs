@@ -53,6 +53,7 @@ namespace magicedit
             tviCharacterSettings.Tag = new UCCharacterManager();
             tviMap.Tag = new UCMapManager();
             tviObjectSchemes.Tag = new UCObjectSchemeManager();
+            tviObjects.Tag = new UCObjectManager();
 
         }
 

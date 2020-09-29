@@ -31,7 +31,7 @@ namespace magicedit
 
         //All the predefined objects are stored here (but references to them may exist elsewhere too)
         [JsonProperty]
-        private List<Object> Objects = new List<Object>();
+        public List<Object> Objects = new List<Object>();
 
         /* *** */
         

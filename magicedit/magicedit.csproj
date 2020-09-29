@@ -66,6 +66,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ui_controls\selectors\UCStringConstSelector.xaml.cs">
+      <DependentUpon>UCStringConstSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\selectors\UCSchemeSelector.xaml.cs">
+      <DependentUpon>UCSchemeSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\main_controls\UCObjectManager.xaml.cs">
+      <DependentUpon>UCObjectManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui_controls\main_controls\UCObjectSchemeManager.xaml.cs">
       <DependentUpon>UCObjectSchemeManager.xaml</DependentUpon>
     </Compile>
@@ -172,6 +181,18 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
+    <Page Include="ui_controls\selectors\UCStringConstSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui_controls\selectors\UCSchemeSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\main_controls\UCObjectManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ui_controls\main_controls\UCObjectSchemeManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="magicedit.UCSchemeSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:magicedit"
+             mc:Ignorable="d">
+    <ComboBox
+        x:Name="cb"
+        Height="23"
+        IsEditable="True"
+        IsTextSearchEnabled="True"
+        SelectionChanged="cb_SelectionChanged">
+            
+    </ComboBox>
+</UserControl>

@@ -13,9 +13,11 @@
             <MenuItem Header="File">
                 <MenuItem Header="New">
                 </MenuItem>
-                <MenuItem Header="Open">
+                <MenuItem x:Name="mOpen" Header="Open" Click="mOpen_Click">
                 </MenuItem>
-                <MenuItem Header="Save">
+                <MenuItem x:Name="mSave" Header="Save" Click="mSave_Click">
+                </MenuItem>
+                <MenuItem x:Name="mSaveAs" Header="Save As" Click="mSaveAs_Click">
                 </MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="Exit">
@@ -74,17 +76,13 @@
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Item">
-                            <TreeViewItem Header="Categories">
-                            </TreeViewItem>
-                            <TreeViewItem Header="Schemes">
+                            <TreeViewItem x:Name="tviItemCategories" Header="Categories">
                             </TreeViewItem>
                             <TreeViewItem Header="Items">
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Spell">
-                            <TreeViewItem Header="Categories">
-                            </TreeViewItem>
-                            <TreeViewItem Header="Schemes">
+                            <TreeViewItem x:Name="tviSpellCategories" Header="Categories">
                             </TreeViewItem>
                             <TreeViewItem Header="Spells">
                             </TreeViewItem>

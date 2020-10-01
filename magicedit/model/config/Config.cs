@@ -37,10 +37,22 @@ namespace magicedit
         
         /* <PERSISTENCE> */
 
+        [JsonConstructor]
+        public Config(
+            Map map, CharacterConfig characterConfig, ItemSpellConfig itemConfig, ItemSpellConfig spellConfig, List<Visual> visuals,
+            List<Text> stringConsts, List<ClassList> classLists, List<Scheme> schemes, List<Object> objects)
+        {
+            Map = map; CharacterConfig = characterConfig; ItemConfig = itemConfig; SpellConfig = spellConfig; Visuals = visuals;
+            StringConsts = stringConsts; ClassLists = classLists; Schemes = schemes; Objects = objects;
+        }
+
+        public Config() { }
+
         public static Config Load(string filePath)
         {
             if (File.Exists(filePath))
             {
+                //Uri uri = new Uri(filePath, UriKind.Absolute);
                 string json = File.ReadAllText(filePath);
                 Config config = JsonConvert.DeserializeObject<Config>(json);
                 config.AfterLoaded();

@@ -27,6 +27,11 @@ namespace magicedit
             InitializeComponent();
         }
 
+        public override void Open()
+        {
+            RefreshList();
+        }
+
         public void RefreshList()
         {
             listTexts.Items.Clear();

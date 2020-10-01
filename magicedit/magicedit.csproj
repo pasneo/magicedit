@@ -66,23 +66,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\resource\ResourceManager.cs" />
+    <Compile Include="ui_controls\main_controls\items\UCItemCategoryManager.xaml.cs">
+      <DependentUpon>UCItemCategoryManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\main_controls\spells\UCSpellCategoryManager.xaml.cs">
+      <DependentUpon>UCSpellCategoryManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui_controls\selectors\UCStringConstSelector.xaml.cs">
       <DependentUpon>UCStringConstSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui_controls\selectors\UCSchemeSelector.xaml.cs">
       <DependentUpon>UCSchemeSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\UCObjectManager.xaml.cs">
+    <Compile Include="ui_controls\main_controls\objects\UCObjectManager.xaml.cs">
       <DependentUpon>UCObjectManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\UCObjectSchemeManager.xaml.cs">
+    <Compile Include="ui_controls\main_controls\objects\UCObjectSchemeManager.xaml.cs">
       <DependentUpon>UCObjectSchemeManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui_controls\misc\IntegerUpDown.xaml.cs">
       <DependentUpon>IntegerUpDown.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\resource\DefaultResources.cs" />
-    <Compile Include="ui_controls\main_controls\UCMapManager.xaml.cs">
+    <Compile Include="ui_controls\main_controls\map\UCMapManager.xaml.cs">
       <DependentUpon>UCMapManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui_controls\selectors\UCSquareTypeSelector.xaml.cs">
@@ -153,7 +160,7 @@
     <Compile Include="language\scheme\SchemeLang.cs" />
     <Compile Include="language\scheme\SchemeLangOptimizer.cs" />
     <Compile Include="model\Project.cs" />
-    <Compile Include="ui_controls\main_controls\UCSquareTypeManager.xaml.cs">
+    <Compile Include="ui_controls\main_controls\map\UCSquareTypeManager.xaml.cs">
       <DependentUpon>UCSquareTypeManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui_controls\selectors\UCEVisualSelectorRow.xaml.cs">
@@ -162,10 +169,10 @@
     <Compile Include="ui_controls\selectors\UCVisualSelector.xaml.cs">
       <DependentUpon>UCVisualSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\UCStringConstManager.xaml.cs">
+    <Compile Include="ui_controls\main_controls\resources\UCStringConstManager.xaml.cs">
       <DependentUpon>UCStringConstManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\UCVisualManager.xaml.cs">
+    <Compile Include="ui_controls\main_controls\resources\UCVisualManager.xaml.cs">
       <DependentUpon>UCVisualManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="windows\GameWindow.xaml.cs">
@@ -181,6 +188,14 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
+    <Page Include="ui_controls\main_controls\items\UCItemCategoryManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\main_controls\spells\UCSpellCategoryManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ui_controls\selectors\UCStringConstSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -189,11 +204,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\UCObjectManager.xaml">
+    <Page Include="ui_controls\main_controls\objects\UCObjectManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\main_controls\UCObjectSchemeManager.xaml">
+    <Page Include="ui_controls\main_controls\objects\UCObjectSchemeManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -201,7 +216,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\UCMapManager.xaml">
+    <Page Include="ui_controls\main_controls\map\UCMapManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,7 +232,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\UCSquareTypeManager.xaml">
+    <Page Include="ui_controls\main_controls\map\UCSquareTypeManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,11 +244,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\UCStringConstManager.xaml">
+    <Page Include="ui_controls\main_controls\resources\UCStringConstManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\UCVisualManager.xaml">
+    <Page Include="ui_controls\main_controls\resources\UCVisualManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

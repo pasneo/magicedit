@@ -29,6 +29,7 @@ namespace magicedit
 
         public override void Open()
         {
+            RefreshList();
             schemeSelector.Refresh();
             textSelector.Refresh();
         }

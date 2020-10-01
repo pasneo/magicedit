@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,8 @@ namespace magicedit
 
         MainUserControl currentMainUC = null;
 
+        private string SavePath { get; set; }
+
         public MainWindow()
         {
             Current = this;
@@ -54,6 +57,8 @@ namespace magicedit
             tviMap.Tag = new UCMapManager();
             tviObjectSchemes.Tag = new UCObjectSchemeManager();
             tviObjects.Tag = new UCObjectManager();
+            tviItemCategories.Tag = new UCItemCategoryManager();
+            tviSpellCategories.Tag = new UCSpellCategoryManager();
 
         }
 
@@ -105,6 +110,49 @@ namespace magicedit
                     break;
             }
         }
+        
+        private void mOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
 
+            if (openFileDialog.ShowDialog() == true)
+            {
+                SavePath = openFileDialog.FileName;
+                Project.Current.Config = Config.Load(SavePath);
+                currentMainUC?.Close();
+                gridMainUC.Children.Clear();
+            }
+        }
+
+        private void mSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveAs(SavePath);
+        }
+
+        private void SaveAs(string path = null)
+        {
+            if (path == null)
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "JSON file (*.json)|*.json";
+
+                if (saveFileDialog.ShowDialog() == true)
+                    SavePath = saveFileDialog.FileName;
+                else
+                    return;
+            }
+
+            if (SavePath != null)
+            {
+                Project.Current?.Config?.Save(SavePath);
+            }
+
+        }
+
+        private void mSaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveAs();
+        }
     }
 }

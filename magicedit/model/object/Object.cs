@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace magicedit
 {
+
+    public enum ObjectTypeTags {
+        Undefined,
+        Item,
+        Spell
+    }
+
     public class Object
     {
      
@@ -20,6 +27,8 @@ namespace magicedit
          * Conclusion: the Name must be the same as the Id of the original object. Copies of the original can (or must) have
          * newly defined Ids (eg. sword_1, sword_2 ...)
          */
+
+        public ObjectTypeTags TypeTag { get; set; }     //used to identify items, spells etc. in the editor
 
         public string Id { get; set; }      //A unique identifier (eg. "sword", "sword (2)")
         public string Name { get; set; }    //The name the creator gave in the editor (eg. "sword")
@@ -40,10 +49,11 @@ namespace magicedit
 
         public Object() { }
 
-        public Object(string id, string name)
+        public Object(string id, string name, ObjectTypeTags typeTag = ObjectTypeTags.Undefined)
         {
             Id = id;
             Name = name;
+            TypeTag = typeTag;
         }
 
         public virtual Object Copy()

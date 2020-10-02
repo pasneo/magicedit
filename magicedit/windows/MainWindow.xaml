@@ -78,13 +78,13 @@
                         <TreeViewItem Header="Item">
                             <TreeViewItem x:Name="tviItemCategories" Header="Categories">
                             </TreeViewItem>
-                            <TreeViewItem Header="Items">
+                            <TreeViewItem x:Name="tviItems" Header="Items">
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Spell">
                             <TreeViewItem x:Name="tviSpellCategories" Header="Categories">
                             </TreeViewItem>
-                            <TreeViewItem Header="Spells">
+                            <TreeViewItem x:Name="tviSpells" Header="Spells">
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Object">

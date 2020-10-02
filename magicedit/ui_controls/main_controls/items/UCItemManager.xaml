@@ -1,0 +1,113 @@
+﻿<local:MainUserControl x:Class="magicedit.UCItemManager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:magicedit"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#ababab">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" MinWidth="200" MaxWidth="500" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                <Label Content="Items" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+
+                <ListBox x:Name="list"
+                    Margin="5,41,5,5"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                    SelectionChanged="list_SelectionChanged"/>
+
+                <Button x:Name="bAdd"
+                    Content="Add" HorizontalAlignment="Right" Margin="0,13,10,0" VerticalAlignment="Top" Width="53"
+                    Click="bAdd_Click"/>
+
+            </Grid>
+
+            <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
+                           Width="5"></GridSplitter>
+
+            <Grid Grid.Column="2" Background="#ababab" Focusable="True">
+
+                <Label Content="Name" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="136"/>
+
+                <TextBox x:Name="tbID"
+                    VerticalContentAlignment="Center"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch" Height="23" Margin="146,10,10.328,0"
+                    Text=""
+                    IsEnabled="False"
+                         TextChanged="tbID_TextChanged"/>
+
+                <Label Content="Shown name" Width="136" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+
+                <local:UCStringConstSelector
+                    x:Name="textSelector"
+                    IsEnabled="False"
+                    HorizontalAlignment="Stretch" Margin="146,41,10.328,0" VerticalAlignment="Top"
+                    SelectionChanged="textSelector_SelectionChanged"/>
+
+                <Label Content="Scheme" Width="136" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+
+                <local:UCSchemeSelector x:Name="schemeSelector"
+                                        IsEnabled="False"
+                                        HorizontalAlignment="Stretch" Height="30" Margin="146,68,10.328,0" VerticalAlignment="Top"
+                                        SelectionChanged="schemeSelector_SelectionChanged"/>
+
+                <Label Content="Parameters" Width="136" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
+
+                <TextBox x:Name="tbParameters"
+                    VerticalContentAlignment="Center"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch" Height="23" Margin="146,103,10.328,0"
+                    Text="-- TODO --"
+                    Foreground="Red" FontWeight="Bold"
+                    IsEnabled="False"
+                         TextChanged="tbParameters_TextChanged"/>
+                
+                <Label Content="Visual" Width="136" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top"/>
+
+                <Border BorderThickness="1" BorderBrush="Black"
+                        Width="150" Height="150"
+                        HorizontalAlignment="Left" Margin="146,134,0,0" VerticalAlignment="Top">
+                    <Grid>
+                        <Image
+                            x:Name="iVisualImage"
+                            MaxHeight="150"
+                            MaxWidth="150"
+                            Cursor="Hand"
+                            MouseDown="iVisualImage_MouseDown"
+                            />
+                        <Label x:Name="lVisualID" Content="" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </Grid>
+                </Border>
+
+                <local:UCVisualSelector
+                    x:Name="visualSelector"
+                    Panel.ZIndex="10000"
+                    Visibility="Hidden" Margin="146,284,0,0"
+                    OnVisualSelected="visualSelector_OnVisualSelected"/>
+
+                <Button x:Name="bDelete" Content="Delete" HorizontalAlignment="Right" Margin="0,0,10.328,10.151" VerticalAlignment="Bottom" Width="75"
+                        IsEnabled="False"
+                        Click="bDelete_Click"/>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</local:MainUserControl>

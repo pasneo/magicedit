@@ -67,8 +67,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="model\resource\ResourceManager.cs" />
+    <Compile Include="model\scheme\ParametrizedScheme.cs" />
     <Compile Include="ui_controls\main_controls\items\UCItemCategoryManager.xaml.cs">
       <DependentUpon>UCItemCategoryManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\main_controls\items\UCItemManager.xaml.cs">
+      <DependentUpon>UCItemManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\main_controls\spells\UCSpellManager.xaml.cs">
+      <DependentUpon>UCSpellManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui_controls\main_controls\spells\UCSpellCategoryManager.xaml.cs">
       <DependentUpon>UCSpellCategoryManager.xaml</DependentUpon>
@@ -191,6 +198,14 @@
     <Page Include="ui_controls\main_controls\items\UCItemCategoryManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\main_controls\items\UCItemManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui_controls\main_controls\spells\UCSpellManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ui_controls\main_controls\spells\UCSpellCategoryManager.xaml">
       <Generator>MSBuild:Compile</Generator>

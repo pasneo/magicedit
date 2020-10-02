@@ -72,11 +72,17 @@ namespace magicedit
             config.Visuals.Add(new Visual("grass", "images/terrain/grass.png", true));
             config.Visuals.Add(new Visual("village", "images/terrain/village.png", true));
             config.Visuals.Add(new Visual("desert", "images/terrain/desert.png", true));
+            config.Visuals.Add(new Visual("stone", "images/terrain/stone.png", true));
+            config.Visuals.Add(new Visual("wall", "images/terrain/wall.png", true));
+            config.Visuals.Add(new Visual("wall_opening", "images/terrain/wall-opening.png", true));
 
             Project.Current.Config.Map.SquareTypes.Add(new SquareType("forest", config.GetVisualById("forest")));
             Project.Current.Config.Map.SquareTypes.Add(new SquareType("grass", config.GetVisualById("grass")));
             Project.Current.Config.Map.SquareTypes.Add(new SquareType("village", config.GetVisualById("village")));
             Project.Current.Config.Map.SquareTypes.Add(new SquareType("desert", config.GetVisualById("desert")));
+            Project.Current.Config.Map.SquareTypes.Add(new SquareType("stone", config.GetVisualById("stone")));
+            Project.Current.Config.Map.SquareTypes.Add(new SquareType("wall", config.GetVisualById("wall")));
+            Project.Current.Config.Map.SquareTypes.Add(new SquareType("wall_opening", config.GetVisualById("wall_opening")));
         }
 
         private void mRun_Click(object sender, RoutedEventArgs e)

@@ -110,6 +110,8 @@ namespace magicedit
             }
         }
 
+        public Class() { }
+
         public bool ContainsAbilityModifier(string abilityName)
         {
             foreach (ClassModifier modifier in Modifiers)

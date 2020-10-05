@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- syntaxdefinition for Json by alek kowalczyk -->
+<SyntaxDefinition name="Classes" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<Color name="Keywords" foreground="#ab1273" fontWeight="bold" />
+	<RuleSet ignoreCase="false">
+		<Keywords color="Keywords" >
+			<Word>set</Word>
+			<Word>forbid</Word>
+			<Word>add</Word>
+		</Keywords>
+		</RuleSet>
+</SyntaxDefinition>

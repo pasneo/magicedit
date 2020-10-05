@@ -43,11 +43,15 @@
     <Reference Include="Antlr4.Runtime, Version=4.6.0.0, Culture=neutral, PublicKeyToken=09abb75b9ed49849, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr4.Runtime.4.6.6\lib\net45\Antlr4.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.6.0.0\lib\net45\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -66,8 +70,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="language\classlist\classlist_lang.g4.lexer.cs">
+      <DependentUpon>classlist_lang.g4</DependentUpon>
+    </Compile>
+    <Compile Include="language\classlist\classlist_lang.g4.parser.cs">
+      <DependentUpon>classlist_lang.g4</DependentUpon>
+    </Compile>
+    <Compile Include="language\classlist\Classlist_langVisitor.cs" />
+    <Compile Include="language\classlist\classlist_lang_gen_template.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>classlist_lang_gen_template.tt</DependentUpon>
+    </Compile>
+    <Compile Include="language\classlist\Classlist_lang_SemanticVisitor.cs" />
     <Compile Include="model\resource\ResourceManager.cs" />
     <Compile Include="model\scheme\ParametrizedScheme.cs" />
+    <Compile Include="SharpDevelop\ITextMarker.cs" />
+    <Compile Include="SharpDevelop\TextMarkerService.cs" />
+    <Compile Include="ui_controls\main_controls\UCClasslistManager.xaml.cs">
+      <DependentUpon>UCClasslistManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\classlist\UCClassListEditor.xaml.cs">
+      <DependentUpon>UCClassListEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui_controls\main_controls\items\UCItemCategoryManager.xaml.cs">
       <DependentUpon>UCItemCategoryManager.xaml</DependentUpon>
     </Compile>
@@ -195,6 +220,14 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
+    <Page Include="ui_controls\main_controls\UCClasslistManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\classlist\UCClassListEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ui_controls\main_controls\items\UCItemCategoryManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -315,6 +348,13 @@
       <CustomToolNamespace>magicedit.language.scheme</CustomToolNamespace>
     </Antlr4>
     <None Include="doc\Optimization.docx" />
+    <Antlr4 Include="language\classlist\classlist_lang.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>magicedit.language.classlist</CustomToolNamespace>
+    </Antlr4>
+    <Content Include="language\classlist\classlist_lang_highlight.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -355,9 +395,16 @@
     <Content Include="images\visual_placeholder.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="language\classlist\classlist_lang_gen_template.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>classlist_lang_gen_template.cs</LastGenOutput>
+    </Content>
     <Content Include="language\examples\scheme_example1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

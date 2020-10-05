@@ -61,6 +61,7 @@ namespace magicedit
             tviSpellCategories.Tag = new UCSpellCategoryManager();
             tviItems.Tag = new UCItemManager();
             tviSpells.Tag = new UCSpellManager();
+            tviClasslists.Tag = new UCClasslistManager();
 
         }
 

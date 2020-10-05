@@ -66,11 +66,13 @@
                             </TreeViewItem>
                             <TreeViewItem x:Name="tviMap" Header="Map">
                             </TreeViewItem>
-                            <TreeViewItem Header="Objects">
+                            <TreeViewItem Header="Scheme">
                             </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Character">
                             <TreeViewItem x:Name="tviCharacterSettings" Header="Settings">
+                            </TreeViewItem>
+                            <TreeViewItem x:Name="tviClasslists" Header="Classlists">
                             </TreeViewItem>
                             <TreeViewItem Header="Scheme">
                             </TreeViewItem>

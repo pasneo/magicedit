@@ -24,5 +24,36 @@ namespace magicedit
         {
             InitializeComponent();
         }
+
+        public override void Open()
+        {
+            classListEditor.RebuildTree();
+        }
+
+        private void bView_Click(object sender, RoutedEventArgs e)
+        {
+            if (classListCodeEditor.Visibility == Visibility.Hidden)
+            {
+                classListCodeEditor.GenerateCode();
+                classListCodeEditor.SyntaxCheckTimer.Start();
+                classListCodeEditor.Visibility = Visibility.Visible;
+                classListEditor.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                if (!classListCodeEditor.GenerateDataFromCode())
+                {
+                    var res = MessageBox.Show(
+                        "By switching views you may lose any unsaved changes. We recommend fixing errors first. Switch anyway?",
+                        "Errors in code",
+                        MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (res == MessageBoxResult.No) return;
+                }
+                classListCodeEditor.SyntaxCheckTimer.Stop();
+                classListEditor.RebuildTree();
+                classListCodeEditor.Visibility = Visibility.Hidden;
+                classListEditor.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

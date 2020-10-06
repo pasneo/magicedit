@@ -11,10 +11,7 @@ namespace magicedit.language.classlist
     public class Classlist_langVisitor : classlist_langBaseVisitor<object>
     {
 
-        private Config Config
-        {
-            get { return Project.Current?.Config; }
-        }
+        public List<ClassList> ClassLists { get; set; } = new List<ClassList>();
 
         ClassList currentClassList = null;
         Class currentClass = null;
@@ -26,7 +23,7 @@ namespace magicedit.language.classlist
             ClassList classList = new ClassList();
             classList.Name = context.classListName().GetText();
 
-            Config.ClassLists.Add(classList);
+            ClassLists.Add(classList);
             currentClassList = classList;
 
             return base.VisitClassListExpr(context);

@@ -87,11 +87,26 @@
     <Compile Include="model\scheme\ParametrizedScheme.cs" />
     <Compile Include="SharpDevelop\ITextMarker.cs" />
     <Compile Include="SharpDevelop\TextMarkerService.cs" />
-    <Compile Include="ui_controls\main_controls\UCClasslistManager.xaml.cs">
-      <DependentUpon>UCClasslistManager.xaml</DependentUpon>
+    <Compile Include="ui_controls\misc\UCETextList.xaml.cs">
+      <DependentUpon>UCETextList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\misc\UCETextListElem.xaml.cs">
+      <DependentUpon>UCETextListElem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\classlist\UCEAbilityModifier.xaml.cs">
+      <DependentUpon>UCEAbilityModifier.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\misc\UCENumericButton.xaml.cs">
+      <DependentUpon>UCENumericButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui_controls\classlist\UCClassListEditor.xaml.cs">
       <DependentUpon>UCClassListEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\main_controls\UCClasslistManager.xaml.cs">
+      <DependentUpon>UCClasslistManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\classlist\UCClassListCodeEditor.xaml.cs">
+      <DependentUpon>UCClassListCodeEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui_controls\main_controls\items\UCItemCategoryManager.xaml.cs">
       <DependentUpon>UCItemCategoryManager.xaml</DependentUpon>
@@ -220,11 +235,31 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
-    <Page Include="ui_controls\main_controls\UCClasslistManager.xaml">
+    <Page Include="ui_controls\misc\UCETextList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\misc\UCETextListElem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\classlist\UCEAbilityModifier.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\misc\UCENumericButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ui_controls\classlist\UCClassListEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\main_controls\UCClasslistManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\classlist\UCClassListCodeEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

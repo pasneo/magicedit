@@ -84,6 +84,23 @@ namespace magicedit
             Project.Current.Config.Map.SquareTypes.Add(new SquareType("stone", config.GetVisualById("stone")));
             Project.Current.Config.Map.SquareTypes.Add(new SquareType("wall", config.GetVisualById("wall")));
             Project.Current.Config.Map.SquareTypes.Add(new SquareType("wall_opening", config.GetVisualById("wall_opening")));
+
+            //TODO: remove the following lines
+            ClassList races = new ClassList("Races");
+            races.Classes.Add(new Class("Dwarf"));
+            races.Classes.Add(new Class("Elf"));
+
+            ClassList skills = new ClassList("Skills");
+            skills.Classes.Add(new Class("Smith"));
+            skills.Classes.Add(new Class("Hunter"));
+            skills.Classes.Add(new Class("Potter"));
+
+            Project.Current.Config.ClassLists.Add(races);
+            Project.Current.Config.ClassLists.Add(skills);
+
+            Project.Current.Config.CharacterConfig.Abilities.Add(new ObjectVariable("number", "STRENGTH", 0));
+            Project.Current.Config.CharacterConfig.Abilities.Add(new ObjectVariable("number", "DEFENSE", 0));
+            Project.Current.Config.CharacterConfig.Abilities.Add(new ObjectVariable("number", "DEXTERITY", 0));
         }
 
         private void mRun_Click(object sender, RoutedEventArgs e)

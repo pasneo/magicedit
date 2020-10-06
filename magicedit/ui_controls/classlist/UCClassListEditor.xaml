@@ -4,52 +4,94 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:magicedit"
-             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <Control.Resources>
+        <ContextMenu x:Key="cmNewClass">
+            <MenuItem x:Name="miNewClass" Header="New class" Click="miNewClass_Click" />
+        </ContextMenu>
+    </Control.Resources>
+
     <Grid>
 
-        <Grid x:Name="gridCode" Visibility="Visible">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="5" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <avalonEdit:TextEditor x:Name="tbCode"
-                     Background="#fefefe"
-                     ShowLineNumbers="True"
-                     BorderBrush="Black"
-                     FontFamily="Consolas"
-                     VerticalScrollBarVisibility="Visible"
-                     HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Margin="10,27,10,0" Text="TextBox" Width="auto"
-                     TextChanged="tbCode_TextChanged"
-                     PreviewTextInput="tbCode_PreviewTextInput"
-                     Visibility="Visible"
-                     SyntaxHighlighting="Classes"/>
-
-            <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" />
-            <!--
-            <TextBox x:Name="tbErrorList"
-                     Grid.Row="2"
-                     IsReadOnly="True"
-                     VerticalScrollBarVisibility="Visible"
-                     Foreground="Red"
-                     FontFamily="Consolas"
-                     Margin="10,0,10,0" VerticalAlignment="Stretch"></TextBox>
-            -->
-
-            <ListBox x:Name="lbErrorList"
-                     Grid.Row="2"
-                     ScrollViewer.VerticalScrollBarVisibility="Visible"
-                     Foreground="Red"
-                     FontFamily="Consolas"
-                     Margin="10,0,10,0" VerticalAlignment="Stretch"
-                     SelectionChanged="lbErrorList_SelectionChanged"></ListBox>
-
+        <Grid>
+            <TreeView x:Name="tvClasslists" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <TreeViewItem x:Name="tviClasslists" Header="Class lists">
+                    <TreeViewItem.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="cmiNewClasslist" Header="New class list" Click="cmiNewClasslist_Click"></MenuItem>
+                        </ContextMenu>
+                    </TreeViewItem.ContextMenu>
+                </TreeViewItem>
+            </TreeView>
         </Grid>
 
+
+        <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
+                              Width="5"/>
+
+        <ScrollViewer Grid.Column="2">
+            <Grid Background="#ababab">
+
+                <!-- Classlist and class settings -->
+
+                <Label Content="Name" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Width="120"/>
+                <TextBox
+                    x:Name="tbName"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Left" Height="23" Margin="130,6,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="299"/>
+                
+                <Label Content="Shown Name" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="120"/>
+                <local:UCStringConstSelector
+                    x:Name="textSelector"
+                    IsEnabled="False"
+                    HorizontalAlignment="Stretch" Margin="130,35,149.42,0" VerticalAlignment="Top"
+                    />
+
+                <!-- Class settings only -->
+
+                <StackPanel x:Name="spClassSettings" Orientation="Vertical" VerticalAlignment="Top" Margin="0,66,0,0">
+
+                    <Grid>
+                        <Label Content="Ability modifiers" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+
+                        <StackPanel x:Name="spAbilityModifiers" Margin="30,31,10.42,0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,10,0,0">
+                        <Label Content="Set attributes" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+                        <local:UCETextList
+                            x:Name="tlSetAttributes"
+                            Background="LightGray"
+                            HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Margin="10,26,0,0" Width="200"
+                            TextAdded="tlSetAttributes_TextAdded"
+                            TextDeleted="tlSetAttributes_TextDeleted"/>
+
+                        <Label Content="Forbidden attributes" HorizontalAlignment="Left" Margin="231,0,0,-0.504" VerticalAlignment="Top"/>
+                        <local:UCETextList
+                            x:Name="tlForbiddenAttributes"
+                            Background="LightGray"
+                            HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Margin="231,26,0,-0.168" Width="200"
+                            TextAdded="tlForbiddenAttributes_TextAdded"
+                            TextDeleted="tlForbiddenAttributes_TextDeleted"/>
+                    </Grid>
+
+                    <!-- TODO: add items -->
+
+                </StackPanel>
+
+            </Grid>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>

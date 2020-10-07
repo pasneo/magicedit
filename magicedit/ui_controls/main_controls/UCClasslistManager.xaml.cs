@@ -28,6 +28,7 @@ namespace magicedit
         public override void Open()
         {
             classListEditor.RebuildTree();
+            classListEditor.Refresh();
         }
 
         private void bView_Click(object sender, RoutedEventArgs e)

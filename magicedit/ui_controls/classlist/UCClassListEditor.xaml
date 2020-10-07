@@ -22,7 +22,9 @@
         </Grid.ColumnDefinitions>
 
         <Grid>
-            <TreeView x:Name="tvClasslists" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TreeView x:Name="tvClasslists" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      SelectedItemChanged="tvClasslists_SelectedItemChanged">
+
                 <TreeViewItem x:Name="tviClasslists" Header="Class lists">
                     <TreeViewItem.ContextMenu>
                         <ContextMenu>
@@ -42,17 +44,22 @@
 
                 <!-- Classlist and class settings -->
 
+              <Grid x:Name="gridSettings">
+                
                 <Label Content="Name" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Width="120"/>
                 <TextBox
                     x:Name="tbName"
                     VerticalContentAlignment="Center"
-                    HorizontalAlignment="Left" Height="23" Margin="130,6,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="299"/>
+                    HorizontalAlignment="Stretch" Height="23" Margin="130,6,149.42,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"
+                    IsEnabled="False"
+                    TextChanged="tbName_TextChanged"/>
                 
                 <Label Content="Shown Name" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="120"/>
                 <local:UCStringConstSelector
                     x:Name="textSelector"
                     IsEnabled="False"
                     HorizontalAlignment="Stretch" Margin="130,35,149.42,0" VerticalAlignment="Top"
+                    SelectionChanged="textSelector_SelectionChanged"
                     />
 
                 <!-- Class settings only -->
@@ -60,7 +67,7 @@
                 <StackPanel x:Name="spClassSettings" Orientation="Vertical" VerticalAlignment="Top" Margin="0,66,0,0">
 
                     <Grid>
-                        <Label Content="Ability modifiers" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Ability modifiers" HorizontalAlignment="Left" Margin="10,10,0,-5.345" VerticalAlignment="Top" FontWeight="Bold"/>
 
                         <StackPanel x:Name="spAbilityModifiers" Margin="30,31,10.42,0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
                         </StackPanel>
@@ -89,6 +96,8 @@
                     <!-- TODO: add items -->
 
                 </StackPanel>
+
+              </Grid>
 
             </Grid>
         </ScrollViewer>

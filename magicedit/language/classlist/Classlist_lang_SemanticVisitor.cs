@@ -136,10 +136,18 @@ namespace magicedit.language.classlist
             return base.VisitAttribute(context);
         }
 
-        public override object VisitItemLine([NotNull] classlist_langParser.ItemLineContext context)
+        public override object VisitItem([NotNull] classlist_langParser.ItemContext context)
         {
-            //TODO: check if item exists
-            return base.VisitItemLine(context);
+            string itemName = context.GetText();
+
+            foreach (var obj in Config.Objects)
+            {
+                if (obj.TypeTag == ObjectTypeTags.Item && obj.Name == itemName) return base.VisitItem(context);
+            }
+
+            Errors.Add(new ErrorDescriptor($"Item '{itemName}' does not exist.", context.Start.Line, context.Start.Column, context.Start.StartIndex, context.Start.StopIndex));
+
+            return base.VisitItem(context);
         }
 
     }

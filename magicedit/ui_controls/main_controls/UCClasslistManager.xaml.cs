@@ -27,14 +27,27 @@ namespace magicedit
 
         public override void Open()
         {
-            classListEditor.RebuildTree();
-            classListEditor.Refresh();
+            if (classListCodeEditor.Visibility == Visibility.Visible)
+            {
+                classListCodeEditor.GenerateDataFromCode();
+            }
+            else
+            {
+                classListEditor.RebuildTree();
+                classListEditor.Refresh();
+            }
+        }
+
+        public override void Close()
+        {
+            classListCodeEditor.SyntaxCheckTimer.Stop();
         }
 
         private void bView_Click(object sender, RoutedEventArgs e)
         {
             if (classListCodeEditor.Visibility == Visibility.Hidden)
             {
+                //open code editor
                 classListCodeEditor.GenerateCode();
                 classListCodeEditor.SyntaxCheckTimer.Start();
                 classListCodeEditor.Visibility = Visibility.Visible;
@@ -42,6 +55,7 @@ namespace magicedit
             }
             else
             {
+                //open normal editor
                 if (!classListCodeEditor.GenerateDataFromCode())
                 {
                     var res = MessageBox.Show(

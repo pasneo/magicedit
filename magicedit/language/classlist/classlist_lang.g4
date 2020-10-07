@@ -39,7 +39,7 @@ classLine : abilityLine | attributeLine | itemLine ;
 
 abilityLine : ability abilityModifier value ;
 attributeLine : attributeOption attribute ;
-itemLine : ADD item ;
+itemLine : ADD item_number? item ;
 
 classListName : STR ;
 className : STR ;
@@ -50,6 +50,7 @@ attribute : STR ;
 attributeOption : (SET | FORBID) ;
 value : VALUE ;
 item : STR ;
+item_number : VALUE ;
 
 SET : 'set' ;
 FORBID : 'forbid' ;
@@ -57,7 +58,7 @@ ADD : 'add' ;
 PLUS : '+' ;
 MINUS : '-' ;
 
-VALUE : ([0-9])+ ;
+VALUE : '0' | [1-9]([0-9])* ;
 STR : ([a-zA-Z] | '_')([a-zA-Z0-9] | '_')* ;
 WS : (' ' | '\r' | '\n' | '\t') -> skip ;
 

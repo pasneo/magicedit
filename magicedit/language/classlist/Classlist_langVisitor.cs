@@ -79,7 +79,17 @@ namespace magicedit.language.classlist
 
         public override object VisitItemLine([NotNull] classlist_langParser.ItemLineContext context)
         {
-            //TODO: add item modif
+            //add item modif
+
+            ItemModifier modif = new ItemModifier();
+
+            modif.ItemName = context.item().GetText();
+            modif.ItemNumber = 1;
+
+            if (context.item_number() != null) modif.ItemNumber = int.Parse(context.item_number().GetText());
+
+            currentClass.Modifiers.Add(modif);
+
             return base.VisitItemLine(context);
         }
 

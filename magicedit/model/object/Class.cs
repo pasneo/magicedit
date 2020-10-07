@@ -78,7 +78,7 @@ namespace magicedit
     public class ItemModifier : ClassModifier
     {
         public string ItemName { get; set; }
-        public readonly int ItemNumber = 1;
+        public int ItemNumber { get; set; } = 1;
 
         public ItemModifier() { }
         public ItemModifier(string itemName)
@@ -88,7 +88,9 @@ namespace magicedit
 
         public override string GetCode()
         {
-            return "add " + ItemName;
+            if (ItemNumber == 1)
+                return "add " + ItemName;
+            return $"add {ItemNumber} {ItemName}";
         }
     }
 

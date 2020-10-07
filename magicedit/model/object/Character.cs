@@ -20,6 +20,18 @@ namespace magicedit
 
         public Character(string id, string name) : base(id, name) { }
 
+        //this will create variables that represent inv slots in character
+        public void CreateInventorySlots(Config config)
+        {
+            foreach(var slot in config.CharacterConfig.InventorySlots)
+            {
+                if (GetVariableByName(slot.Name, config) == null)
+                {
+                    Variables.Add(new ObjectVariable(slot.Type, slot.Name, null));
+                }
+            }
+        }
+
         public bool CanReachObject(Game game, Object @object)
         {
 
@@ -107,6 +119,22 @@ namespace magicedit
                     }
                 }
             }
+        }
+
+        public Item GetItemBySlot(string slotName, Config config)
+        {
+            var variable = GetVariableByName(slotName, config);
+            return (Item)variable.Value;
+        }
+
+        public bool MoveItemToSlot(Item item, string slotName, Config config)
+        {
+            var variable = GetVariableByName(slotName, config);
+
+            if (item.Scheme == null || SchemeExecutor.CheckTypeCompatibility(variable.Type, item.Scheme.Name, config)) return false;
+
+            variable.Value = item;
+            return true;
         }
 
     }

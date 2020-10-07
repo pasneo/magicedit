@@ -19,6 +19,10 @@ namespace magicedit
         //classvars the player can customize at the beginning of a game (only type and name are important here; values are passed in Game.SetupPlayers())
         public List<ObjectVariable> Classvars { get; set; } = new List<ObjectVariable>();
 
+        //only types and names matter (eg. weapon hand, armor body)
+        //characters will have variables that correspond to each defined slot
+        public List<ObjectVariable> InventorySlots { get; set; } = new List<ObjectVariable>();
+
         public Scheme CommonScheme { get; set; }        //scheme for all characters
     }
 }

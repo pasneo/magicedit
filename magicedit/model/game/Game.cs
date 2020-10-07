@@ -72,6 +72,7 @@ namespace magicedit
             for(int i=0; i<numberOfPlayers; ++i)
             {
                 Player player = new Player();
+                player.Character.CreateInventorySlots(Config);      //generate variables for inventory slots
                 player.Character.Position = Map.GetSpawnerByNo(i);
                 Players.Add(player);
             }
@@ -91,6 +92,7 @@ namespace magicedit
             for (int i = 0; i < numberOfPlayers; ++i)
             {
                 Player player = new Player(characters[i]);
+                player.Character.CreateInventorySlots(Config);      //generate variables for inventory slots
                 player.Character.Position = Map.GetSpawnerByNo(i);
                 player.Character.EvaluateClassItemModifiers(Config);    //add items to character provided by its class modifiers
                 Players.Add(player);

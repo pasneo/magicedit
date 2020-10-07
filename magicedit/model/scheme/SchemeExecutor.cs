@@ -168,9 +168,14 @@ namespace magicedit
             return null;
         }
 
+        public bool CheckTypeCompatibility(string variableType, string valueType)
+        {
+            return CheckTypeCompatibility(variableType, valueType, Game.Config);
+        }
+
         // Checks if a variable with type variableType can be set to a variable with type valueType
         // (Is [variable = value] a valid statement?)
-        public bool CheckTypeCompatibility(string variableType, string valueType)
+        public static bool CheckTypeCompatibility(string variableType, string valueType, Config config)
         {
             //Check if types are basic types (number, logical, text) or schemes
 
@@ -185,13 +190,13 @@ namespace magicedit
                 if (valueType == VariableTypes.Object) return true;
                 //Basic types are not compatible with 'object'
                 if (valueType == VariableTypes.Number || valueType == VariableTypes.Logical || valueType == VariableTypes.Text) return false;
-                Scheme valueScheme = Game.Config.GetSchemeByName(valueType);
+                Scheme valueScheme = config.GetSchemeByName(valueType);
                 if (valueScheme == null) throw CreateException($"Unknown type '{valueType}'");
                 return true;
             }
 
             //if variable is of a scheme type
-            Scheme variableScheme = Game.Config.GetSchemeByName(variableType);
+            Scheme variableScheme = config.GetSchemeByName(variableType);
 
             if (variableScheme != null)
             {
@@ -201,7 +206,7 @@ namespace magicedit
                 //Basic types are not compatible with any scheme
                 if (valueType == VariableTypes.Number || valueType == VariableTypes.Logical || valueType == VariableTypes.Text) return false;
 
-                Scheme valueScheme = Game.Config.GetSchemeByName(valueType);
+                Scheme valueScheme = config.GetSchemeByName(valueType);
 
                 if (valueScheme == null) throw CreateException($"Unknown type '{valueType}'");
 
@@ -210,7 +215,7 @@ namespace magicedit
             }
 
             //if variable type is class type (classlist)
-            if (Game.Config.IsClassType(variableType)) return variableType == valueType;
+            if (config.IsClassType(variableType)) return variableType == valueType;
 
             throw CreateException($"Unknown type '{variableType}'");
 
@@ -266,7 +271,7 @@ namespace magicedit
                 {
                     ObjectVariable value = FindValueByString(valueName);
 
-                    if (!CheckTypeCompatibility(variable.Type, value.Type))
+                    if (!CheckTypeCompatibility(variable.Type, value.Type, Game.Config))
                         throw CreateException("Incompatible types");
 
                     variable.Value = value.Value;
@@ -291,7 +296,7 @@ namespace magicedit
 
                 if (variable != null)
                 {
-                    if (!CheckTypeCompatibility(variable.Type, value.Type))
+                    if (!CheckTypeCompatibility(variable.Type, value.Type, Game.Config))
                         throw CreateException("Incompatible types");
 
                     variable.Value = value.Value;

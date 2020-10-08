@@ -9,16 +9,42 @@
     
     <Grid Background="#ababab">
         
-        <Label Content="Abilities" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Abilities" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+        <Label Content="Ability name" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
+        
         <local:UCETextList
             x:Name="tlAbilities"
             Background="LightGray"
             HorizontalAlignment="Left" VerticalAlignment="Top"
-            Margin="10,36,0,0" Width="200"/>
+            Margin="10,55,0,0" Width="200"
+            TextAdded="tlAbilities_TextAdded"
+            TextDeleted="tlAbilities_TextDeleted"/>
 
-        <Label Content="Inventory slots" HorizontalAlignment="Left" Margin="236,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Inventory slots" HorizontalAlignment="Left" Margin="236,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
 
+        <Label Content="Slot name" HorizontalAlignment="Left" Margin="236,29,0,0" VerticalAlignment="Top"/>
+        <Label Content="Slot scheme" HorizontalAlignment="Left" Margin="335,29,0,0" VerticalAlignment="Top"/>
+        
+        <Grid Margin="236,55,0,0" Background="LightGray" HorizontalAlignment="Left" VerticalAlignment="Top">
 
+            <TextBox    x:Name="tbSlotName"
+                        Height="23"
+                        HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Width="100"
+                                />
+            <local:UCSchemeSelector
+                                x:Name="slotSchemeSelector"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,0,0,0" Width="120" Height="23"/>
+            <Button x:Name="bAddItem" Content="Add"
+                                    HorizontalAlignment="Left" VerticalAlignment="Top"
+                                    Width="40" Margin="220,0,0,0" Height="23"
+                                    Click="bAddItem_Click"/>
+
+            <StackPanel x:Name="spSlots" Margin="0,23,0,0" Width="260" HorizontalAlignment="Left">
+                <local:UCETextListElem/>
+            </StackPanel>
+        </Grid>
 
     </Grid>
     

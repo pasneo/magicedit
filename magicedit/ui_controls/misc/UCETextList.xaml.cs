@@ -36,6 +36,16 @@ namespace magicedit
             spTexts.Children.Clear();
         }
 
+        public void AddElemToList(UCETextListElem elem)
+        {
+            spTexts.Children.Add(elem);
+        }
+
+        public void RemoveElem(UCETextListElem elem)
+        {
+            spTexts.Children.Remove(elem);
+        }
+
         public UCETextListElem AddTextToList(string text)
         {
             UCETextListElem elem = new UCETextListElem();

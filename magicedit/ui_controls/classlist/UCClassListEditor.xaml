@@ -111,6 +111,7 @@
                                 />
                             <local:IntegerUpDown
                                 x:Name="nItemNumber"
+                                MinValue="1"
                                 HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,0,0,0" Width="70" Height="23"/>
                             <Button x:Name="bAddItem" Content="Add"
                                     HorizontalAlignment="Left" VerticalAlignment="Top"

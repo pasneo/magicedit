@@ -81,9 +81,10 @@ namespace magicedit
         public int ItemNumber { get; set; } = 1;
 
         public ItemModifier() { }
-        public ItemModifier(string itemName)
+        public ItemModifier(string itemName, int itemNumber = 1)
         {
             this.ItemName = itemName;
+            ItemNumber = itemNumber;
         }
 
         public override string GetCode()

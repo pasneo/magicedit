@@ -120,6 +120,9 @@
     <Compile Include="ui_controls\main_controls\spells\UCSpellCategoryManager.xaml.cs">
       <DependentUpon>UCSpellCategoryManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ui_controls\selectors\UCObjectSelector.xaml.cs">
+      <DependentUpon>UCObjectSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui_controls\selectors\UCStringConstSelector.xaml.cs">
       <DependentUpon>UCStringConstSelector.xaml</DependentUpon>
     </Compile>
@@ -276,6 +279,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ui_controls\main_controls\spells\UCSpellCategoryManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui_controls\selectors\UCObjectSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

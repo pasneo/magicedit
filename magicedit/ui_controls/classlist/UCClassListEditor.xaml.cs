@@ -33,6 +33,7 @@ namespace magicedit
         public void Refresh()
         {
             textSelector.Refresh();
+            itemSelector.Refresh();
         }
 
         private void ClearInfo()
@@ -104,6 +105,7 @@ namespace magicedit
 
             tlSetAttributes.ClearList();
             tlForbiddenAttributes.ClearList();
+            spItemModifiers.Children.Clear();
 
             foreach(var modif in @class.Modifiers)
             {
@@ -120,6 +122,11 @@ namespace magicedit
                         var elem = tlForbiddenAttributes.AddTextToList(attributeModifier.AttributeName);
                         elem.Tag = attributeModifier;
                     }
+                }
+                else if (modif is ItemModifier)
+                {
+                    var textElem = CreateItemModifierElem((ItemModifier)modif);
+                    spItemModifiers.Children.Add(textElem);
                 }
             }
 
@@ -275,6 +282,43 @@ namespace magicedit
                 ClassList classList = (ClassList)item.Tag;
                 BuildClasslistContent(classList);
             }
+        }
+
+        private UCETextListElem CreateItemModifierElem(ItemModifier modif)
+        {
+            UCETextListElem textElem = new UCETextListElem();
+            textElem.Content = $"{modif.ItemName} ({modif.ItemNumber})";
+            textElem.Tag = modif;
+            textElem.DeleteClicked += ItemTextElem_DeleteClicked;
+
+            return textElem;
+        }
+
+        private void bAddItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (itemSelector.SelectedTag != null)
+            {
+                Class selectedClass = (Class)((TreeViewItem)tvClasslists.SelectedItem).Tag;
+
+                ItemModifier modif = new ItemModifier(itemSelector.SelectedTag.Name, nItemNumber.NumValue);
+                selectedClass.AddModifier(modif);
+
+                var textElem = CreateItemModifierElem(modif);
+                spItemModifiers.Children.Add(textElem);
+            }
+
+            itemSelector.SelectByTag(null);
+            nItemNumber.NumValue = 1;
+        }
+
+        private void ItemTextElem_DeleteClicked(object sender, RoutedEventArgs e)
+        {
+            Class selectedClass = (Class)((TreeViewItem)tvClasslists.SelectedItem).Tag;
+
+            UCETextListElem textElem = (UCETextListElem)sender;
+
+            selectedClass.Modifiers.Remove((ItemModifier)textElem.Tag);
+            spItemModifiers.Children.Remove(textElem);
         }
     }
 }

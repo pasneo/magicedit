@@ -93,7 +93,36 @@
                             TextDeleted="tlForbiddenAttributes_TextDeleted"/>
                     </Grid>
 
-                    <!-- TODO: add items -->
+                        <Label Content="Items" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"
+                               FontWeight="Bold"/>
+
+                        <Grid>
+                            <Label Content="Item" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
+                            <Label Content="#" HorizontalAlignment="Left" Margin="161,0,0,-0.185" VerticalAlignment="Top"/>
+                        </Grid>
+                    
+                        <Grid Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="LightGray">
+                            
+                            <local:UCObjectSelector
+                                x:Name="itemSelector"
+                                TypeTag="Item"
+                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Width="150"
+                                />
+                            <local:IntegerUpDown
+                                x:Name="nItemNumber"
+                                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,0,0,0" Width="70" Height="23"/>
+                            <Button x:Name="bAddItem" Content="Add"
+                                    HorizontalAlignment="Left" VerticalAlignment="Top"
+                                    Width="40" Margin="220,0,0,0" Height="23"
+                                    Click="bAddItem_Click"/>
+
+                            <StackPanel x:Name="spItemModifiers" Margin="0,30,0,0">
+                            </StackPanel>
+                            
+                        </Grid>
+
+                        <!-- TODO: add items -->
 
                 </StackPanel>
 

@@ -87,6 +87,9 @@
     <Compile Include="model\scheme\ParametrizedScheme.cs" />
     <Compile Include="SharpDevelop\ITextMarker.cs" />
     <Compile Include="SharpDevelop\TextMarkerService.cs" />
+    <Compile Include="ui_controls\misc\UCEObjectRow.xaml.cs">
+      <DependentUpon>UCEObjectRow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui_controls\misc\UCETextList.xaml.cs">
       <DependentUpon>UCETextList.xaml</DependentUpon>
     </Compile>
@@ -238,6 +241,10 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
+    <Page Include="ui_controls\misc\UCEObjectRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ui_controls\misc\UCETextList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -20,7 +20,7 @@ namespace magicedit
     /// </summary>
     public partial class UCMapManager : MainUserControl
     {
-
+        
         // used when setting square type for multiple squares. 'Set' means all selected squares should be set to the specific type.
         private enum SquareTypeSetEnum
         {
@@ -29,9 +29,14 @@ namespace magicedit
             Remove
         }
 
+        private Config Config
+        {
+            get { return Project.Current.Config; }
+        }
+
         private Map Map
         {
-            get { return Project.Current?.Config?.Map; }
+            get { return Config.Map; }
         }
 
         public UCMapManager()
@@ -45,6 +50,7 @@ namespace magicedit
         {
             RefreshSquareTypeSelector();
             RefreshSpawnerIndicator();
+            RefreshMapObjectsPanel();
         }
 
         private void RefreshSquareTypeSelector()
@@ -99,14 +105,51 @@ namespace magicedit
 
         }
 
+        private void RefreshMapObjectsPanel()
+        {
+            spObjects.Children.Clear();
+
+            if (mapEditor.SelectedPositions.Count != 1) return;
+
+            var selectedPos = mapEditor.SelectedPositions.FirstOrDefault();
+
+            foreach (var obj in Config.Map.Objects)
+            {
+                UCEObjectRow objectRow = new UCEObjectRow(obj, obj.Position != null && obj.Position.Equals(selectedPos));
+                objectRow.CheckChanged += ObjectRow_CheckChanged;
+                spObjects.Children.Add(objectRow);
+            }
+        }
+
+        private void ObjectRow_CheckChanged(UCEObjectRow row)
+        {
+            if (row.Checked)
+            {
+                //set obj's position to selected one
+                MapObject mo = (MapObject)row.Tag;
+                mo.Position = mapEditor.SelectedPositions.FirstOrDefault();
+            }
+            else
+            {
+                //set obj's position to null
+                MapObject mo = (MapObject)row.Tag;
+                mo.Position = null;
+            }
+            mapEditor.Redraw();
+        }
+
         public override void Open()
         {
+            Config.Map.RecollectMapObjects(Config.Objects);
+
             //todo: check if objects or square types have been deleted (in this case remove from map these objects and squares)
             squareTypeSelector.RefreshList();
             mapEditor.Redraw();
 
             nMapWidth.NumValue = Map.Width;
             nMapHeight.NumValue = Map.Height;
+
+            RefreshMapObjectsPanel();
         }
 
         private void squareTypeSelector_OnSquareTypeSelected(SquareType selectedSquareType)

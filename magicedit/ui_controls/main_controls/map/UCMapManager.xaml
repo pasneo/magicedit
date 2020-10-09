@@ -43,14 +43,21 @@
                         <Hyperlink x:Name="hySquareTypes" Click="hySquareTypes_Click"><Run Text="Go to square types"/></Hyperlink>
                     </TextBlock>
 
-                    <TextBlock HorizontalAlignment="Left" Margin="10,20,0,0" TextWrapping="Wrap" Text="Objects" VerticalAlignment="Top"/>
-
                     <Grid Margin="10,20,0,0">
                         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Spawn point" VerticalAlignment="Top"/>
                         <CheckBox x:Name="cbSpawner"
                                   IsEnabled="False"
                                   HorizontalAlignment="Right" Margin="0,1,30,0" Checked="cbSpawner_CheckChanged" Unchecked="cbSpawner_CheckChanged"/>
                     </Grid>
+
+                    <TextBlock HorizontalAlignment="Left" Margin="10,20,0,0" TextWrapping="Wrap" Text="Objects" VerticalAlignment="Top"/>
+
+                    <StackPanel
+                        x:Name="spObjects"
+                        Margin="10,10,10,0"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        
+                    </StackPanel>
 
                 </StackPanel>
             </ScrollViewer>

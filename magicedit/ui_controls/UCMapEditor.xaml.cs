@@ -87,21 +87,23 @@ namespace magicedit
         {
             canvas.Children.Clear();
 
-            foreach (var mapObject in Map.Objects)
-            {
-                Image image = new Image();
-                image.Width = image.Height = CellSize;
-                image.Margin = new Thickness(TranslateX(mapObject.Position.X * CellSize), TranslateY(mapObject.Position.Y * CellSize), 0.0, 0.0);
-                image.Source = DefaultResources.GetVisualImageOrDefault(mapObject.Visual);
-                canvas.Children.Add(image);
-            }
-
             foreach (var square in Map.Squares)
             {
                 Image image = new Image();
                 image.Width = image.Height = CellSize;
                 image.Margin = new Thickness(TranslateX(square.Key.X * CellSize), TranslateY(square.Key.Y * CellSize), 0.0, 0.0);
                 image.Source = DefaultResources.GetVisualImageOrDefault(square.Value.Visual);
+                canvas.Children.Add(image);
+            }
+
+            foreach (var mapObject in Map.Objects)
+            {
+                if (mapObject.Position == null || !Map.IsPositionWithin(mapObject.Position)) continue;
+
+                Image image = new Image();
+                image.Width = image.Height = CellSize;
+                image.Margin = new Thickness(TranslateX(mapObject.Position.X * CellSize), TranslateY(mapObject.Position.Y * CellSize), 0.0, 0.0);
+                image.Source = DefaultResources.GetVisualImageOrDefault(mapObject.Visual);
                 canvas.Children.Add(image);
             }
 
@@ -198,7 +200,7 @@ namespace magicedit
             {
                 foreach (var selectedPosition in SelectedPositions)
                 {
-                    if (mapObject.Position.Equals(selectedPosition))
+                    if (mapObject.Position != null && mapObject.Position.Equals(selectedPosition))
                     {
                         selectedMapObjects.Add(mapObject);
                         break;

@@ -55,10 +55,10 @@ namespace magicedit
             tviSquareTypes.Tag = new UCSquareTypeManager();
             tviCharacterSettings.Tag = new UCCharacterManager();
             tviMap.Tag = new UCMapManager();
-            tviObjectSchemes.Tag = new UCObjectSchemeManager();
+            tviSchemes.Tag = new UCObjectSchemeManager();
             tviObjects.Tag = new UCObjectManager();
-            tviItemCategories.Tag = new UCItemCategoryManager();
-            tviSpellCategories.Tag = new UCSpellCategoryManager();
+            //tviItemCategories.Tag = new UCItemCategoryManager();
+            //tviSpellCategories.Tag = new UCSpellCategoryManager();
             tviItems.Tag = new UCItemManager();
             tviSpells.Tag = new UCSpellManager();
             tviClasslists.Tag = new UCClasslistManager();

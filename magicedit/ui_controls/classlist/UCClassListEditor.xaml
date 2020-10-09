@@ -73,7 +73,9 @@
                         </StackPanel>
                     </Grid>
 
-                    <Grid Margin="0,10,0,0">
+                    <Label Content="Attribute modifiers" HorizontalAlignment="Left" Margin="10,10,0,-5.345" VerticalAlignment="Top" FontWeight="Bold"/>
+                    
+                    <Grid Margin="0,0,0,0">
                         <Label Content="Set attributes" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>
                         <local:UCETextList
                             x:Name="tlSetAttributes"
@@ -93,7 +95,7 @@
                             TextDeleted="tlForbiddenAttributes_TextDeleted"/>
                     </Grid>
 
-                        <Label Content="Items" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top"
+                        <Label Content="Items" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"
                                FontWeight="Bold"/>
 
                         <Grid>

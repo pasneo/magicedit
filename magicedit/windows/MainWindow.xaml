@@ -77,23 +77,20 @@
                             <TreeViewItem Header="Scheme">
                             </TreeViewItem>
                         </TreeViewItem>
-                        <TreeViewItem Header="Item">
-                            <TreeViewItem x:Name="tviItemCategories" Header="Categories">
-                            </TreeViewItem>
-                            <TreeViewItem x:Name="tviItems" Header="Items">
-                            </TreeViewItem>
+                        
+                        <!-- <TreeViewItem x:Name="tviItemCategories" Header="Categories">
+                        </TreeViewItem> -->
+                        <TreeViewItem x:Name="tviItems" Header="Items">
                         </TreeViewItem>
-                        <TreeViewItem Header="Spell">
-                            <TreeViewItem x:Name="tviSpellCategories" Header="Categories">
-                            </TreeViewItem>
-                            <TreeViewItem x:Name="tviSpells" Header="Spells">
-                            </TreeViewItem>
+                            <!-- <TreeViewItem x:Name="tviSpellCategories" Header="Categories"> 
+                            </TreeViewItem> -->
+                        <TreeViewItem x:Name="tviSpells" Header="Spells">
                         </TreeViewItem>
-                        <TreeViewItem Header="Object">
-                            <TreeViewItem x:Name="tviObjects" Header="Objects">
-                            </TreeViewItem>
-                            <TreeViewItem x:Name="tviObjectSchemes" Header="Schemes">
-                            </TreeViewItem>
+                        
+                        <TreeViewItem x:Name="tviObjects" Header="Objects">
+                        </TreeViewItem>
+                        
+                        <TreeViewItem x:Name="tviSchemes" Header="Schemes">
                         </TreeViewItem>
                     </TreeView>
                 </Grid>

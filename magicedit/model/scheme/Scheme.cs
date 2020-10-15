@@ -23,7 +23,7 @@ namespace magicedit
             }
         }
 
-        private List<Scheme> Parents = new List<Scheme>();
+        public List<Scheme> Parents = new List<Scheme>();
         
         public CompiledScheme CompiledScheme { get; set; }
 

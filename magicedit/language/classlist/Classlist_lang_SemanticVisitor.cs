@@ -10,24 +10,6 @@ using Antlr4.Runtime.Tree;
 namespace magicedit.language.classlist
 {
 
-    public class ErrorDescriptor
-    {
-        public string Message { get; set; }
-        public int Line { get; set; }
-        public int Position { get; set; }
-
-        public bool HasExactPosition { get; set; } = false;
-        public int StartPosition { get; set; }
-        public int EndPosition { get; set; }
-
-        public ErrorDescriptor(string message, int line, int position) { Message = message; Line = line; Position = position; }
-        public ErrorDescriptor(string message, int line, int position, int startPosition, int endPosition)
-        {
-            Message = message; Line = line; Position = position; StartPosition = startPosition; EndPosition = endPosition;
-            HasExactPosition = true;
-        }
-    }
-
     public class Classlist_lang_SemanticVisitor : classlist_langBaseVisitor<object>
     {
 

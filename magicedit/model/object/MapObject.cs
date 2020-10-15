@@ -8,6 +8,8 @@ namespace magicedit
 {
     public class MapObject : Object
     {
+        public override string ObjectType => "MapObject";
+
         public Position Position { get; set; }
         public bool Permeable { get; set; }     //true if characters can step on this object
 

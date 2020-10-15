@@ -1,4 +1,6 @@
-﻿using System;
+﻿using JsonSubTypes;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace magicedit
 {
+
+    [JsonConverter(typeof(JsonSubtypes), "ModifierType")]
     public abstract class ClassModifier
     {
         public enum Type
@@ -15,12 +19,16 @@ namespace magicedit
             ItemModifier
         }
 
+        public virtual string ModifierType => "ClassModifier";
+
         public abstract string GetCode();
 
     }
 
     public class AbilityModifier : ClassModifier
     {
+        public override string ModifierType => "AbilityModifier";
+
         public string AbilityName { get; set; }
         public int Value { get; set; } = 0;
 
@@ -39,6 +47,8 @@ namespace magicedit
 
     public class AttributeModifier : ClassModifier
     {
+        public override string ModifierType => "AttributeModifier";
+
         public enum AttributeModifierOptions
         {
             NONE,
@@ -77,6 +87,8 @@ namespace magicedit
 
     public class ItemModifier : ClassModifier
     {
+        public override string ModifierType => "ItemModifier";
+
         public string ItemName { get; set; }
         public int ItemNumber { get; set; } = 1;
 

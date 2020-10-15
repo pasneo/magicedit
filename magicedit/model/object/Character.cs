@@ -11,6 +11,9 @@ namespace magicedit
 {
     public class Character : MapObject
     {
+
+        public override string ObjectType => "Character";
+
         public List<Item> Items = new List<Item>();
         public HashSet<Spell> Spells = new HashSet<Item>();
 

@@ -43,6 +43,7 @@ namespace magicedit
         public int X { get; set; }
         public int Y { get; set; }
 
+        [JsonConstructor]
         public Position(int x, int y)
         {
             X = x;

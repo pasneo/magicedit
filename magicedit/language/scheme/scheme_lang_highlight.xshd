@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- syntaxdefinition for Json by alek kowalczyk -->
+<SyntaxDefinition name="Scheme" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+
+  <Color name="Keywords" foreground="#4994f5" fontWeight="bold" />
+	<Color name="Object" foreground="#ab1273" fontWeight="bold" />
+	<Color name="BasicTypes" foreground="#edc937" fontWeight="bold" />
+  <Color name="Consts" foreground="#000000" fontWeight="bold" />
+  <Color name="Operations" foreground="#bb6677" fontWeight="bold" />
+  <Color name="Special" foreground="#36d957" fontWeight="bold" />
+  
+  <RuleSet ignoreCase="false">
+    
+		<Keywords color="Keywords" >
+			<Word>action</Word>
+			<Word>init</Word>
+			<Word>if</Word>
+      <Word>else</Word>
+      <Word>endif</Word>
+      <Word>param</Word>
+      <Word>not</Word>
+		</Keywords>
+    
+		<Keywords color="Object" >
+			<Word>actions</Word>
+      <Word>clear</Word>
+			<Word>desc</Word>
+			<Word>report</Word>
+		</Keywords>
+
+    <Keywords color="BasicTypes" >
+      <Word>number</Word>
+      <Word>logical</Word>
+      <Word>text</Word>
+      <Word>object</Word>
+      <Word>ability</Word>
+    </Keywords>
+
+    <Keywords color="Consts" >
+      <Word>actor</Word>
+      <Word>me</Word>
+
+      <Word>true</Word>
+      <Word>false</Word>
+      <Word>True</Word>
+      <Word>False</Word>
+      <Word>TRUE</Word>
+      <Word>FALSE</Word>
+    </Keywords>
+
+    <Keywords color="Operations" >
+      <Word>and</Word>
+      <Word>or</Word>
+    </Keywords>
+    
+    <Keywords color="Special" >
+      <Word>end</Word>
+      <Word>fail</Word>
+      
+      <Word>add</Word>
+      <Word>to</Word>
+      <Word>remove</Word>
+      <Word>from</Word>
+      <Word>teach</Word>
+      <Word>destroy</Word>
+      <Word>forbid</Word>
+      <Word>set</Word>
+      <Word>has</Word>
+      <Word>knows</Word>
+      <Word>of</Word>
+      <Word>is</Word>
+    </Keywords>
+	
+  </RuleSet>
+
+</SyntaxDefinition>

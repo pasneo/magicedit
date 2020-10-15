@@ -27,9 +27,19 @@ namespace magicedit
             Variables.Add(variable);
         }
 
+        public ObjectVariable GetVariableByName(string name)
+        {
+            return Variables.Where(v => v.Name == name).FirstOrDefault();
+        }
+
         public void AddParameter(ObjectVariable parameter)
         {
             Parameters.Add(parameter);
+        }
+
+        public ObjectVariable GetParameterByName(string name)
+        {
+            return Parameters.Where(p => p.Name == name).FirstOrDefault();
         }
 
         public void SetBody(SchemeFunction bodyFunction)

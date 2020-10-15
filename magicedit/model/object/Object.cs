@@ -1,4 +1,6 @@
-﻿using System;
+﻿using JsonSubTypes;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +15,10 @@ namespace magicedit
         Spell
     }
 
+    [JsonConverter(typeof(JsonSubtypes), "ObjectType")]
     public class Object
     {
-     
+
         /*
          * TODO: the Name property might be renamed to OriginalId or something similar to highlight to following:
          * 
@@ -27,6 +30,8 @@ namespace magicedit
          * Conclusion: the Name must be the same as the Id of the original object. Copies of the original can (or must) have
          * newly defined Ids (eg. sword_1, sword_2 ...)
          */
+
+        public virtual string ObjectType { get; } = "Object";
 
         public ObjectTypeTags TypeTag { get; set; }     //used to identify items, spells etc. in the editor
 

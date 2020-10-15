@@ -7,11 +7,115 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using magicedit.language;
 
 namespace magicedit
 {
     public class SchemeLang
     {
+
+        public class MissingActionErrorDescriptor : ErrorDescriptor {
+
+            string actionName;
+
+            public MissingActionErrorDescriptor(string actionName, string message, ParserRuleContext context) : base(message, context)
+            {
+                this.actionName = actionName;
+            }
+
+            public bool IsError(Scheme scheme)
+            {
+                return scheme.CompiledScheme.GetFunctionByName(actionName) == null;
+            }
+
+        }
+
+        public class CommandBlock
+        {
+            public List<ObjectVariable> LocalVariables = new List<ObjectVariable>();
+        }
+
+        // this class helps to manage command blocks and check for local variables and their validity
+        public class VariableManager
+        {
+            public List<CommandBlock> Blocks = new List<CommandBlock>();
+
+            public void NewBlock() { Blocks.Add(new CommandBlock()); }
+            public void EndBlock() { Blocks.Remove(Blocks.Last()); }
+
+            // checks whether given value can really be used as a value
+            public bool IsValueValid(string variableName, Scheme scheme, Config config)
+            {
+                // check keywords
+                if (variableName == "actor" || variableName == "me") return true;
+
+                // check local variables
+                foreach(var block in Blocks)
+                {
+                    if (block.LocalVariables.Where(v => v.Name == variableName).Count() > 0) return true;
+                }
+
+                // check global variables & parameters
+                if (scheme.CompiledScheme.GetVariableByName(variableName) != null) return true;
+                if (scheme.CompiledScheme.GetParameterByName(variableName) != null) return true;
+
+                // check inherited global variables & parameters
+                foreach(var parent in scheme.Parents)
+                {
+                    if (parent.CompiledScheme?.GetVariableByName(variableName) != null) return true;
+                    if (parent.CompiledScheme?.GetParameterByName(variableName) != null) return true;
+                }
+
+                // check global objects
+                if (config.GetObjectById(variableName) != null) return true;
+
+                // check string consts
+                if (config.GetStringConstByName(variableName) != null) return true;
+
+                return false;
+            }
+
+            public bool IsVariable(string variableName, Scheme scheme)
+            {
+                // check local variables
+                foreach (var block in Blocks)
+                {
+                    if (block.LocalVariables.Where(v => v.Name == variableName).Count() > 0) return true;
+                }
+
+                // check global variables & parameters
+                if (scheme.CompiledScheme.GetVariableByName(variableName) != null) return true;
+
+                // check inherited global variables & parameters
+                foreach (var parent in scheme.Parents)
+                {
+                    if (parent.CompiledScheme?.GetVariableByName(variableName) != null) return true;
+                }
+
+                return false;
+            }
+
+            public void CheckValueValidity(string variableName, Visitor visitor, ParserRuleContext context)
+            {
+                if (!IsValueValid(variableName, visitor.Scheme, visitor.Config))
+                {
+                    visitor.Errors.Add(new ErrorDescriptor($"Variable '{variableName}' is not recognized.", context));
+                }
+            }
+
+            public void CheckNewVariable(string variableName, Visitor visitor, ParserRuleContext context)
+            {
+                if (IsValueValid(variableName, visitor.Scheme, visitor.Config))
+                {
+                    visitor.Errors.Add(new ErrorDescriptor($"Variable '{variableName}' already exists.", context));
+                }
+                else if (Blocks.Count > 0)
+                {
+                    Blocks.Last().LocalVariables.Add(new ObjectVariable(VariableTypes.Unknown, variableName, null));
+                }
+            }
+
+        }
 
         public class SchemeLangException : Exception
         {
@@ -28,6 +132,10 @@ namespace magicedit
             private SchemeFunction bodyFunction;
             private SchemeFunction currentFunc;
 
+            private VariableManager VariableManager = new VariableManager();
+
+            public List<ErrorDescriptor> Errors { get; set; } = new List<ErrorDescriptor>();
+            public List<MissingActionErrorDescriptor> MissingActionErrors { get; set; } = new List<MissingActionErrorDescriptor>();
 
             /* *** */
 
@@ -43,11 +151,27 @@ namespace magicedit
                 currentFunc = bodyFunction;
             }
 
+            /* FUNCTIONS FOR VALIDATION */
+
+            private bool IsValidVariable(string name)
+            {
+
+                return false;
+            }
+
+            /* CODE BUILDING */
+
             private ObjectVariable CreateVariableFromContext(scheme_langParser.Variable_definitionContext context)
             {
                 string type = context.variable_type().GetText();
                 string name = context.variable_name().GetText();
                 object value = null;
+
+                if (CompiledScheme.GetVariableByName(name) != null || CompiledScheme.GetParameterByName(name) != null)
+                {
+                    Errors.Add(new ErrorDescriptor($"Variable or parameter '{name}' already exists.", context));
+                    return null;
+                }
 
                 return new ObjectVariable(type, name, value);
             }
@@ -59,7 +183,12 @@ namespace magicedit
                 //Add parent to scheme
                 string parentName = context.GetText();
                 Scheme parent = Config.GetSchemeByName(parentName);
-                Scheme.AddParent(parent);
+
+                if (parent == null)
+                    Errors.Add(new ErrorDescriptor($"Scheme '{parentName}' does not exist.", context));
+                else
+                    Scheme.AddParent(parent);
+
                 return base.VisitParent_name(context);
             }
 
@@ -68,11 +197,15 @@ namespace magicedit
                 //Add predefined variable to scheme
                 var variable_definition = context.variable_definition();
                 ObjectVariable variable = CreateVariableFromContext(variable_definition);
-                CompiledScheme.AddVariable(variable);
 
-                CommandSetVariable cmd = new CommandSetVariable(variable_definition.variable_name().GetText(), GetRegName(0));
-                currentFunc.AddCommand(cmd);
-                SetNewExpression(1);
+                if (variable != null)
+                {
+                    CompiledScheme.AddVariable(variable);
+
+                    CommandSetVariable cmd = new CommandSetVariable(variable_definition.variable_name().GetText(), GetRegName(0));
+                    currentFunc.AddCommand(cmd);
+                    SetNewExpression(1);
+                }
 
                 return base.VisitBody_variable_definition(context);
             }
@@ -82,15 +215,32 @@ namespace magicedit
                 //Add parameter to scheme
                 string type = context.variable_type().GetText();
                 string name = context.variable_name().GetText();
-                ObjectVariable param = new ObjectVariable(type, name, null);
-                CompiledScheme.AddParameter(param);
+
+                if (CompiledScheme.GetVariableByName(name) != null || CompiledScheme.GetParameterByName(name) != null)
+                {
+                    Errors.Add(new ErrorDescriptor($"Variable or parameter '{name}' already exists.", context));
+                }
+                else
+                {
+                    ObjectVariable param = new ObjectVariable(type, name, null);
+                    CompiledScheme.AddParameter(param);
+                }
+
                 return base.VisitParameter_definition(context);
             }
 
             public override object VisitInit_block([NotNull] scheme_langParser.Init_blockContext context)
             {
+
+                if (CompiledScheme.GetFunctionByName("init") != null)
+                {
+                    Errors.Add(new ErrorDescriptor($"This scheme already contains an init block.", context));
+                }
+
                 //Sign start of init block
                 currentFunc = new SchemeFunction("init");
+                VariableManager.NewBlock();
+
                 return base.VisitInit_block(context);
             }
 
@@ -99,15 +249,31 @@ namespace magicedit
                 //Add completed init function to scheme
                 CompiledScheme.SetInit(currentFunc);
                 currentFunc = null;
+                VariableManager.EndBlock();
                 return base.VisitEnd_of_init(context);
             }
 
             public override object VisitAction_block([NotNull] scheme_langParser.Action_blockContext context)
             {
                 //Sign start of action
-                string name = context.action_name().GetText();
-                int actionPoints = int.Parse(context.action_point().GetText());
+                string name = context.action_name()?.GetText();
+                int actionPoints = 0;
+
+                if (context.action_point() != null)
+                {
+                    int.TryParse(context.action_point().GetText(), out actionPoints);
+                }
+                //else
+                    //Errors.Add(new ErrorDescriptor("Missing action points"));
+                    
+                if (CompiledScheme.GetFunctionByName(name) != null)
+                {
+                    Errors.Add(new ErrorDescriptor($"This scheme already contains an action named '{name}'.", context.action_name()));
+                }
+
                 currentFunc = new SchemeFunction(name, actionPoints);
+                VariableManager.NewBlock();
+
                 return base.VisitAction_block(context);
             }
 
@@ -116,6 +282,7 @@ namespace magicedit
                 //Add completed action to scheme
                 CompiledScheme.AddAction(currentFunc);
                 currentFunc = null;
+                VariableManager.EndBlock();
                 return base.VisitEnd_of_action(context);
             }
 
@@ -127,6 +294,9 @@ namespace magicedit
                 string characterName = context.character_name().GetText();
                 string itemName = context.item_name().GetText();
                 string itemNumber = "1";
+
+                VariableManager.CheckValueValidity(characterName, this, context.character_name());
+                VariableManager.CheckValueValidity(itemName, this, context.item_name());
 
                 if (context.item_number() != null) itemNumber = GetRegName(0);
 
@@ -140,11 +310,12 @@ namespace magicedit
 
             public override object VisitCmd_create_var([NotNull] scheme_langParser.Cmd_create_varContext context)
             {
-                
                 var var_def = context.variable_definition();
 
                 string var_type = var_def.variable_type().GetText();
                 string var_name = var_def.variable_name().GetText();
+
+                VariableManager.CheckNewVariable(var_name, this, var_def.variable_name());
 
                 CommandCreateVariable create_cmd = new CommandCreateVariable(var_type, var_name);
                 currentFunc.AddCommand(create_cmd);
@@ -161,10 +332,15 @@ namespace magicedit
 
             public override object VisitCmd_desc([NotNull] scheme_langParser.Cmd_descContext context)
             {
-
                 string string_const_name = context.content().GetText();
 
                 CommandDesc cmd = new CommandDesc(string_const_name);
+
+                if (Config.GetStringConstByName(string_const_name) == null)
+                {
+                    Errors.Add(new ErrorDescriptor($"String const '{string_const_name}' does not exist.", context));
+                }
+
                 currentFunc.AddCommand(cmd);
 
                 return base.VisitCmd_desc(context);
@@ -191,14 +367,22 @@ namespace magicedit
             
             public override object VisitAdd_action([NotNull] scheme_langParser.Add_actionContext context)
             {
-                CommandAddAction cmd = new CommandAddAction(context.action_name().GetText());
+                string action_name = context.action_name().GetText();
+
+                MissingActionErrors.Add(new MissingActionErrorDescriptor(action_name, $"Action '{action_name}' does not exist.", context.action_name()));
+
+                CommandAddAction cmd = new CommandAddAction(action_name);
                 currentFunc.AddCommand(cmd);
                 return base.VisitAdd_action(context);
             }
 
             public override object VisitRemove_action([NotNull] scheme_langParser.Remove_actionContext context)
             {
-                CommandRemoveAction cmd = new CommandRemoveAction(context.action_name().GetText());
+                string action_name = context.action_name().GetText();
+                
+                MissingActionErrors.Add(new MissingActionErrorDescriptor(action_name, $"Action '{action_name}' does not exist.", context.action_name()));
+
+                CommandRemoveAction cmd = new CommandRemoveAction(action_name);
                 currentFunc.AddCommand(cmd);
                 return base.VisitRemove_action(context);
             }
@@ -225,6 +409,9 @@ namespace magicedit
                 string itemName = context.item_name().GetText();
                 string itemNumber = "1";
 
+                VariableManager.CheckValueValidity(characterName, this, context.character_name());
+                VariableManager.CheckValueValidity(itemName, this, context.item_name());
+
                 if (context.item_number() != null) itemNumber = GetRegName(0);
 
                 CommandRemoveItem cmd = new CommandRemoveItem(characterName, itemNumber, itemName);
@@ -237,9 +424,12 @@ namespace magicedit
 
             public override object VisitCmd_remove_spell([NotNull] scheme_langParser.Cmd_remove_spellContext context)
             {
-
                 string characterName = context.character_name().GetText();
                 string spellName = context.spell_name().GetText();
+
+                VariableManager.CheckValueValidity(characterName, this, context.character_name());
+                VariableManager.CheckValueValidity(spellName, this, context.spell_name());
+
                 CommandRemoveSpell cmd = new CommandRemoveSpell(characterName, spellName);
                 currentFunc.AddCommand(cmd);
 
@@ -248,8 +438,12 @@ namespace magicedit
 
             public override object VisitCmd_report([NotNull] scheme_langParser.Cmd_reportContext context)
             {
-
                 string string_const_name = context.content().GetText();
+
+                if (Config.GetStringConstByName(string_const_name) == null)
+                {
+                    Errors.Add(new ErrorDescriptor($"String const '{string_const_name}' does not exist.", context));
+                }
 
                 CommandReport cmd = new CommandReport(string_const_name);
                 currentFunc.AddCommand(cmd);
@@ -280,8 +474,14 @@ namespace magicedit
 
             public override object VisitCmd_set_var([NotNull] scheme_langParser.Cmd_set_varContext context)
             {
-                
-                CommandSetVariable cmd = new CommandSetVariable(context.variable_name().GetText(), GetRegName(0));
+                string varName = context.variable_name().GetText();
+
+                if (!VariableManager.IsVariable(varName, Scheme))
+                {
+                    Errors.Add(new ErrorDescriptor($"Variable '{varName}' is not recognized.", context.variable_name()));
+                }
+
+                CommandSetVariable cmd = new CommandSetVariable(varName, GetRegName(0));
                 currentFunc.AddCommand(cmd);
 
                 SetNewExpression(1);
@@ -293,6 +493,8 @@ namespace magicedit
             {
 
                 string propertyName = context.property_name().GetText();
+
+                //todo: maybe check if given object really has such property (but this is a bit complicated)
 
                 int objectReg = 0;
                 int valueReg = 1;
@@ -307,8 +509,13 @@ namespace magicedit
 
             public override object VisitCmd_teach_spell([NotNull] scheme_langParser.Cmd_teach_spellContext context)
             {
+                string characterName = context.character_name().GetText();
+                string spellName = context.spell_name().GetText();
 
-                CommandAddSpell cmd = new CommandAddSpell(context.character_name().GetText(), context.spell_name().GetText());
+                VariableManager.CheckValueValidity(characterName, this, context.character_name());
+                VariableManager.CheckValueValidity(spellName, this, context.character_name());
+
+                CommandAddSpell cmd = new CommandAddSpell(characterName, spellName);
                 currentFunc.AddCommand(cmd);
 
                 return base.VisitCmd_teach_spell(context);
@@ -326,7 +533,6 @@ namespace magicedit
 
             public override object VisitCmd_if([NotNull] scheme_langParser.Cmd_ifContext context)
             {
-
                 string value = GetRegName(0);
                 CommandJumpIfFalse cmd = new CommandJumpIfFalse(value,-1);
                 currentFunc.AddCommand(cmd);
@@ -335,13 +541,13 @@ namespace magicedit
 
                 SetNewExpression(1);
 
+                VariableManager.NewBlock();
+
                 return base.VisitCmd_if(context);
             }
 
             public override object VisitElse([NotNull] scheme_langParser.ElseContext context)
             {
-
-
                 CommandJump jump = new CommandJump(-1);
                 currentFunc.AddCommand(jump);
 
@@ -350,12 +556,18 @@ namespace magicedit
 
                 jump_cmds.Add(jump);
 
+                VariableManager.EndBlock(); // end if-block
+                VariableManager.NewBlock(); // start else-block
+
                 return base.VisitElse(context);
             }
 
             public override object VisitEndif([NotNull] scheme_langParser.EndifContext context)
             {
                 SetLatestJumpPosition(currentFunc.GetCommandCount());
+
+                VariableManager.EndBlock();
+
                 return base.VisitEndif(context);
             }
 
@@ -414,7 +626,14 @@ namespace magicedit
 
                 int result_reg = PopLastParamReg();
 
-                CommandSetVariable cmd = new CommandSetVariable(GetRegName(result_reg), context.string_const().GetText());
+                string string_const_name = context.string_const().GetText();
+
+                if (Config.GetStringConstByName(string_const_name) == null)
+                {
+                    Errors.Add(new ErrorDescriptor($"String const '{string_const_name}' does not exist.", context));
+                }
+
+                CommandSetVariable cmd = new CommandSetVariable(GetRegName(result_reg), string_const_name);
                 currentFunc.AddCommand(cmd, expression_index);
 
                 return base.VisitString_const_expr(context);
@@ -497,7 +716,12 @@ namespace magicedit
                 if (context.variable_name() != null)
                 {
                     int result_reg = PopLastParamReg();
-                    CommandSetVariable cmd = new CommandSetVariable(GetRegName(result_reg), context.variable_name().GetText());
+
+                    string varName = context.variable_name().GetText();
+
+                    VariableManager.CheckValueValidity(varName, this, context.variable_name());
+
+                    CommandSetVariable cmd = new CommandSetVariable(GetRegName(result_reg), varName);
                     currentFunc.AddCommand(cmd, expression_index);
                 }
 
@@ -522,7 +746,11 @@ namespace magicedit
 
                 int result_reg = PopLastParamReg();
 
-                CommandSetVariable cmd = new CommandSetVariable(GetRegName(result_reg), context.object_name().GetText());
+                string objName = context.object_name().GetText();
+
+                VariableManager.CheckValueValidity(objName, this, context.object_name());
+
+                CommandSetVariable cmd = new CommandSetVariable(GetRegName(result_reg), objName);
                 currentFunc.AddCommand(cmd, expression_index);
 
                 return base.VisitObject_atom(context);
@@ -576,7 +804,9 @@ namespace magicedit
 
                 int param = PopLastParamReg();
 
-                CommandSetVariable cmd = new CommandSetVariable(GetRegName(param), context.logical_const().GetText());
+                string logical_const = context.logical_const().GetText();
+
+                CommandSetVariable cmd = new CommandSetVariable(GetRegName(param), logical_const);
                 currentFunc.AddCommand(cmd, expression_index);
 
                 return base.VisitLogical_const_expr(context);
@@ -590,6 +820,9 @@ namespace magicedit
                 string character_name = context.character_name().GetText();
                 string item_name = context.item_name().GetText();
                 string number = "1";
+
+                VariableManager.CheckValueValidity(character_name, this, context.character_name());
+                VariableManager.CheckValueValidity(item_name, this, context.item_name());
 
                 if (context.item_number() != null)
                 {
@@ -617,6 +850,9 @@ namespace magicedit
                 string character_name = context.character_name().GetText();
                 string spell_name = context.spell_name().GetText();
 
+                VariableManager.CheckValueValidity(character_name, this, context.character_name());
+                VariableManager.CheckValueValidity(spell_name, this, context.spell_name());
+
                 if (context.NOT() != null)
                 {
                     currentFunc.AddCommand(new CommandNot(GetRegName(param), GetRegName(param)), expression_index);
@@ -632,6 +868,8 @@ namespace magicedit
             {
 
                 int param = GetLastParamReg();
+
+                //todo: maybe check if identifier is valid
 
                 CommandIs cmd = new CommandIs(GetRegName(param), context.identifier().GetText(), GetRegName(param));
                 currentFunc.AddCommand(cmd, expression_index);
@@ -673,7 +911,7 @@ namespace magicedit
         }
         
         /* Compilation */
-
+        
         public static IParseTree GetAST(string code)
         {
             var inputStream = new AntlrInputStream(code);
@@ -684,12 +922,51 @@ namespace magicedit
             return context;
         }
 
+        public static IParseTree GenerateAST(string code, ref List<ErrorDescriptor> errors)
+        {
+            var inputStream = new AntlrInputStream(code);
+            var lexer = new scheme_langLexer(inputStream);
+
+            lexer.RemoveErrorListeners();
+            LexerErrorListener errorListener = new LexerErrorListener(errors);
+            lexer.AddErrorListener(errorListener);
+
+            var tokenStream = new CommonTokenStream(lexer);
+            var parser = new scheme_langParser(tokenStream);
+
+            parser.RemoveErrorListeners();
+            ParserErrorListener errorListener2 = new ParserErrorListener(errors);
+            parser.AddErrorListener(errorListener2);
+
+            var context = parser.doc();
+
+            return context;
+        }
+
         public static CompiledScheme Compile(Scheme scheme, Config config)
         {
             var ast = GetAST(scheme.Code);
             var visitor = new Visitor(scheme, config);
             visitor.Visit(ast);
             return visitor.CompiledScheme;
+        }
+
+        public static List<ErrorDescriptor> CompileWithErrors(Scheme scheme, Config config)
+        {
+            List<ErrorDescriptor> errors = new List<ErrorDescriptor>();
+
+            var ast = GenerateAST(scheme.Code, ref errors);
+            var visitor = new Visitor(scheme, config);
+            visitor.Errors = errors;
+
+            visitor.Visit(ast);
+
+            foreach(var missingActionError in visitor.MissingActionErrors)
+            {
+                if (missingActionError.IsError(scheme)) visitor.Errors.Add(missingActionError);
+            }
+
+            return visitor.Errors;
         }
 
     }

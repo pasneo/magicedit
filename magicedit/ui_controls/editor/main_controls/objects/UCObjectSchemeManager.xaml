@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:magicedit"
-             mc:Ignorable="d" 
+                       xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                       mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#ababab">
 
@@ -54,6 +55,40 @@
 
                 <Label Content="Code" Width="60" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
 
+                <Grid x:Name="gridCode" Visibility="Visible" Margin="75,41,10.328,34.151" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="100" />
+                    </Grid.RowDefinitions>
+
+                    <avalonEdit:TextEditor x:Name="tbCode"
+                         IsEnabled="False"
+                         Background="#fefefe"
+                         ShowLineNumbers="True"
+                         BorderBrush="Black"
+                         FontFamily="Consolas"
+                         VerticalScrollBarVisibility="Visible"
+                         HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Margin="0,0,0,0" Text="TextBox" Width="auto"
+                         TextChanged="tbCode_TextChanged"
+                         Visibility="Visible"
+                         SyntaxHighlighting="Scheme"
+                         Grid.Column="0"/>
+
+                    <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" />
+
+                    <ListBox x:Name="lbErrorList"
+                     Grid.Row="2"
+                     ScrollViewer.VerticalScrollBarVisibility="Visible"
+                     Foreground="Red"
+                     FontFamily="Consolas"
+                     Margin="0,0,0,0" VerticalAlignment="Stretch"
+                     SelectionChanged="lbErrorList_SelectionChanged"></ListBox>
+
+                </Grid>
+
+                <!--
                 <TextBox
                     x:Name="tbCode"
                     IsEnabled="False"
@@ -63,7 +98,8 @@
                     VerticalAlignment="Stretch"
                     VerticalScrollBarVisibility="Visible"
                     TextChanged="tbCode_TextChanged"/>
-
+                   -->
+                
                 <Button x:Name="bDelete" Content="Delete" HorizontalAlignment="Right" Margin="0,0,10.328,10.151" VerticalAlignment="Bottom" Width="75"
                         IsEnabled="False"
                         Click="bDelete_Click"/>

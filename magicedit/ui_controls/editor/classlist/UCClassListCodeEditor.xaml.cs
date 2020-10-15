@@ -18,6 +18,7 @@ using magicedit.language.classlist;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+using magicedit.language;
 
 namespace magicedit
 {

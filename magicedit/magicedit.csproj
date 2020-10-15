@@ -46,6 +46,9 @@
     <Reference Include="ICSharpCode.AvalonEdit, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>..\packages\AvalonEdit.6.0.0\lib\net45\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
+    <Reference Include="JsonSubTypes, Version=1.8.0.0, Culture=neutral, PublicKeyToken=ee75fc290dbc1176, processorArchitecture=MSIL">
+      <HintPath>..\packages\JsonSubTypes.1.8.0\lib\net46\JsonSubTypes.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -83,78 +86,82 @@
       <DependentUpon>classlist_lang_gen_template.tt</DependentUpon>
     </Compile>
     <Compile Include="language\classlist\Classlist_lang_SemanticVisitor.cs" />
+    <Compile Include="language\ErrorDescriptor.cs" />
+    <Compile Include="language\ErrorListeners.cs" />
+    <Compile Include="language\scheme\SchemeLangSemanticVisitor.cs" />
+    <Compile Include="model\object\ObjectJsonConverter.cs" />
     <Compile Include="model\resource\ResourceManager.cs" />
     <Compile Include="model\scheme\ParametrizedScheme.cs" />
     <Compile Include="SharpDevelop\ITextMarker.cs" />
     <Compile Include="SharpDevelop\TextMarkerService.cs" />
-    <Compile Include="ui_controls\misc\UCEObjectRow.xaml.cs">
+    <Compile Include="ui_controls\editor\misc\UCEObjectRow.xaml.cs">
       <DependentUpon>UCEObjectRow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\misc\UCETextList.xaml.cs">
+    <Compile Include="ui_controls\editor\misc\UCETextList.xaml.cs">
       <DependentUpon>UCETextList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\misc\UCETextListElem.xaml.cs">
+    <Compile Include="ui_controls\editor\misc\UCETextListElem.xaml.cs">
       <DependentUpon>UCETextListElem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\classlist\UCEAbilityModifier.xaml.cs">
+    <Compile Include="ui_controls\editor\classlist\UCEAbilityModifier.xaml.cs">
       <DependentUpon>UCEAbilityModifier.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\misc\UCENumericButton.xaml.cs">
+    <Compile Include="ui_controls\editor\misc\UCENumericButton.xaml.cs">
       <DependentUpon>UCENumericButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\classlist\UCClassListEditor.xaml.cs">
+    <Compile Include="ui_controls\editor\classlist\UCClassListEditor.xaml.cs">
       <DependentUpon>UCClassListEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\UCClasslistManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\UCClasslistManager.xaml.cs">
       <DependentUpon>UCClasslistManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\classlist\UCClassListCodeEditor.xaml.cs">
+    <Compile Include="ui_controls\editor\classlist\UCClassListCodeEditor.xaml.cs">
       <DependentUpon>UCClassListCodeEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\items\UCItemCategoryManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\items\UCItemCategoryManager.xaml.cs">
       <DependentUpon>UCItemCategoryManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\items\UCItemManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\items\UCItemManager.xaml.cs">
       <DependentUpon>UCItemManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\spells\UCSpellManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\spells\UCSpellManager.xaml.cs">
       <DependentUpon>UCSpellManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\spells\UCSpellCategoryManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\spells\UCSpellCategoryManager.xaml.cs">
       <DependentUpon>UCSpellCategoryManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\selectors\UCObjectSelector.xaml.cs">
+    <Compile Include="ui_controls\editor\selectors\UCObjectSelector.xaml.cs">
       <DependentUpon>UCObjectSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\selectors\UCStringConstSelector.xaml.cs">
+    <Compile Include="ui_controls\editor\selectors\UCStringConstSelector.xaml.cs">
       <DependentUpon>UCStringConstSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\selectors\UCSchemeSelector.xaml.cs">
+    <Compile Include="ui_controls\editor\selectors\UCSchemeSelector.xaml.cs">
       <DependentUpon>UCSchemeSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\objects\UCObjectManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\objects\UCObjectManager.xaml.cs">
       <DependentUpon>UCObjectManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\objects\UCObjectSchemeManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\objects\UCObjectSchemeManager.xaml.cs">
       <DependentUpon>UCObjectSchemeManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\misc\IntegerUpDown.xaml.cs">
+    <Compile Include="ui_controls\editor\misc\IntegerUpDown.xaml.cs">
       <DependentUpon>IntegerUpDown.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\resource\DefaultResources.cs" />
-    <Compile Include="ui_controls\main_controls\map\UCMapManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\map\UCMapManager.xaml.cs">
       <DependentUpon>UCMapManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\selectors\UCSquareTypeSelector.xaml.cs">
+    <Compile Include="ui_controls\editor\selectors\UCSquareTypeSelector.xaml.cs">
       <DependentUpon>UCSquareTypeSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\UCMapEditor.xaml.cs">
+    <Compile Include="ui_controls\editor\UCMapEditor.xaml.cs">
       <DependentUpon>UCMapEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\UCCharacterManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\UCCharacterManager.xaml.cs">
       <DependentUpon>UCCharacterManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\MainUserControl.cs" />
+    <Compile Include="ui_controls\editor\MainUserControl.cs" />
     <Compile Include="model\config\IdGenerator.cs" />
     <Compile Include="model\scheme\commands\operations\CommandCmp.cs" />
     <Compile Include="model\scheme\commands\object\CommandClearActions.cs" />
@@ -213,19 +220,19 @@
     <Compile Include="language\scheme\SchemeLang.cs" />
     <Compile Include="language\scheme\SchemeLangOptimizer.cs" />
     <Compile Include="model\Project.cs" />
-    <Compile Include="ui_controls\main_controls\map\UCSquareTypeManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\map\UCSquareTypeManager.xaml.cs">
       <DependentUpon>UCSquareTypeManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\selectors\UCEVisualSelectorRow.xaml.cs">
+    <Compile Include="ui_controls\editor\selectors\UCEVisualSelectorRow.xaml.cs">
       <DependentUpon>UCEVisualSelectorRow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\selectors\UCVisualSelector.xaml.cs">
+    <Compile Include="ui_controls\editor\selectors\UCVisualSelector.xaml.cs">
       <DependentUpon>UCVisualSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\resources\UCStringConstManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\resources\UCStringConstManager.xaml.cs">
       <DependentUpon>UCStringConstManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\main_controls\resources\UCVisualManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\resources\UCVisualManager.xaml.cs">
       <DependentUpon>UCVisualManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="windows\GameWindow.xaml.cs">
@@ -241,111 +248,111 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
-    <Page Include="ui_controls\misc\UCEObjectRow.xaml">
+    <Page Include="ui_controls\editor\misc\UCEObjectRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\misc\UCETextList.xaml">
+    <Page Include="ui_controls\editor\misc\UCETextList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\misc\UCETextListElem.xaml">
+    <Page Include="ui_controls\editor\misc\UCETextListElem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\classlist\UCEAbilityModifier.xaml">
+    <Page Include="ui_controls\editor\classlist\UCEAbilityModifier.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\misc\UCENumericButton.xaml">
+    <Page Include="ui_controls\editor\misc\UCENumericButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\classlist\UCClassListEditor.xaml">
+    <Page Include="ui_controls\editor\classlist\UCClassListEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\UCClasslistManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\UCClasslistManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\classlist\UCClassListCodeEditor.xaml">
+    <Page Include="ui_controls\editor\classlist\UCClassListCodeEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\items\UCItemCategoryManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\items\UCItemCategoryManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\items\UCItemManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\items\UCItemManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\main_controls\spells\UCSpellManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\spells\UCSpellManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\main_controls\spells\UCSpellCategoryManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\spells\UCSpellCategoryManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\selectors\UCObjectSelector.xaml">
+    <Page Include="ui_controls\editor\selectors\UCObjectSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\selectors\UCStringConstSelector.xaml">
+    <Page Include="ui_controls\editor\selectors\UCStringConstSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\selectors\UCSchemeSelector.xaml">
+    <Page Include="ui_controls\editor\selectors\UCSchemeSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\objects\UCObjectManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\objects\UCObjectManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\main_controls\objects\UCObjectSchemeManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\objects\UCObjectSchemeManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\misc\IntegerUpDown.xaml">
+    <Page Include="ui_controls\editor\misc\IntegerUpDown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\map\UCMapManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\map\UCMapManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\selectors\UCSquareTypeSelector.xaml">
+    <Page Include="ui_controls\editor\selectors\UCSquareTypeSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\UCMapEditor.xaml">
+    <Page Include="ui_controls\editor\UCMapEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\UCCharacterManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\UCCharacterManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\map\UCSquareTypeManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\map\UCSquareTypeManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\selectors\UCEVisualSelectorRow.xaml">
+    <Page Include="ui_controls\editor\selectors\UCEVisualSelectorRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\selectors\UCVisualSelector.xaml">
+    <Page Include="ui_controls\editor\selectors\UCVisualSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\resources\UCStringConstManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\resources\UCStringConstManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ui_controls\main_controls\resources\UCVisualManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\resources\UCVisualManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -404,6 +411,9 @@
     <Content Include="language\classlist\classlist_lang_highlight.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="language\scheme\scheme_lang_highlight.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -415,6 +425,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="model\scheme\compilation\" />
+    <Folder Include="ui_controls\game\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\plus_symbol.png">

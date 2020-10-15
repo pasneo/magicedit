@@ -15,22 +15,20 @@ namespace magicedit
         public Map Map = new Map();
 
         public CharacterConfig CharacterConfig { get; set; } = new CharacterConfig();
+
+        //TODO: remove these two fields
         public ItemSpellConfig ItemConfig { get; set; } = new ItemSpellConfig();
         public ItemSpellConfig SpellConfig { get; set; } = new ItemSpellConfig();
-
-        [JsonProperty]
+        
         public List<Visual> Visuals = new List<Visual>();
-
-        [JsonProperty]
+        
         public List<Text> StringConsts = new List<Text>();
 
         public List<ClassList> ClassLists = new List<ClassList>();
-
-        [JsonProperty]
+        
         public List<Scheme> Schemes = new List<Scheme>();
 
         //All the predefined objects are stored here (but references to them may exist elsewhere too)
-        [JsonProperty]
         public List<Object> Objects = new List<Object>();
 
         /* *** */

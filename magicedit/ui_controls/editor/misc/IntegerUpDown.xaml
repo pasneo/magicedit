@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:magicedit"
              mc:Ignorable="d">
     <Grid>
-        <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="0,0,30,0" Text="0" HorizontalAlignment="Stretch" TextChanged="txtNum_TextChanged" />
+        <TextBox x:Name="txtNum" VerticalContentAlignment="Center" x:FieldModifier="private" Margin="0,0,30,0" Text="0" HorizontalAlignment="Stretch" TextChanged="txtNum_TextChanged" />
         <Button x:Name="cmdUp" x:FieldModifier="private" Margin="0,0,15,0" Content="˄" Width="15" HorizontalAlignment="Right" Click="cmdUp_Click" />
         <Button x:Name="cmdDown" x:FieldModifier="private" Margin="0,0,0,0"  Content="˅" Width="15" HorizontalAlignment="Right" Click="cmdDown_Click" />
     </Grid>

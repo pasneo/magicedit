@@ -6,14 +6,23 @@
              xmlns:local="clr-namespace:magicedit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
-    <Grid Background="#ababab">
-        
-        <Label Content="Abilities" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
 
-        <Label Content="Ability name" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
-        
-        <local:UCETextList
+    <Grid Background="#ababab">
+
+        <Label Content="Starting ability points" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <local:IntegerUpDown x:Name="iAbilityPoints" Height="23" Margin="185,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" MinValue="0"
+                             ValueChanged="iAbilityPoints_ValueChanged"/>
+
+        <Label Content="Movement action cost" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <local:IntegerUpDown x:Name="iMovementCost" Height="23" Margin="185,36,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" MinValue="0"
+                             ValueChanged="iMovementCost_ValueChanged"/>
+
+        <Grid Margin="0,80,0,0">
+
+            <Label Content="Abilities" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            <Label Content="Ability name" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
+
+            <local:UCETextList
             x:Name="tlAbilities"
             Background="LightGray"
             HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -21,31 +30,32 @@
             TextAdded="tlAbilities_TextAdded"
             TextDeleted="tlAbilities_TextDeleted"/>
 
-        <Label Content="Inventory slots" HorizontalAlignment="Left" Margin="236,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            <Label Content="Inventory slots" HorizontalAlignment="Left" Margin="236,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
 
-        <Label Content="Slot name" HorizontalAlignment="Left" Margin="236,29,0,0" VerticalAlignment="Top"/>
-        <Label Content="Slot scheme" HorizontalAlignment="Left" Margin="335,29,0,0" VerticalAlignment="Top"/>
-        
-        <Grid Margin="236,55,0,0" Background="LightGray" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Label Content="Slot name" HorizontalAlignment="Left" Margin="236,29,0,0" VerticalAlignment="Top"/>
+            <Label Content="Slot scheme" HorizontalAlignment="Left" Margin="335,29,0,0" VerticalAlignment="Top"/>
 
-            <TextBox    x:Name="tbSlotName"
+            <Grid Margin="236,55,0,0" Background="LightGray" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+                <TextBox    x:Name="tbSlotName"
                         Height="23"
                         HorizontalAlignment="Left" VerticalAlignment="Top"
                         Width="100"
                                 />
-            <local:UCSchemeSelector
+                <local:UCSchemeSelector
                                 x:Name="slotSchemeSelector"
                                 HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,0,0,0" Width="120" Height="23"/>
-            <Button x:Name="bAddItem" Content="Add"
+                <Button x:Name="bAddItem" Content="Add"
                                     HorizontalAlignment="Left" VerticalAlignment="Top"
                                     Width="40" Margin="220,0,0,0" Height="23"
                                     Click="bAddItem_Click"/>
 
-            <StackPanel x:Name="spSlots" Margin="0,23,0,0" Width="260" HorizontalAlignment="Left">
-                <local:UCETextListElem/>
-            </StackPanel>
-        </Grid>
+                <StackPanel x:Name="spSlots" Margin="0,23,0,0" Width="260" HorizontalAlignment="Left">
+                    <local:UCETextListElem/>
+                </StackPanel>
+            </Grid>
 
+        </Grid>
     </Grid>
-    
+
 </local:MainUserControl>

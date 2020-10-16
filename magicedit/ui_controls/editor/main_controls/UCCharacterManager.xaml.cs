@@ -29,6 +29,9 @@ namespace magicedit
         {
             RefreshLists();
             slotSchemeSelector.Refresh();
+
+            iAbilityPoints.NumValue = Project.Current.Config.CharacterConfig.StartingAbilityPoints;
+            iMovementCost.NumValue = Project.Current.Config.CharacterConfig.MovementActionPoints;
         }
 
         private void RefreshLists()
@@ -88,6 +91,16 @@ namespace magicedit
         private void tlAbilities_TextDeleted(UCETextListElem elem)
         {
             Project.Current.Config.CharacterConfig.Abilities.RemoveAll(ab => ab.Name == elem.Content);
+        }
+
+        private void iAbilityPoints_ValueChanged(IntegerUpDown sender)
+        {
+            Project.Current.Config.CharacterConfig.StartingAbilityPoints = iAbilityPoints.NumValue;
+        }
+
+        private void iMovementCost_ValueChanged(IntegerUpDown sender)
+        {
+            Project.Current.Config.CharacterConfig.MovementActionPoints = iMovementCost.NumValue;
         }
     }
 }

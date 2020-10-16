@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="magicedit.UCEItemRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:magicedit"
+             mc:Ignorable="d" 
+             d:DesignHeight="30">
+    <Grid x:Name="grid" Background="LightGray" Cursor="Hand" MouseEnter="grid_MouseEnter" MouseLeave="grid_MouseLeave" MouseLeftButtonDown="grid_MouseLeftButtonDown">
+    <StackPanel Orientation="Horizontal" Margin="10,0,10,0">
+
+        <Image x:Name="img" Height="26" VerticalAlignment="Center"/>
+        <Grid Width="10"/>
+        <TextBlock x:Name="tbItemName" VerticalAlignment="Center" Width="200">Sword</TextBlock>
+
+        <TextBlock VerticalAlignment="Center"><Hyperlink x:Name="hyMove" Click="hyMove_Click">move</Hyperlink></TextBlock>
+        
+        <!--
+        <Grid Width="20"/>
+        <TextBlock VerticalAlignment="Center"><Hyperlink x:Name="hyDestroy" Click="hyDrop_Click">destroy</Hyperlink></TextBlock>
+        -->
+
+    </StackPanel>
+    </Grid>
+</UserControl>

@@ -105,6 +105,8 @@ namespace magicedit
 
         private void mRun_Click(object sender, RoutedEventArgs e)
         {
+            Project.Current.Game = new Game(Project.Current.Config);
+
             GameWindow gameWindow = new GameWindow();
             gameWindow.Show();
         }

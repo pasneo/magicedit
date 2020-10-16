@@ -30,20 +30,8 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0">
+            <ScrollViewer Grid.Column="0">
                 <StackPanel HorizontalAlignment="Stretch">
-                    
-                    <Grid HorizontalAlignment="Stretch" Background="#ab99ff">
-                        <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
-                            <TextBlock FontSize="16">Desciption</TextBlock>
-                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
-                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
-                                    This is a place where you can find general info about an object.
-                                </TextBlock>
-                            </Border>
-                        </StackPanel>
-                    </Grid>
-
 
                     <Grid HorizontalAlignment="Stretch" Background="#99ffab">
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
@@ -56,6 +44,16 @@
                         </StackPanel>
                     </Grid>
 
+                    <Grid HorizontalAlignment="Stretch" Background="#ab99ff">
+                        <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
+                            <TextBlock FontSize="16">Description</TextBlock>
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
+                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
+                                    This is a place where you can find general info about an object.
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
 
                     <Grid HorizontalAlignment="Stretch" Background="#ff99ab">
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
@@ -72,9 +70,7 @@
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
                             <TextBlock FontSize="16">Inventory</TextBlock>
                             <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
-                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
-                                    All your items will be listed here, and you can select any of them to do something with them.
-                                </TextBlock>
+                                <local:UCInventoryPanel/>
                             </Border>
                         </StackPanel>
                     </Grid>
@@ -91,7 +87,7 @@
                     </Grid>
 
                 </StackPanel>
-            </Grid>
+            </ScrollViewer>
 
             <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
                           Width="5"></GridSplitter>

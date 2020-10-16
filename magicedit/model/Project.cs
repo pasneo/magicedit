@@ -12,6 +12,7 @@ namespace magicedit
         public static Project Current { get; set; }
 
         public Config Config { get; set; }
+        public Game Game { get; set; }
 
         /* *** */
 

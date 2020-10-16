@@ -73,6 +73,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="windows\GameInitWindow.xaml.cs">
+      <DependentUpon>GameInitWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="language\classlist\classlist_lang.g4.lexer.cs">
       <DependentUpon>classlist_lang.g4</DependentUpon>
     </Compile>
@@ -94,6 +97,15 @@
     <Compile Include="model\scheme\ParametrizedScheme.cs" />
     <Compile Include="SharpDevelop\ITextMarker.cs" />
     <Compile Include="SharpDevelop\TextMarkerService.cs" />
+    <Compile Include="ui_controls\game\misc\UCEItemRow.xaml.cs">
+      <DependentUpon>UCEItemRow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\game\panels\UCInventoryPanel.xaml.cs">
+      <DependentUpon>UCInventoryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\game\panels\UCDescriptionPanel.xaml.cs">
+      <DependentUpon>UCDescriptionPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui_controls\editor\misc\UCEObjectRow.xaml.cs">
       <DependentUpon>UCEObjectRow.xaml</DependentUpon>
     </Compile>
@@ -248,6 +260,22 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
+    <Page Include="windows\GameInitWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\game\misc\UCEItemRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\game\panels\UCInventoryPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\game\panels\UCDescriptionPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ui_controls\editor\misc\UCEObjectRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -425,7 +453,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="model\scheme\compilation\" />
-    <Folder Include="ui_controls\game\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\plus_symbol.png">

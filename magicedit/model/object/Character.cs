@@ -127,7 +127,7 @@ namespace magicedit
         public Item GetItemBySlot(string slotName, Config config)
         {
             var variable = GetVariableByName(slotName, config);
-            return (Item)variable.Value;
+            return (Item)variable?.Value;
         }
 
         public bool MoveItemToSlot(Item item, string slotName, Config config)

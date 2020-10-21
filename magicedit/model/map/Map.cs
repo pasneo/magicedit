@@ -132,6 +132,17 @@ namespace magicedit
             action.Execute(new Object(), actor, game);
         }
 
+        public int GetMovementCost(SquareType squareType, Config config)
+        {
+            if (Scheme == null || squareType.ActionName == null || squareType.ActionName == "") return config.CharacterConfig.MovementActionPoints;
+
+            SchemeFunction action = Scheme.GetFunctionByName(squareType.ActionName);
+
+            if (action == null) return config.CharacterConfig.MovementActionPoints;
+
+            return action.ActionPoints;
+        }
+
         private void SizeChanged()
         {
             //check squares

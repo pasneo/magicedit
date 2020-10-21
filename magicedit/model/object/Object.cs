@@ -113,7 +113,8 @@ namespace magicedit
                 if (config.IsClassType(var.Type))
                 {
                     Class @class = (Class)var.Value;
-                    modifValue += @class.GetAbilityModifier(ability.Name).Value;
+                    if (@class != null && @class.GetAbilityModifier(ability.Name) != null)
+                        modifValue += @class.GetAbilityModifier(ability.Name).Value;
                 }
             }
             ObjectVariable actualVar = new ObjectVariable(VariableTypes.Number, "", modifValue + (int)ability.Value);

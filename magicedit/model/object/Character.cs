@@ -140,5 +140,22 @@ namespace magicedit
             return true;
         }
 
+        //returns variable without calculating actual value (compare Object.GetVariableByName)
+        public ObjectVariable GetAbilityByName(string name)
+        {
+            foreach(var variable in Variables)
+            {
+                if (variable.Name == name) return variable;
+            }
+            return null;
+        }
+
+        public ObjectVariable AddAbility(string abilityName)
+        {
+            var ability = new ObjectVariable(VariableTypes.Ability, abilityName, 0);
+            Variables.Add(ability);
+            return ability;
+        }
+
     }
 }

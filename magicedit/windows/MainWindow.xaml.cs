@@ -105,10 +105,12 @@ namespace magicedit
 
         private void mRun_Click(object sender, RoutedEventArgs e)
         {
-            Project.Current.Game = new Game(Project.Current.Config);
+            //Project.Current.Game = new Game(Project.Current.Config);
+            //GameWindow gameWindow = new GameWindow();
+            //gameWindow.Show();
 
-            GameWindow gameWindow = new GameWindow();
-            gameWindow.Show();
+            GameInitWindow gameInitWindow = new GameInitWindow(Project.Current.Config);
+            gameInitWindow.ShowDialog();
         }
 
         private void tvExplorer_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

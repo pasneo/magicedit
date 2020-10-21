@@ -36,6 +36,7 @@ namespace Test
 
             Config config = new Config();
             config.Map = map;
+            config.CharacterConfig.ActionPoints = 10;
 
             Game game = new Game(config);
 

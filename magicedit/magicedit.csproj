@@ -73,6 +73,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ui_controls\game_init\UCEAbilityButton.xaml.cs">
+      <DependentUpon>UCEAbilityButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\game_init\UCEClassSelector.xaml.cs">
+      <DependentUpon>UCEClassSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\game_init\UCEAbilityRow.xaml.cs">
+      <DependentUpon>UCEAbilityRow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="windows\GameInitWindow.xaml.cs">
       <DependentUpon>GameInitWindow.xaml</DependentUpon>
     </Compile>
@@ -260,6 +269,18 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
+    <Page Include="ui_controls\game_init\UCEAbilityButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui_controls\game_init\UCEClassSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\game_init\UCEAbilityRow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="windows\GameInitWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

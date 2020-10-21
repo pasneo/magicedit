@@ -100,6 +100,25 @@ namespace magicedit
 
         }
 
+        public void SetupPlayers(List<Player> players)
+        {
+            int numberOfPlayers = players.Count;
+
+            if (numberOfPlayers > Map.GetSpawnerCount()) throw new GameException("Number of players exceeds number of spawn points");
+
+            Players = players;
+
+            //characters are placed on spawn points 0-n
+            int i = 0;
+            foreach(Player player in Players)
+            {
+                player.Character.CreateInventorySlots(Config);      //generate variables for inventory slots
+                player.Character.Position = Map.GetSpawnerByNo(i);
+                player.Character.EvaluateClassItemModifiers(Config);    //add items to character provided by its class modifiers
+                ++i;
+            }
+        }
+
         public void Start()
         {
 
@@ -162,9 +181,6 @@ namespace magicedit
             if (actionName == BasicActions.Movement)
             {
                 
-                if (Config.CharacterConfig.MovementActionPoints > CurrentPlayer.AvailableActionPoints)
-                    throw new GameException("Too few action points for movement");
-                
                 Character character = CurrentPlayer.Character;
 
                 Position newPosition = new Position(character.Position.X, character.Position.Y);
@@ -178,12 +194,19 @@ namespace magicedit
                 if (!Map.IsPositionWithin(newPosition))
                     throw new GameException("Invalid movement");
 
+                // if no special square at target position, or it has no associated action, the movement cost is the basic movement cost
+                int MovementCost = Config.CharacterConfig.MovementActionPoints;
+
                 // check square restrictions at new position
                 SquareType squareType = Map.GetSquareTypeAt(newPosition);
                 if (squareType != null)
                 {
                     if (!squareType.AllowsCharacter(character)) throw new GameException("This character is not allowed to step on this square");
+                    MovementCost = Map.GetMovementCost(squareType, Config);
                 }
+
+                if (MovementCost > CurrentPlayer.AvailableActionPoints)
+                    throw new GameException("Too few action points for movement");
 
                 character.Position = newPosition;
                 CurrentPlayer.AvailableActionPoints -= Config.CharacterConfig.MovementActionPoints;

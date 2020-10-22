@@ -20,6 +20,8 @@ namespace magicedit
     public partial class GameInitWindow : Window
     {
 
+        public Game Game { get; private set; }
+
         public Config Config { get; set; }
         public AbilityMaxValue AbilityMaxValue { get; set; }
 
@@ -46,6 +48,8 @@ namespace magicedit
             AbilityMaxValue = new AbilityMaxValue(Config.CharacterConfig.StartingAbilityPoints);
 
             InitializeComponent();
+
+            lMaxPlayers.Content = Config.Map.GetSpawnerCount();
         }
 
         private void BuildAbilityList(Character character)
@@ -127,7 +131,6 @@ namespace magicedit
 
         private void bAdd_Click(object sender, RoutedEventArgs e)
         {
-
             string newId = IdGenerator.Generate("ch");
             while (Players.Where(p => p.Character.Id == newId).Count() > 0) newId = IdGenerator.Generate("ch");
 
@@ -140,6 +143,11 @@ namespace magicedit
             list.SelectedItem = item;
 
             bStartGame.IsEnabled = true;
+
+            if (Players.Count == Config.Map.GetSpawnerCount())
+            {
+                bAdd.IsEnabled = false;
+            }
         }
 
         private void tbName_TextChanged(object sender, TextChangedEventArgs e)
@@ -176,6 +184,8 @@ namespace magicedit
             list.SelectedItem = null;
 
             if (Players.Count == 0) bStartGame.IsEnabled = false;
+
+            bAdd.IsEnabled = true;
         }
 
         private void visualSelector_OnVisualSelected(Visual selectedVisual)
@@ -227,10 +237,12 @@ namespace magicedit
             {
                 try
                 {
-                    Game game = new Game(Config);
-                    game.SetupPlayers(Players);
-                    game.Start();
+                    Game = new Game(Config);
+                    Game.SetupPlayers(Players);
+                    Game.Start();
                     MessageBox.Show("Game successfully started.");
+                    DialogResult = true;
+                    Close();
                 }
                 catch (Exception ex)
                 {

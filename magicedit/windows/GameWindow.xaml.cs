@@ -19,9 +19,15 @@ namespace magicedit
     /// </summary>
     public partial class GameWindow : Window
     {
-        public GameWindow()
+        public Game Game { get; set; }
+
+        public GameWindow(Game game)
         {
+            Game = game;
+
             InitializeComponent();
+
+            map.Game = Game;
         }
     }
 }

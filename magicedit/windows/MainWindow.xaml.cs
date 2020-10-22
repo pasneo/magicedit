@@ -110,7 +110,15 @@ namespace magicedit
             //gameWindow.Show();
 
             GameInitWindow gameInitWindow = new GameInitWindow(Project.Current.Config);
-            gameInitWindow.ShowDialog();
+            bool? result = gameInitWindow.ShowDialog();
+
+            if (result == true)
+            {
+                Game game = gameInitWindow.Game;
+                GameWindow gameWindow = new GameWindow(game);
+                gameWindow.ShowDialog();
+            }
+
         }
 
         private void tvExplorer_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

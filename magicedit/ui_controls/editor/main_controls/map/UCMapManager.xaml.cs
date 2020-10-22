@@ -41,6 +41,7 @@ namespace magicedit
 
         public UCMapManager()
         {
+
             InitializeComponent();
 
             mapEditor.OnMapPositionSelectionChanged += MapEditor_OnMapPositionSelectionChanged;

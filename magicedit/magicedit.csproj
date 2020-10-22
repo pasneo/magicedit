@@ -176,7 +176,7 @@
     <Compile Include="ui_controls\editor\selectors\UCSquareTypeSelector.xaml.cs">
       <DependentUpon>UCSquareTypeSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\editor\UCMapEditor.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\map\UCMapEditor.xaml.cs">
       <DependentUpon>UCMapEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui_controls\editor\main_controls\UCCharacterManager.xaml.cs">
@@ -377,7 +377,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\editor\UCMapEditor.xaml">
+    <Page Include="ui_controls\editor\main_controls\map\UCMapEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

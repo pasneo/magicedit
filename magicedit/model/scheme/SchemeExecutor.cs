@@ -123,7 +123,7 @@ namespace magicedit
 
             //If variable is "actor" or "me"
             if (name == "actor") return new ObjectVariable(Actor.Scheme.Name, "actor", Actor);
-            if (name == "me") return new ObjectVariable(Object.Scheme.Name, "me", Object);
+            if (name == "me") return new ObjectVariable(Object.Scheme?.Name == null ? VariableTypes.Object : Object.Scheme.Name, "me", Object);
 
             //If it is a register (_0, _1 ... _r0, _r1 ...) we return its value
             if (IsRegister(name))
@@ -148,7 +148,7 @@ namespace magicedit
             if (@object != null)
             {
                 //Type of an object is its scheme
-                if (@object.Scheme != null)
+                if (@object.Scheme?.Name != null)
                     return new ObjectVariable(@object.Scheme.Name, name, @object);
                 return new ObjectVariable("unknown", name, @object);
             }

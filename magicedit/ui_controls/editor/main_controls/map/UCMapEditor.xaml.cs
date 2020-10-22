@@ -52,7 +52,12 @@ namespace magicedit
         //private int selectY = -1;
         //private MapObject selectedMapObject = null;
 
-        public bool Multiselect { get; set; } = false;
+        private bool multiselect;
+        public bool Multiselect
+        {
+            get { return (MultiselectEnabled ? multiselect : false); }
+            set { multiselect = value; }
+        }
 
         public HashSet<MapObject> SelectedMapObjects = new HashSet<MapObject>();
         public Position HoveredPosition { get; set; }
@@ -64,9 +69,38 @@ namespace magicedit
         {
             get
             {
-                return Project.Current?.Config.Map;
+                return (IsGameMode ? Game.Config.Map : Project.Current?.Config.Map);
             }
         }
+
+        //<GAME MODE>
+
+        private Game game;
+        public Game Game
+        {
+            get { return game; }
+            set
+            {
+                game = value;
+                IsGameMode = (Game != null);
+            }
+        }
+
+        private bool gameMode;
+        public bool IsGameMode
+        {
+            get { return gameMode; }
+            set
+            {
+                gameMode = value;
+                MultiselectEnabled = !IsGameMode;
+            }
+        }
+
+
+        public bool MultiselectEnabled { get; set; } = true;
+
+        //</GAME MODE>
 
         public UCMapEditor()
         {
@@ -127,13 +161,16 @@ namespace magicedit
                 canvas.Children.Add(line);
             }
 
-            foreach(Position spawner in Map.SpawnerPositions)
+            if (!IsGameMode)
             {
-                Image spawnerSymbol = new Image();
-                spawnerSymbol.Width = spawnerSymbol.Height = CellSize / 3;
-                spawnerSymbol.Source = DefaultResources.PlusSymbolImage;
-                spawnerSymbol.Margin = new Thickness(TranslateX(spawner.X * CellSize) + 4.0, TranslateY(spawner.Y * CellSize) + 4.0, 0.0, 0.0);
-                canvas.Children.Add(spawnerSymbol);
+                foreach (Position spawner in Map.SpawnerPositions)
+                {
+                    Image spawnerSymbol = new Image();
+                    spawnerSymbol.Width = spawnerSymbol.Height = CellSize / 3;
+                    spawnerSymbol.Source = DefaultResources.PlusSymbolImage;
+                    spawnerSymbol.Margin = new Thickness(TranslateX(spawner.X * CellSize) + 4.0, TranslateY(spawner.Y * CellSize) + 4.0, 0.0, 0.0);
+                    canvas.Children.Add(spawnerSymbol);
+                }
             }
 
             foreach (Position selectedPosition in SelectedPositions)

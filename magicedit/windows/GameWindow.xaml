@@ -92,7 +92,8 @@
             <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
                           Width="5"></GridSplitter>
 
-            <Grid Grid.Column="2" Background="AntiqueWhite">
+            <Grid x:Name="gridMap" Grid.Column="2" Background="AntiqueWhite">
+                <local:UCMapEditor x:Name="map"/>
             </Grid>
             
         </Grid>

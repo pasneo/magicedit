@@ -72,6 +72,8 @@ namespace magicedit
 
         public virtual void CopyTo(Object copy)
         {
+            copy.TypeTag = TypeTag;
+
             copy.Id = Id;
             copy.Name = Name;
             copy.ShownName = ShownName;
@@ -90,6 +92,8 @@ namespace magicedit
 
         public void Create(Game game)
         {
+            if (Scheme == null) return;
+
             //Compile scheme and call its constructor
             Scheme.Construct(this, Parameters, game);
             Scheme.Init(this, game);
@@ -97,7 +101,7 @@ namespace magicedit
 
         public int ExecuteAction(string actionName, Object actor, Game game)
         {
-            SchemeFunction action = Scheme.GetFunctionByName(actionName);
+            SchemeFunction action = Scheme?.GetFunctionByName(actionName);
 
             if (action == null) throw new GameException("Given action does not exist.");
 
@@ -146,7 +150,7 @@ namespace magicedit
 
         public void AddAction(string actionName)
         {
-            if (Scheme.GetFunctionByName(actionName) == null) throw new GameException($"Action '{actionName}' not found");
+            if (Scheme?.GetFunctionByName(actionName) == null) throw new GameException($"Action '{actionName}' not found");
             AvailableActions.Add(actionName);
         }
 

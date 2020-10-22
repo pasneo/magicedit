@@ -60,6 +60,22 @@ namespace magicedit
 
         }
 
+        private void InitializeCharacter(Character character, int spawnNo)
+        {
+            if (character.Scheme == null)
+            {
+                character.Scheme = Config.GetSchemeByName("character");
+            }
+
+            character.CreateInventorySlots(Config);      //generate variables for inventory slots
+            if (spawnNo >= 0)
+                character.Position = Map.GetSpawnerByNo(spawnNo);
+            character.EvaluateClassItemModifiers(Config);    //add items to character provided by its class modifiers
+
+            Objects.Add(character);
+            Map.Objects.Add(character);
+        }
+
         //Sets up a game with empty characters (used mainly for test purposes)
         public void SetupPlayers(int numberOfPlayers)
         {
@@ -72,8 +88,7 @@ namespace magicedit
             for(int i=0; i<numberOfPlayers; ++i)
             {
                 Player player = new Player();
-                player.Character.CreateInventorySlots(Config);      //generate variables for inventory slots
-                player.Character.Position = Map.GetSpawnerByNo(i);
+                InitializeCharacter(player.Character, i);
                 Players.Add(player);
             }
 
@@ -92,9 +107,7 @@ namespace magicedit
             for (int i = 0; i < numberOfPlayers; ++i)
             {
                 Player player = new Player(characters[i]);
-                player.Character.CreateInventorySlots(Config);      //generate variables for inventory slots
-                player.Character.Position = Map.GetSpawnerByNo(i);
-                player.Character.EvaluateClassItemModifiers(Config);    //add items to character provided by its class modifiers
+                InitializeCharacter(player.Character, i);
                 Players.Add(player);
             }
 
@@ -112,9 +125,7 @@ namespace magicedit
             int i = 0;
             foreach(Player player in Players)
             {
-                player.Character.CreateInventorySlots(Config);      //generate variables for inventory slots
-                player.Character.Position = Map.GetSpawnerByNo(i);
-                player.Character.EvaluateClassItemModifiers(Config);    //add items to character provided by its class modifiers
+                InitializeCharacter(player.Character, i);
                 ++i;
             }
         }

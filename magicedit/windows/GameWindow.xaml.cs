@@ -20,7 +20,7 @@ namespace magicedit
     public partial class GameWindow : Window
     {
         public Game Game { get; set; }
-
+        
         public GameWindow(Game game)
         {
             Game = game;
@@ -28,6 +28,25 @@ namespace magicedit
             InitializeComponent();
 
             map.Game = Game;
+            map.OnMapPositionSelectionChanged += Map_OnMapPositionSelectionChanged;
+
+            actionPanel.Game = Game;
+        }
+
+        private void Map_OnMapPositionSelectionChanged(UCMapEditor mapEditor)
+        {
+            var selectedObjects = map.GetSelectedMapObjects();
+
+            var selectedObject = selectedObjects.FirstOrDefault();
+
+            tbDesc.Text = "";
+            actionPanel.SelectedObject = selectedObject;
+
+            if (selectedObject != null)
+            {
+                string desc = selectedObject.Description?.Content;
+                if (desc != null) tbDesc.Text = desc;
+            }
         }
     }
 }

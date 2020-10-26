@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace magicedit
 {
@@ -26,7 +27,7 @@ namespace magicedit
         public List<Scheme> Parents = new List<Scheme>();
         
         public CompiledScheme CompiledScheme { get; set; }
-
+        
         public bool IsCompiledValid { get; set; } = false;
 
         /* *** */
@@ -58,6 +59,8 @@ namespace magicedit
 
         public void Construct(Object @object, List<ObjectVariable> parameters, Game game)
         {
+            if (!IsCompiledValid) Compile(game.Config);
+
             //construct object based on this scheme
             CompiledScheme.Construct(@object, parameters, game);
 

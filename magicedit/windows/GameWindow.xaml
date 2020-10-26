@@ -37,7 +37,7 @@
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
                             <TextBlock FontSize="16">Report</TextBlock>
                             <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
-                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
+                                <TextBlock x:Name="tbReport" TextWrapping="Wrap" Margin="10,10,10,10">
                                     In this box there will be reports about objects when you do something with them.
                                 </TextBlock>
                             </Border>
@@ -48,7 +48,7 @@
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
                             <TextBlock FontSize="16">Description</TextBlock>
                             <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
-                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
+                                <TextBlock x:Name="tbDesc" TextWrapping="Wrap" Margin="10,10,10,10">
                                     This is a place where you can find general info about an object.
                                 </TextBlock>
                             </Border>
@@ -59,9 +59,7 @@
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
                             <TextBlock FontSize="16">Actions</TextBlock>
                             <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
-                                <TextBlock TextWrapping="Wrap" Margin="10,10,10,10">
-                                    Here you'll find all the actions you can do with the currently selected object.
-                                </TextBlock>
+                                <local:UCActionPanel x:Name="actionPanel"/>
                             </Border>
                         </StackPanel>
                     </Grid>

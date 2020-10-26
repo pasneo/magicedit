@@ -13,11 +13,15 @@
         <local:IntegerUpDown x:Name="iAbilityPoints" Height="23" Margin="185,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" MinValue="0"
                              ValueChanged="iAbilityPoints_ValueChanged"/>
 
-        <Label Content="Movement action cost" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-        <local:IntegerUpDown x:Name="iMovementCost" Height="23" Margin="185,36,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" MinValue="0"
+        <Label Content="Action points" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <local:IntegerUpDown x:Name="iActionPoints" Height="23" Margin="185,36,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" MinValue="0"
+                             ValueChanged="iActionPoints_ValueChanged"/>
+        
+        <Label Content="Movement action cost" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <local:IntegerUpDown x:Name="iMovementCost" Height="23" Margin="185,62,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" MinValue="0"
                              ValueChanged="iMovementCost_ValueChanged"/>
 
-        <Grid Margin="0,80,0,0">
+        <Grid Margin="0,110,0,0">
 
             <Label Content="Abilities" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
             <Label Content="Ability name" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>

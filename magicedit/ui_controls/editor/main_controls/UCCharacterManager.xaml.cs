@@ -31,6 +31,7 @@ namespace magicedit
             slotSchemeSelector.Refresh();
 
             iAbilityPoints.NumValue = Project.Current.Config.CharacterConfig.StartingAbilityPoints;
+            iActionPoints.NumValue = Project.Current.Config.CharacterConfig.ActionPoints;
             iMovementCost.NumValue = Project.Current.Config.CharacterConfig.MovementActionPoints;
         }
 
@@ -96,6 +97,11 @@ namespace magicedit
         private void iAbilityPoints_ValueChanged(IntegerUpDown sender)
         {
             Project.Current.Config.CharacterConfig.StartingAbilityPoints = iAbilityPoints.NumValue;
+        }
+
+        private void iActionPoints_ValueChanged(IntegerUpDown sender)
+        {
+            Project.Current.Config.CharacterConfig.ActionPoints = iActionPoints.NumValue;
         }
 
         private void iMovementCost_ValueChanged(IntegerUpDown sender)

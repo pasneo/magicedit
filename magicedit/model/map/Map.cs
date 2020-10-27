@@ -121,6 +121,15 @@ namespace magicedit
             return null;
         }
 
+        public bool IsPositionPermeable(Position position)
+        {
+            foreach (MapObject obj in Objects)
+            {
+                if (!obj.IsPermeable && obj.Position.Equals(position)) return false;
+            }
+            return true;
+        }
+
         public void CallSquareMethod(SquareType squareType, Character actor, Game game)
         {
             if (Scheme == null || squareType.ActionName == null || squareType.ActionName == "") return;
@@ -141,6 +150,13 @@ namespace magicedit
             if (action == null) return config.CharacterConfig.MovementActionPoints;
 
             return action.ActionPoints;
+        }
+
+        public int GetMovementCost(Position position, Config config)
+        {
+            SquareType squareType = GetSquareTypeAt(position);
+            if (squareType != null) return GetMovementCost(squareType, config);
+            return config.CharacterConfig.MovementActionPoints;
         }
 
         private void SizeChanged()

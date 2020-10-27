@@ -252,6 +252,14 @@ namespace magicedit
             SelectedMapObjects = GetSelectedMapObjects();
         }
 
+        public void DeselectAll()
+        {
+            SelectedPositions.Clear();
+            SelectedMapObjects.Clear();
+            OnMapPositionSelectionChanged?.Invoke(this);
+            Redraw();
+        }
+
         // selects the hovered position.
         private void SelectHoveredPosition(bool drag)
         {

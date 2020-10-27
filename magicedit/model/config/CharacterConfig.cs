@@ -9,7 +9,7 @@ namespace magicedit
     public class CharacterConfig
     {
         public int ActionPoints { get; set; }               //how many ap each character has at the beginning of a new round
-        public int MovementActionPoints { get; set; } = 1;  //how many ap each movement costs
+        public int MovementActionPoints { get; set; } = 1;  //how many ap each movement costs (if not overwritten by a squaretype)
 
         public int StartingAbilityPoints { get; set; } = 10;  //points the player can spend on abilities at the beginning of a game
 

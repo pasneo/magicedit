@@ -35,6 +35,24 @@ namespace magicedit
             }
         }
 
+        // returns whether this character could step to given position (ignoring available action points)
+        public bool CanStepToPosition(Position position, Game game)
+        {
+            if (!game.GetMap().IsPositionWithin(position)) return false;
+            if (Position.GetDistance(position) != 1) return false;
+
+            if (!game.GetMap().IsPositionPermeable(position)) return false;
+
+            SquareType squareType = game.GetMap().GetSquareTypeAt(position);
+
+            if (squareType != null)
+            {
+                if (!squareType.AllowsCharacter(this)) return false;
+            }
+
+            return true;
+        }
+
         public bool CanReachObject(Game game, Object @object)
         {
 

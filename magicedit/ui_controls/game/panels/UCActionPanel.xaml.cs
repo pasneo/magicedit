@@ -21,56 +21,86 @@ namespace magicedit
     public partial class UCActionPanel : UserControl
     {
 
-        public Game Game { get; set; }
+        public delegate void ActionExecutedDelegate();
 
-        private Object selectedObject;
-        public Object SelectedObject
-        {
-            get { return selectedObject; }
-            set
-            {
-                selectedObject = value;
-                Refresh();
-            }
-        }
+        public event ActionExecutedDelegate ActionExecuted;
+
+        public Game Game { get; set; }
+        
+        public Object SelectedObject { get; set; }
+        public Position SelectedPosition { get; set; }
 
         public UCActionPanel()
         {
             InitializeComponent();
         }
 
-        private void Refresh()
+        public void Refresh()
         {
             list.Items.Clear();
-
-            if (SelectedObject == null)
-            {
-                ListBoxItem item = new ListBoxItem();
-                item.Content = "No actions available";
-                list.Items.Add(item);
-                list.IsEnabled = false;
-                return;
-            }
-
             list.IsEnabled = true;
-
-            var actions = SelectedObject.AvailableActions;
 
             int actionPoints = Game.CurrentPlayer.AvailableActionPoints;
 
-            foreach(var action in actions)
+            if (SelectedPosition != null)
             {
-                int actionCost = SelectedObject.Scheme.GetFunctionByName(action).ActionPoints;
+                if (Game.CurrentPlayer.Character.CanStepToPosition(SelectedPosition, Game))
+                {
+                    int movementCost = Game.GetMap().GetMovementCost(SelectedPosition, Game.Config);
 
+                    ListBoxItem item = new ListBoxItem();
+                    var actionPlan = new MoveActionPlan(Game, Game.CurrentPlayer.Character, SelectedPosition);
+                    UCEActionRow row = new UCEActionRow("Move", movementCost, movementCost <= actionPoints, actionPlan);
+                    item.Content = row;
+                    list.Items.Add(item);
+                }
+            }
+
+            if (SelectedObject != null && SelectedObject.AvailableActions.Count > 0)
+            {
+                var actions = SelectedObject.AvailableActions;
+
+                foreach (var action in actions)
+                {
+                    int actionCost = SelectedObject.Scheme.GetFunctionByName(action).ActionPoints;
+
+                    ListBoxItem item = new ListBoxItem();
+                    var actionPlan = new ObjectActionPlan(Game, Game.CurrentPlayer.Character, SelectedObject, action);
+                    UCEActionRow row = new UCEActionRow(action, actionCost, actionCost <= actionPoints, actionPlan);
+
+                    item.Content = row;
+
+                    list.Items.Add(item);
+                }
+
+            }
+
+            if (list.Items.Count == 0)
+            {
                 ListBoxItem item = new ListBoxItem();
-                UCEActionRow row = new UCEActionRow(action, actionCost, actionCost <= actionPoints);
-                
-                item.Content = row;
-
+                item.Content = "No other actions available";
+                item.IsEnabled = false;
                 list.Items.Add(item);
             }
 
+            ListBoxItem endTurnItem = new ListBoxItem();
+            var endTurnActionPlan = new EndTurnActionPlan(Game, Game.CurrentPlayer.Character);
+            UCEActionRow endTurnRow = new UCEActionRow("End turn", 0, true, endTurnActionPlan);
+            endTurnItem.Content = endTurnRow;
+            list.Items.Add(endTurnItem);
+
         }
 
+        private void list_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBoxItem item = (ListBoxItem)list.SelectedItem;
+
+            if (item == null) return;
+
+            UCEActionRow row = (UCEActionRow)item.Content;
+            row.Execute();
+
+            ActionExecuted?.Invoke();
+        }
     }
 }

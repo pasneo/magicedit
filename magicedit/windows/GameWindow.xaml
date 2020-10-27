@@ -57,7 +57,7 @@
 
                     <Grid HorizontalAlignment="Stretch" Background="#ff99ab">
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
-                            <TextBlock FontSize="16">Actions</TextBlock>
+                            <TextBlock FontSize="16">Actions (<Run x:Name="txActionPoints">2</Run>)</TextBlock>
                             <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
                                 <local:UCActionPanel x:Name="actionPanel"/>
                             </Border>

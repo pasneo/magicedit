@@ -159,7 +159,7 @@ namespace magicedit
 
             Log.Write($"Player [{CurrentPlayerNo}]: select object '{objectId}'");
 
-            if (objectId == "_none")
+            if (objectId == null || objectId == "_none")
             {
                 SelectedObject = null;
                 return;

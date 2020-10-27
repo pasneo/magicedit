@@ -31,22 +31,41 @@ namespace magicedit
             map.OnMapPositionSelectionChanged += Map_OnMapPositionSelectionChanged;
 
             actionPanel.Game = Game;
+            actionPanel.ActionExecuted += ActionPanel_ActionExecuted;
         }
 
-        private void Map_OnMapPositionSelectionChanged(UCMapEditor mapEditor)
+        private void ActionPanel_ActionExecuted()
+        {
+            map.DeselectAll();
+            Refresh();
+        }
+
+        private void Refresh()
         {
             var selectedObjects = map.GetSelectedMapObjects();
 
             var selectedObject = selectedObjects.FirstOrDefault();
+            var selectedPosition = map.SelectedPositions.FirstOrDefault();
+
+            if (!Game.CurrentPlayer.Character.CanReachObject(Game, selectedObject)) selectedObject = null;
+
+            actionPanel.SelectedObject = selectedObject;
+            actionPanel.SelectedPosition = selectedPosition;
+            actionPanel.Refresh();
+
+            txActionPoints.Text = Game.CurrentPlayer.AvailableActionPoints.ToString();
 
             tbDesc.Text = "";
-            actionPanel.SelectedObject = selectedObject;
-
             if (selectedObject != null)
             {
                 string desc = selectedObject.Description?.Content;
                 if (desc != null) tbDesc.Text = desc;
             }
+        }
+
+        private void Map_OnMapPositionSelectionChanged(UCMapEditor mapEditor)
+        {
+            Refresh();
         }
     }
 }

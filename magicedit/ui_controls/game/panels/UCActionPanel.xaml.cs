@@ -47,12 +47,10 @@ namespace magicedit
                 if (Game.CurrentPlayer.Character.CanStepToPosition(SelectedPosition, Game))
                 {
                     int movementCost = Game.GetMap().GetMovementCost(SelectedPosition, Game.Config);
-
-                    ListBoxItem item = new ListBoxItem();
+                    
                     var actionPlan = new MoveActionPlan(Game, Game.CurrentPlayer.Character, SelectedPosition);
                     UCEActionRow row = new UCEActionRow("Move", movementCost, movementCost <= actionPoints, actionPlan);
-                    item.Content = row;
-                    list.Items.Add(item);
+                    AddActionRow(row);
                 }
             }
 
@@ -63,14 +61,10 @@ namespace magicedit
                 foreach (var action in actions)
                 {
                     int actionCost = SelectedObject.Scheme.GetFunctionByName(action).ActionPoints;
-
-                    ListBoxItem item = new ListBoxItem();
+                    
                     var actionPlan = new ObjectActionPlan(Game, Game.CurrentPlayer.Character, SelectedObject, action);
                     UCEActionRow row = new UCEActionRow(action, actionCost, actionCost <= actionPoints, actionPlan);
-
-                    item.Content = row;
-
-                    list.Items.Add(item);
+                    AddActionRow(row);
                 }
 
             }
@@ -82,25 +76,37 @@ namespace magicedit
                 item.IsEnabled = false;
                 list.Items.Add(item);
             }
-
-            ListBoxItem endTurnItem = new ListBoxItem();
+            
             var endTurnActionPlan = new EndTurnActionPlan(Game, Game.CurrentPlayer.Character);
             UCEActionRow endTurnRow = new UCEActionRow("End turn", 0, true, endTurnActionPlan);
-            endTurnItem.Content = endTurnRow;
-            list.Items.Add(endTurnItem);
+            AddActionRow(endTurnRow);
 
+        }
+
+        private ListBoxItem AddActionRow(UCEActionRow row)
+        {
+            ListBoxItem item = new ListBoxItem();
+            item.Content = row;
+            list.Items.Add(item);
+            item.PreviewMouseLeftButtonDown += Item_MouseLeftButtonDown;
+            return item;
+        }
+
+        private void Item_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+
+            ListBoxItem item = (ListBoxItem)sender;
+
+            UCEActionRow row = (UCEActionRow)item.Content;
+            list.SelectedItem = null;
+            row.Execute();
+
+            ActionExecuted?.Invoke();
         }
 
         private void list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListBoxItem item = (ListBoxItem)list.SelectedItem;
-
-            if (item == null) return;
-
-            UCEActionRow row = (UCEActionRow)item.Content;
-            row.Execute();
-
-            ActionExecuted?.Invoke();
         }
     }
 }

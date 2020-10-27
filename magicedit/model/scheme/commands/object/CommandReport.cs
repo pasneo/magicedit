@@ -18,7 +18,7 @@ namespace magicedit
 
         public void Execute(SchemeExecutor executor)
         {
-            Console.WriteLine(executor.Game.Config.GetStringConstByName(messageStringConstName).Content);
+            executor.Game.Report(executor.Game.Config.GetStringConstByName(messageStringConstName));
         }
 
         public string GetAsString()

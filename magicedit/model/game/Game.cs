@@ -9,6 +9,12 @@ namespace magicedit
     public class Game
     {
 
+        public delegate void OnReportDelegate(Text report);
+        public event OnReportDelegate OnReport;
+
+        public delegate void OnNextPlayerDelegate();
+        public event OnNextPlayerDelegate OnNextPlayer;
+
         //Actions that characters can do without a target object
         public class BasicActions
         {
@@ -266,6 +272,8 @@ namespace magicedit
             CurrentPlayer.AvailableActionPoints = Config.CharacterConfig.ActionPoints;
 
             Log.Write($"Next player: {CurrentPlayerNo}");
+
+            OnNextPlayer?.Invoke();
         }
 
         private void NextRound()
@@ -273,6 +281,12 @@ namespace magicedit
             Round++;
 
             Log.Write($"Next round: {Round}");
+        }
+
+        public void Report(Text report)
+        {
+            Console.WriteLine(report.Content);
+            OnReport?.Invoke(report);
         }
 
         public Map GetMap()

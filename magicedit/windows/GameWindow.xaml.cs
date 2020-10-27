@@ -20,10 +20,15 @@ namespace magicedit
     public partial class GameWindow : Window
     {
         public Game Game { get; set; }
+
+        private bool ReportArrived = false;
         
         public GameWindow(Game game)
         {
             Game = game;
+
+            Game.OnReport += Game_OnReport;
+            Game.OnNextPlayer += Game_OnNextPlayer;
 
             InitializeComponent();
 
@@ -34,10 +39,24 @@ namespace magicedit
             actionPanel.ActionExecuted += ActionPanel_ActionExecuted;
         }
 
+        private void Game_OnNextPlayer()
+        {
+            tbReport.Text = "";
+        }
+
+        private void Game_OnReport(Text report)
+        {
+            tbReport.Text = report.Content;
+            ReportArrived = true;
+        }
+
         private void ActionPanel_ActionExecuted()
         {
             map.DeselectAll();
             Refresh();
+
+            if (!ReportArrived) tbReport.Text = "";
+            ReportArrived = false;
         }
 
         private void Refresh()
@@ -47,7 +66,20 @@ namespace magicedit
             var selectedObject = selectedObjects.FirstOrDefault();
             var selectedPosition = map.SelectedPositions.FirstOrDefault();
 
-            if (!Game.CurrentPlayer.Character.CanReachObject(Game, selectedObject)) selectedObject = null;
+            if (selectedObject != null && !Game.CurrentPlayer.Character.CanReachObject(Game, selectedObject))
+            {
+                selectedObject = null;
+                tbDesc.Text = "You are too far away from this item to examine it.";
+            }
+            else
+            {
+                tbDesc.Text = "";
+                if (selectedObject != null)
+                {
+                    string desc = selectedObject.Description?.Content;
+                    if (desc != null) tbDesc.Text = desc;
+                }
+            }
 
             actionPanel.SelectedObject = selectedObject;
             actionPanel.SelectedPosition = selectedPosition;
@@ -55,12 +87,6 @@ namespace magicedit
 
             txActionPoints.Text = Game.CurrentPlayer.AvailableActionPoints.ToString();
 
-            tbDesc.Text = "";
-            if (selectedObject != null)
-            {
-                string desc = selectedObject.Description?.Content;
-                if (desc != null) tbDesc.Text = desc;
-            }
         }
 
         private void Map_OnMapPositionSelectionChanged(UCMapEditor mapEditor)

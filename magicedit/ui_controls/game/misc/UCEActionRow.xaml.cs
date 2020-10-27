@@ -97,6 +97,7 @@ namespace magicedit
     public partial class UCEActionRow : UserControl
     {
         ActionPlan ActionPlan { get; set; }
+        public bool Available { get; set; }
 
         public UCEActionRow()
         {
@@ -106,6 +107,8 @@ namespace magicedit
         public UCEActionRow(string action, int actionPoint, bool available, ActionPlan actionPlan)
         {
             InitializeComponent();
+
+            Available = available;
 
             tbAction.Text = action;
             tbActionPoint.Text = actionPoint.ToString();
@@ -120,7 +123,8 @@ namespace magicedit
 
         public void Execute()
         {
-            ActionPlan?.Execute();
+            if (Available)
+                ActionPlan?.Execute();
         }
 
     }

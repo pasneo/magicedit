@@ -16,7 +16,7 @@ namespace magicedit
 
         private SchemeFunction BodyFunction = null;    //This is created from code in the scheme's body (outside of any other function)
         private SchemeFunction InitFunction = null;
-        private List<SchemeFunction> ActionFunctions = new List<SchemeFunction>();
+        public List<SchemeFunction> ActionFunctions { get; private set; } = new List<SchemeFunction>();
 
         /* *** */
 

@@ -83,7 +83,7 @@ namespace Test
         public void TestSquareActions()
         {
 
-            Scheme mapScheme = new Scheme("map");
+            Scheme mapScheme = new Scheme(SpecialSchemes.Map);
             mapScheme.Code = @"scheme map {
                                     action Step ( 0 ) {
                                         rick_rolled of actor = true
@@ -91,7 +91,7 @@ namespace Test
                                }";
 
             Map map = new Map(2, 1);
-            map.Scheme = mapScheme;
+            //map.Scheme = mapScheme;
 
             map.AddSpawner(new Position(0, 0));
 
@@ -101,6 +101,7 @@ namespace Test
 
             Config config = new Config();
             config.Map = map;
+            config.AddScheme(mapScheme);
 
             Game game = new Game(config);
 

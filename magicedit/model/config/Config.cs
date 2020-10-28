@@ -9,6 +9,12 @@ using Newtonsoft.Json;
 namespace magicedit
 {
     
+    public class SpecialSchemes
+    {
+        public static readonly string Map = "map";
+        public static readonly string Character = "character";
+    }
+
     public class Config
     {
 

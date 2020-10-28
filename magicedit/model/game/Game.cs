@@ -61,6 +61,9 @@ namespace magicedit
                 obj.Create(this);
             }
 
+            //collect special schemes
+            Map.Scheme = Config.GetSchemeByName(SpecialSchemes.Map);
+
             Map?.Scheme?.Compile(config);
             Map?.RecollectMapObjects(Objects);
 
@@ -70,7 +73,7 @@ namespace magicedit
         {
             if (character.Scheme == null)
             {
-                character.Scheme = Config.GetSchemeByName("character");
+                character.Scheme = Config.GetSchemeByName(SpecialSchemes.Character);
             }
 
             character.CreateInventorySlots(Config);      //generate variables for inventory slots

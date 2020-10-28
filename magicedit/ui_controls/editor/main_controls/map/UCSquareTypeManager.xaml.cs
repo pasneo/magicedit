@@ -49,6 +49,33 @@ namespace magicedit
 
         }
 
+        private void RefreshActions(string selectedActionName)
+        {
+            cbActionName.Items.Clear();
+
+            Scheme scheme = Project.Current.Config.GetSchemeByName(SpecialSchemes.Map);
+            
+            //add default item with 'null' (so we can select 'none' action)
+            ComboBoxItem defaultItem = new ComboBoxItem();
+            defaultItem.Content = "(no action)";
+            defaultItem.Tag = null;
+            cbActionName.Items.Add(defaultItem);
+            if (selectedActionName == null) defaultItem.IsSelected = true;
+
+            if (scheme == null) return;
+
+            var errors = SchemeLang.CompileWithErrors(scheme, Project.Current.Config);
+
+            foreach(var action in scheme.CompiledScheme.ActionFunctions)
+            {
+                ComboBoxItem item = new ComboBoxItem();
+                item.Content = item.Tag = action.Name;
+                cbActionName.Items.Add(item);
+
+                if (selectedActionName == action.Name) item.IsSelected = true;
+            }
+        }
+
         private ListBoxItem AddListBoxItem(SquareType squareType)
         {
             ListBoxItem listBoxItem = new ListBoxItem();
@@ -70,8 +97,11 @@ namespace magicedit
             tbAllowedAttributes.IsEnabled = false;
             tbForbiddenAttributes.Text = "";
             tbForbiddenAttributes.IsEnabled = false;
-            tbActionName.Text = "";
-            tbActionName.IsEnabled = false;
+
+            cbActionName.Items.Clear();
+            cbActionName.SelectedItem = null;
+            cbActionName.IsEnabled = false;
+
             bDelete.IsEnabled = false;
             visualSelector.Visibility = Visibility.Hidden;
             lVisualID.Content = "";
@@ -86,7 +116,9 @@ namespace magicedit
                 tbID.IsEnabled = true;
                 tbAllowedAttributes.IsEnabled = true;
                 tbForbiddenAttributes.IsEnabled = true;
-                tbActionName.IsEnabled = true;
+
+                cbActionName.IsEnabled = true;
+
                 bDelete.IsEnabled = true;
 
                 SquareType squareType = (SquareType)((ListBoxItem)list.SelectedItem).Tag;
@@ -94,7 +126,7 @@ namespace magicedit
                 tbID.Text = squareType.Name;
                 tbAllowedAttributes.Text = string.Join(" ", squareType.AllowedAttributes.ToArray());
                 tbForbiddenAttributes.Text = string.Join(" ", squareType.ForbiddenAttributes.ToArray());
-                tbActionName.Text = squareType.ActionName;
+                RefreshActions(squareType.ActionName);
 
                 iVisualImage.Source = (squareType.Visual?.BitmapFrame == null) ? DefaultResources.VisualPlaceholder : squareType.Visual.BitmapFrame;
                 lVisualID.Content = (squareType.Visual == null) ? "" : squareType.Visual.ID;
@@ -193,14 +225,14 @@ namespace magicedit
             squareType.ForbiddenAttributes = tbForbiddenAttributes.Text.Split(' ').ToList();
         }
 
-        private void tbActionName_TextChanged(object sender, TextChangedEventArgs e)
+        private void cbActionName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (list.SelectedItem == null || ((ListBoxItem)list.SelectedItem).Tag == null) return;
+            if (list.SelectedItem == null || ((ListBoxItem)list.SelectedItem).Tag == null || cbActionName.SelectedItem == null) return;
 
             ListBoxItem item = (ListBoxItem)list.SelectedItem;
             SquareType squareType = (SquareType)item.Tag;
 
-            squareType.ActionName = tbActionName.Text;
+            squareType.ActionName = (string)((ComboBoxItem)cbActionName.SelectedItem).Tag;
         }
     }
 }

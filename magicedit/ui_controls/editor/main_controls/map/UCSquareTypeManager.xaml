@@ -92,13 +92,24 @@
                     IsEnabled="False"
                     TextChanged="tbForbiddenAttributes_TextChanged"/>
 
-                <Label Content="Action name" HorizontalAlignment="Left" Margin="242,149,0,0" VerticalAlignment="Top"/>
+                <Label Content="Action" HorizontalAlignment="Left" Margin="242,149,0,0" VerticalAlignment="Top"/>
+
+                <ComboBox 
+                    x:Name="cbActionName"
+                    IsEnabled="False"
+                    VerticalContentAlignment="Center"
+                    HorizontalAlignment="Left" Height="23" Margin="242,175,0,0" VerticalAlignment="Top" Width="243"
+                    SelectionChanged="cbActionName_SelectionChanged"
+                    />
+
+                <!--
                 <TextBox 
                     x:Name="tbActionName"
                     IsEnabled="False"
                     VerticalContentAlignment="Center"
                     HorizontalAlignment="Left" Height="23" Margin="242,175,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="243"
                     TextChanged="tbActionName_TextChanged"/>
+                -->
 
                 <Button x:Name="bDelete" Content="Delete" HorizontalAlignment="Right" Margin="0,224,10.328,0" VerticalAlignment="Top" Width="75"
                         IsEnabled="False"

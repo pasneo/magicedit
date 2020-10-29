@@ -240,7 +240,7 @@ namespace magicedit
                     Game = new Game(Config);
                     Game.SetupPlayers(Players);
                     Game.Start();
-                    MessageBox.Show("Game successfully started.");
+                    Log.Write("Game successfully started.");
                     DialogResult = true;
                     Close();
                 }

@@ -21,13 +21,15 @@ namespace magicedit
     public partial class UCInventoryPanel : UserControl
     {
 
+        public event UCEItemRow.OnSelectedDelegate OnItemSelected;
+
         public Game Game
         {
             get { return Project.Current?.Game; }
         }
 
-        Character _character;
-        Character Character {
+        private Character _character;
+        public Character Character {
             get { return _character; }
             set
             {
@@ -45,6 +47,9 @@ namespace magicedit
 
         public void Refresh()
         {
+            spSlotItems.Children.Clear();
+            spBagItems.Children.Clear();
+
             if (Character == null) return;
 
             List<Object> slotItems = new List<Object>();
@@ -66,11 +71,17 @@ namespace magicedit
             {
                 if (!slotItems.Contains(item))
                 {
-                    spBagItems.Children.Add(new UCEItemRow(item));
+                    UCEItemRow row = new UCEItemRow(item);
+                    row.OnSelected += ItemRow_OnSelected;
+                    spBagItems.Children.Add(row);
                 }
             }
 
         }
 
+        private void ItemRow_OnSelected(UCEItemRow itemRow)
+        {
+            OnItemSelected?.Invoke(itemRow);
+        }
     }
 }

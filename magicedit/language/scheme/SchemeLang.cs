@@ -291,6 +291,9 @@ namespace magicedit
             public override object VisitCmd_add_item([NotNull] scheme_langParser.Cmd_add_itemContext context)
             {
 
+                if (context.character_name() == null) return base.VisitCmd_add_item(context);
+                if (context.item_name() == null) return base.VisitCmd_add_item(context);
+
                 string characterName = context.character_name().GetText();
                 string itemName = context.item_name().GetText();
                 string itemNumber = "1";
@@ -332,13 +335,15 @@ namespace magicedit
 
             public override object VisitCmd_desc([NotNull] scheme_langParser.Cmd_descContext context)
             {
+                if (context.content() == null) return base.VisitCmd_desc(context);
+
                 string string_const_name = context.content().GetText();
 
                 CommandDesc cmd = new CommandDesc(string_const_name);
 
                 if (Config.GetStringConstByName(string_const_name) == null)
                 {
-                    Errors.Add(new ErrorDescriptor($"String const '{string_const_name}' does not exist.", context));
+                    Errors.Add(new ErrorDescriptor($"String const '{string_const_name}' does not exist.", context.content()));
                 }
 
                 currentFunc.AddCommand(cmd);
@@ -438,11 +443,13 @@ namespace magicedit
 
             public override object VisitCmd_report([NotNull] scheme_langParser.Cmd_reportContext context)
             {
+                if (context.content() == null) return base.VisitCmd_report(context);
+
                 string string_const_name = context.content().GetText();
 
                 if (Config.GetStringConstByName(string_const_name) == null)
                 {
-                    Errors.Add(new ErrorDescriptor($"String const '{string_const_name}' does not exist.", context));
+                    Errors.Add(new ErrorDescriptor($"String const '{string_const_name}' does not exist.", context.content()));
                 }
 
                 CommandReport cmd = new CommandReport(string_const_name);
@@ -453,6 +460,7 @@ namespace magicedit
 
             public override object VisitCmd_set_attr([NotNull] scheme_langParser.Cmd_set_attrContext context)
             {
+
 
                 string attr_name = context.attr_name().GetText();
                 string attr_type = context.attr_type().GetText();

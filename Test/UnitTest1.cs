@@ -10,8 +10,8 @@ namespace Test
         public void TestCharacterCountItem()
         {
             Character character = new Character();
-            character.AddItem(new Object("i1", "item"));
-            character.AddItem(new Object("i2", "item"));
+            character.AddItemWithoutCopy(new Object("i1", "item"));
+            character.AddItemWithoutCopy(new Object("i2", "item"));
             Assert.AreEqual(character.CountItem("item"), 2);
             Assert.AreEqual(character.CountItem("something"), 0);
         }

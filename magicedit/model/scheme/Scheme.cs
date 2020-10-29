@@ -28,6 +28,7 @@ namespace magicedit
         
         public CompiledScheme CompiledScheme { get; set; }
         
+        [JsonIgnore]
         public bool IsCompiledValid { get; set; } = false;
 
         /* *** */
@@ -47,7 +48,9 @@ namespace magicedit
         public void Compile(Config config)
         {
             // compile self
-            SchemeLang.Compile(this, config);
+            if (Code != null && Code != "")
+                SchemeLang.Compile(this, config);
+
             IsCompiledValid = true;
 
             // compile parents

@@ -115,6 +115,9 @@ namespace magicedit
             if (result == true)
             {
                 Game game = gameInitWindow.Game;
+
+                Project.Current.Game = game;
+
                 GameWindow gameWindow = new GameWindow(game);
                 gameWindow.ShowDialog();
             }

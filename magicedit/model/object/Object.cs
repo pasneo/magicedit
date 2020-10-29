@@ -64,20 +64,20 @@ namespace magicedit
             TypeTag = typeTag;
         }
 
-        public virtual Object Copy()
+        public virtual Object Copy(Game game)
         {
             Object copy = new Object();
 
-            CopyTo(copy);
+            CopyTo(copy, game);
 
             return copy;
         }
 
-        public virtual void CopyTo(Object copy)
+        public virtual void CopyTo(Object copy, Game game)
         {
             copy.TypeTag = TypeTag;
 
-            copy.Id = Id;
+            copy.Id = (game == null) ? Id : IdGenerator.Generate(Id, id => game.GetObjectById(id) == null);
             copy.Name = Name;
             copy.ShownName = ShownName;
 

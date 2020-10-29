@@ -54,7 +54,7 @@ namespace magicedit
             Map = config.Map;
             
             //Collect all objects into the list Objects, construct and init objects
-            Objects = Config.CopyObjects();
+            Objects = Config.CopyObjects(null); //use 'null' so each initial object is copied with their original Id
 
             foreach(Object obj in Objects)
             {
@@ -62,7 +62,8 @@ namespace magicedit
             }
 
             //collect special schemes
-            Map.Scheme = Config.GetSchemeByName(SpecialSchemes.Map);
+            if (Map.Scheme == null)
+                Map.Scheme = Config.GetSchemeByName(SpecialSchemes.Map);
 
             Map?.Scheme?.Compile(config);
             Map?.RecollectMapObjects(Objects);
@@ -73,13 +74,19 @@ namespace magicedit
         {
             if (character.Scheme == null)
             {
-                character.Scheme = Config.GetSchemeByName(SpecialSchemes.Character);
+                Scheme characterScheme = Config.GetSchemeByName(SpecialSchemes.Character);
+                if (characterScheme == null)
+                {
+                    characterScheme = new Scheme(SpecialSchemes.Character);
+                    characterScheme.Compile(Config);
+                }
+                character.Scheme = characterScheme;
             }
 
             character.CreateInventorySlots(Config);      //generate variables for inventory slots
             if (spawnNo >= 0)
                 character.Position = Map.GetSpawnerByNo(spawnNo);
-            character.EvaluateClassItemModifiers(Config);    //add items to character provided by its class modifiers
+            character.EvaluateClassItemModifiers(this);    //add items to character provided by its class modifiers
 
             Objects.Add(character);
             Map.Objects.Add(character);

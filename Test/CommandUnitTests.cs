@@ -92,8 +92,11 @@ namespace Test
             f.AddCommand(new CommandSetVariable("n", "3"));
             f.AddCommand(new CommandAddItem("actor", "n", "apple"));
 
+            Scheme itemScheme = new Scheme("item");
+
             Object sword = new Object("sword", "sword");
             Object apple = new Object("apple", "apple");
+            sword.Scheme = apple.Scheme = itemScheme;
 
             MapObject @object = new MapObject();
             @object.Name = "some_object";
@@ -101,15 +104,17 @@ namespace Test
 
             Character actor = new Character();
             actor.Scheme = new Scheme();
-            actor.AddItem(sword);
 
             Config config = new Config();
             config.AddScheme(@object.Scheme);
+            config.AddScheme(itemScheme);
 
             Game game = new Game(config);
             game._AddObject(@object);
             game._AddObject(sword);
             game._AddObject(apple);
+
+            actor.AddItem(game, sword);
 
             //Execute function on object
             f.Execute(@object, actor, game);

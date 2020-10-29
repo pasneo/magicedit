@@ -93,12 +93,12 @@ namespace magicedit
             return null;
         }
 
-        public List<Object> CopyObjects()
+        public List<Object> CopyObjects(Game game)
         {
             List<Object> objects = new List<Object>();
             foreach(Object obj in Objects)
             {
-                objects.Add(obj.Copy());
+                objects.Add(obj.Copy(game));
             }
             return objects;
         }

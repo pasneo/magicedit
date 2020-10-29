@@ -48,6 +48,8 @@ namespace magicedit
             }
         }
 
+        public Object Item { get; set; }
+
         public UCEItemRow()
         {
             InitializeComponent();
@@ -55,6 +57,8 @@ namespace magicedit
 
         public UCEItemRow(Object item)
         {
+            Item = item;
+
             InitializeComponent();
 
             tbItemName.Text = item?.Name;
@@ -94,7 +98,7 @@ namespace magicedit
 
         private void grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Selected = true;
+            Selected = !Selected;
             OnSelected?.Invoke(this);
         }
     }

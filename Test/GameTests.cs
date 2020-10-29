@@ -106,7 +106,6 @@ namespace Test
             Game game = new Game(config);
 
             Character ch = new Character("ch", "ch");
-            ch.Scheme = new Scheme("ch_scheme");
             ch.Variables.Add(new ObjectVariable(VariableTypes.Logical, "rick_rolled", false));
 
             List<Character> characters = new List<Character>() { ch };

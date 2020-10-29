@@ -63,15 +63,9 @@ namespace magicedit
                 return (Position.GetDistance(mapObject.Position) <= 1);
             }
 
-            foreach(Item item in Items)
-            {
-                if (@object == item) return true;
-            }
+            if (Items.Contains(@object)) return true;
 
-            foreach (Spell spell in Spells)
-            {
-                if (@object == spell) return true;
-            }
+            if (Spells.Contains(@object)) return true;
 
             return false;
         }
@@ -95,10 +89,19 @@ namespace magicedit
             return false;
         }
 
-        public void AddItem(Item item, int number = 1)
+        public void AddItem(Game game, Item item, int number = 1)
         {
-            for(int i = 0; i < number; ++i)
-                Items.Add(item.Copy());
+            for (int i = 0; i < number; ++i)
+            {
+                Item itemCopy = item.Copy(game);
+                game._AddObject(itemCopy);
+                Items.Add(itemCopy);
+            }
+        }
+
+        public void AddItemWithoutCopy(Item item)
+        {
+            Items.Add(item);
         }
 
         //This method chooses "randomly" which items to remove, so should only be used for items that can't have unique states
@@ -125,18 +128,18 @@ namespace magicedit
         }
 
         // used to evaluate classes that provide items for characters
-        public void EvaluateClassItemModifiers(Config config)
+        public void EvaluateClassItemModifiers(Game game)
         {
             foreach (ObjectVariable var in Variables)
             {
-                if (config.IsClassType(var.Type))
+                if (game.Config.IsClassType(var.Type))
                 {
                     Class @class = (Class)var.Value;
                     List<ItemModifier> itemModifiers = @class.GetItemModifiers();
                     foreach(ItemModifier im in itemModifiers)
                     {
-                        Item item = config.GetItemById(im.ItemName);
-                        AddItem(item, im.ItemNumber);
+                        Item item = game.GetObjectById(im.ItemName);
+                        AddItem(game, item, im.ItemNumber);
                     }
                 }
             }

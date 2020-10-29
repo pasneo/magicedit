@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,8 @@ namespace magicedit
 
         private SchemeFunction BodyFunction = null;    //This is created from code in the scheme's body (outside of any other function)
         private SchemeFunction InitFunction = null;
+
+        [JsonIgnore]
         public List<SchemeFunction> ActionFunctions { get; private set; } = new List<SchemeFunction>();
 
         /* *** */

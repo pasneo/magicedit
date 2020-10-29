@@ -18,10 +18,10 @@ namespace magicedit
         public MapObject() { }
         public MapObject(string id, string name) : base(id, name) { }
 
-        public override Object Copy()
+        public override Object Copy(Game game)
         {
             MapObject copy = new MapObject(); ;
-            CopyTo(copy);
+            CopyTo(copy, game);
             copy.Position = Position;
             copy.Permeable = Permeable;
             return copy;

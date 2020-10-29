@@ -21,6 +21,8 @@ namespace magicedit
     {
         public Game Game { get; set; }
 
+        public Object SelectedObject { get; private set; }
+
         private bool ReportArrived = false;
         
         public GameWindow(Game game)
@@ -37,11 +39,25 @@ namespace magicedit
 
             actionPanel.Game = Game;
             actionPanel.ActionExecuted += ActionPanel_ActionExecuted;
+
+            inventoryPanel.Character = Game.CurrentPlayer.Character;
+            inventoryPanel.OnItemSelected += InventoryPanel_OnItemSelected;
+        }
+
+        private void InventoryPanel_OnItemSelected(UCEItemRow itemRow)
+        {
+            map.DeselectAll();
+            if (itemRow.Selected)
+                SelectedObject = itemRow.Item;
+            else
+                SelectedObject = null;
+            Refresh();
         }
 
         private void Game_OnNextPlayer()
         {
             tbReport.Text = "";
+            inventoryPanel.Character = Game.CurrentPlayer.Character;
         }
 
         private void Game_OnReport(Text report)
@@ -53,7 +69,9 @@ namespace magicedit
         private void ActionPanel_ActionExecuted()
         {
             map.DeselectAll();
-            Refresh();
+            //Refresh();
+
+            inventoryPanel.Refresh();
 
             if (!ReportArrived) tbReport.Text = "";
             ReportArrived = false;
@@ -61,27 +79,24 @@ namespace magicedit
 
         private void Refresh()
         {
-            var selectedObjects = map.GetSelectedMapObjects();
-
-            var selectedObject = selectedObjects.FirstOrDefault();
             var selectedPosition = map.SelectedPositions.FirstOrDefault();
 
-            if (selectedObject != null && !Game.CurrentPlayer.Character.CanReachObject(Game, selectedObject))
+            if (SelectedObject != null && !Game.CurrentPlayer.Character.CanReachObject(Game, SelectedObject))
             {
-                selectedObject = null;
+                SelectedObject = null;
                 tbDesc.Text = "You are too far away from this item to examine it.";
             }
             else
             {
                 tbDesc.Text = "";
-                if (selectedObject != null)
+                if (SelectedObject != null)
                 {
-                    string desc = selectedObject.Description?.Content;
+                    string desc = SelectedObject.Description?.Content;
                     if (desc != null) tbDesc.Text = desc;
                 }
             }
 
-            actionPanel.SelectedObject = selectedObject;
+            actionPanel.SelectedObject = SelectedObject;
             actionPanel.SelectedPosition = selectedPosition;
             actionPanel.Refresh();
 
@@ -91,6 +106,9 @@ namespace magicedit
 
         private void Map_OnMapPositionSelectionChanged(UCMapEditor mapEditor)
         {
+            var selectedObjects = map.GetSelectedMapObjects();
+            SelectedObject = selectedObjects.FirstOrDefault();
+
             Refresh();
         }
     }

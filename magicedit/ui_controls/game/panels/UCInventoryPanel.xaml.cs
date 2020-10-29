@@ -38,6 +38,8 @@ namespace magicedit
             }
         }
 
+        private UCEItemRow SelectedItemRow { get; set; }
+
         public UCInventoryPanel()
         {
             InitializeComponent();
@@ -62,7 +64,10 @@ namespace magicedit
                 if (slotItem != null)
                 {
                     slotItems.Add(slotItem);
-                    spSlotItems.Children.Add(new UCEItemRow(slotItem));
+                    UCEItemRow row = new UCEItemRow(slotItem, slotName);
+                    row.OnSelected += ItemRow_OnSelected;
+                    row.OnMoveClicked += ItemRow_OnMoveClicked;
+                    spSlotItems.Children.Add(row);
                 }
 
             }
@@ -73,15 +78,45 @@ namespace magicedit
                 {
                     UCEItemRow row = new UCEItemRow(item);
                     row.OnSelected += ItemRow_OnSelected;
+                    row.OnMoveClicked += ItemRow_OnMoveClicked;
                     spBagItems.Children.Add(row);
                 }
             }
 
         }
 
+        private void ItemRow_OnMoveClicked(UCEItemRow itemRow)
+        {
+            var slotSelectorDialog = new SlotSelectorDialog(itemRow.Item, Game);
+
+            if (slotSelectorDialog.ShowDialog() == true)
+            {
+                if (slotSelectorDialog.SelectedSlot == SpecialSlots.Bag)
+                {
+                    Game.CurrentPlayer.Character.MoveItemToBag(itemRow.Item, Game.Config);
+                }
+                else
+                    Game.CurrentPlayer.Character.MoveItemToSlot(itemRow.Item, slotSelectorDialog.SelectedSlot, Game.Config);
+
+                Refresh();
+            }
+
+        }
+
         private void ItemRow_OnSelected(UCEItemRow itemRow)
         {
-            OnItemSelected?.Invoke(itemRow);
+            if (itemRow.Selected)
+            {
+                SelectedItemRow?.Deselect();
+                SelectedItemRow = itemRow;
+                OnItemSelected?.Invoke(itemRow);
+            }
+            else
+            {
+                SelectedItemRow = null;
+                OnItemSelected?.Invoke(null);
+            }
+
         }
     }
 }

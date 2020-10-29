@@ -47,7 +47,7 @@ namespace magicedit
         private void InventoryPanel_OnItemSelected(UCEItemRow itemRow)
         {
             map.DeselectAll();
-            if (itemRow.Selected)
+            if (itemRow != null && itemRow.Selected)
                 SelectedObject = itemRow.Item;
             else
                 SelectedObject = null;

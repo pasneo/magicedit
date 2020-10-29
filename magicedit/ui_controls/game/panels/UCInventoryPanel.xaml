@@ -10,12 +10,12 @@
         <StackPanel>
             <TextBlock>Slots</TextBlock>
 
-            <StackPanel x:Name="spSlotItems">
+            <StackPanel x:Name="spSlotItems" Margin="5,5,5,5">
             </StackPanel>
             
             <TextBlock>Bag</TextBlock>
 
-            <StackPanel x:Name="spBagItems">
+            <StackPanel x:Name="spBagItems" Margin="5,5,5,0">
             </StackPanel>
             
         </StackPanel>

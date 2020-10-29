@@ -69,6 +69,9 @@ namespace magicedit
         {
             Config config = Project.Current.Config;
 
+            config.Visuals.Add(new Visual("mage", "images/objects/mage.png", true));
+            config.Visuals.Add(new Visual("soldier", "images/objects/soldier.png", true));
+
             config.Visuals.Add(new Visual("forest", "images/terrain/forest.png", true));
             config.Visuals.Add(new Visual("grass", "images/terrain/grass.png", true));
             config.Visuals.Add(new Visual("village", "images/terrain/village.png", true));

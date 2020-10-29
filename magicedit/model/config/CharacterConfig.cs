@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace magicedit
 {
+
+    public class SpecialSlots
+    {
+        public static readonly string Bag = "_bag";
+    }
+
     public class CharacterConfig
     {
         public int ActionPoints { get; set; }               //how many ap each character has at the beginning of a new round

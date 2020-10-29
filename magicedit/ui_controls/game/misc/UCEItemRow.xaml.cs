@@ -49,35 +49,49 @@ namespace magicedit
         }
 
         public Object Item { get; set; }
+        public string SlotName { get; set; }
 
         public UCEItemRow()
         {
             InitializeComponent();
         }
 
-        public UCEItemRow(Object item)
+        public UCEItemRow(Object item, string slotName = null)
         {
             Item = item;
+            SlotName = slotName;
 
             InitializeComponent();
 
-            tbItemName.Text = item?.Name;
+            if (slotName == null || slotName.Length == 0)
+                tbItemName.Text = item?.Name;
+            else
+                tbItemName.Text = $"{item?.Name} ({slotName})";
+
             img.Source = DefaultResources.GetVisualImageOrDefault(item.Visual);
+
+            RefreshBackground();
+        }
+
+        public void Deselect()
+        {
+            Selected = false;
         }
 
         private void RefreshBackground()
         {
             if (Hover)
             {
-                grid.Background = Brushes.DarkOrange;
+                grid.Background = Brushes.DarkGray;
             }
             else if (Selected)
             {
-                grid.Background = Brushes.Orange;
+                grid.Background = Brushes.PowderBlue;
             }
             else
             {
-                grid.Background = Brushes.LightGray;
+                //grid.Background = Brushes.LightGray;
+                grid.Background = Brushes.Transparent;
             }
         }
 

@@ -107,6 +107,7 @@ namespace magicedit
         //This method chooses "randomly" which items to remove, so should only be used for items that can't have unique states
         public void RemoveItem(string itemName, int number)
         {
+            //todo: remove item from slot (if inside one)
             for(int i = Items.Count - 1; (i >= 0) && (number > 0); --i)
             {
                 if (Items[i].Name == itemName)
@@ -145,6 +146,20 @@ namespace magicedit
             }
         }
 
+        public void MoveItemToBag(Item item, Config config)
+        {
+            // we search for the slot in which the item is, and remove the item from it
+            foreach(var slot in config.CharacterConfig.InventorySlots)
+            {
+                var slotVariable = GetVariableByName(slot.Name, config);
+                if (slotVariable.Value == item)
+                {
+                    slotVariable.Value = null;
+                    return;
+                }
+            }
+        }
+
         public Item GetItemBySlot(string slotName, Config config)
         {
             var variable = GetVariableByName(slotName, config);
@@ -155,7 +170,7 @@ namespace magicedit
         {
             var variable = GetVariableByName(slotName, config);
 
-            if (item.Scheme == null || SchemeExecutor.CheckTypeCompatibility(variable.Type, item.Scheme.Name, config)) return false;
+            if (item.Scheme == null || !SchemeExecutor.CheckTypeCompatibility(variable.Type, item.Scheme.Name, config)) return false;
 
             variable.Value = item;
             return true;

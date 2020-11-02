@@ -133,6 +133,7 @@ namespace magicedit
             foreach (var mapObject in Map.Objects)
             {
                 if (mapObject.Position == null || !Map.IsPositionWithin(mapObject.Position)) continue;
+                if (IsGameMode && !mapObject.IsVisible) continue;
 
                 Image image = new Image();
                 image.Width = image.Height = CellSize;
@@ -239,7 +240,8 @@ namespace magicedit
                 {
                     if (mapObject.Position != null && mapObject.Position.Equals(selectedPosition))
                     {
-                        selectedMapObjects.Add(mapObject);
+                        if (!IsGameMode || mapObject.IsVisible)
+                            selectedMapObjects.Add(mapObject);
                         break;
                     }
                 }

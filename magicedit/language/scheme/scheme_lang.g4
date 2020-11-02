@@ -48,7 +48,7 @@ command : cmd_report |
           cmd_if |
           cmd_fail |
 		  cmd_end |
-          //cmd_destroy |
+          cmd_toggle |
           cmd_set_attr |
           cmd_add_item |
           cmd_remove_item |
@@ -90,7 +90,7 @@ cmd_fail : FAIL ;
 
 cmd_end : END ;
 
-//cmd_destroy : DESTROY object ;
+cmd_toggle : TOGGLE object_name ;
     object : object_atom | property_of ;
 	object_atom : object_name ;
     object_name : identifier ;
@@ -112,7 +112,8 @@ cmd_remove_item : REMOVE item_number? item_name FROM character_name ;
 cmd_teach_spell : TEACH spell_name TO character_name;
     spell_name : identifier ;
 
-cmd_remove_spell : REMOVE spell_name FROM character_name ;
+//cmd_remove_spell : REMOVE spell_name FROM character_name ;
+cmd_remove_spell : MAKE character_name FORGET spell_name ;
 
 /* Expressions */
 
@@ -227,18 +228,19 @@ AND : 'and' ;
 CLASS : 'class' ;
 CLEAR : 'clear' ;
 DESC: 'desc' ;
-DESTROY : 'destroy' ;
 ELSE : 'else' ;
 END : 'end' ;
 ENDIF : 'endif' ;
 FAIL : 'fail' ;
 FORBID : 'forbid' ;
+FORGET : 'forget' ;
 FROM : 'from' ;
 HAS : 'has' ;
 IF : 'if' ;
 INIT : 'init' ;
 IS : 'is' ;
 KNOWS : 'knows' ;
+MAKE : 'make' ;
 NOT : 'not' ;
 OF : 'of' ;
 OR : 'or' ;
@@ -249,6 +251,7 @@ SCHEME : 'scheme' ;
 SET : 'set' ;
 TEACH : 'teach' ;
 TO : 'to' ;
+TOGGLE : 'toggle' ;
 
 PLUS: '+' ; MINUS : '-' ; MUL : '*' ; DIV : '/' ;
 //MOD_ADD : '+=' ; MOD_SUB : '-=' ; MOD_MUL : '*=' ; MOD_DIV : '/=' ;

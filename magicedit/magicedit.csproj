@@ -73,6 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\scheme\commands\object\CommandToggle.cs" />
     <Compile Include="ui_controls\game\misc\SlotSelectorDialog.xaml.cs">
       <DependentUpon>SlotSelectorDialog.xaml</DependentUpon>
     </Compile>

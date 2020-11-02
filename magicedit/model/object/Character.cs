@@ -118,6 +118,11 @@ namespace magicedit
             }
         }
 
+        public void RemoveItem(Item item)
+        {
+            Items.Remove(item);
+        }
+
         public void AddSpell(Spell spell)
         {
             Spells.Add(spell);

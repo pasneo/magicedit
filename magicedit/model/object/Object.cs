@@ -51,7 +51,15 @@ namespace magicedit
         public HashSet<string> AvailableActions = new HashSet<string>();
 
         public bool IsVisible { get; set; } = true;         //if this is false, the object is not showing on the map
-        public bool IsPermeable { get; set; } = false;
+
+        [JsonProperty]
+        private bool isPermeable = false;
+        [JsonIgnore]
+        public bool IsPermeable
+        {
+            get { return !IsVisible || isPermeable; }
+            set { isPermeable = value; }
+        }
 
         /* *** */
 

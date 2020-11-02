@@ -62,13 +62,15 @@
       <Word>remove</Word>
       <Word>from</Word>
       <Word>teach</Word>
-      <Word>destroy</Word>
+      <Word>toggle</Word>
       <Word>forbid</Word>
       <Word>set</Word>
       <Word>has</Word>
       <Word>knows</Word>
       <Word>of</Word>
       <Word>is</Word>
+      <Word>make</Word>
+      <Word>forget</Word>
     </Keywords>
 	
   </RuleSet>

@@ -9,12 +9,14 @@ namespace magicedit
     public class CommandRemoveItem : ISchemeCommand
     {
         string characterName, numberName, itemName;
+        bool expl;  //if true, we remove actual item identified by itemName variable, not just some item with the name 'itemName'
 
-        public CommandRemoveItem(string characterName, string numberName, string itemName)
+        public CommandRemoveItem(string characterName, string numberName, string itemName, bool expl)
         {
             this.characterName = characterName;
             this.numberName = numberName;
             this.itemName = itemName;
+            this.expl = expl;
         }
 
         public void Execute(SchemeExecutor executor)
@@ -35,8 +37,11 @@ namespace magicedit
             //TODO: Maybe check if the object identified by itemName is really an item (now we check only if it's an object)
             if (!executor.CheckTypeCompatibility(VariableTypes.Object, itemVariable.Type))
                 throw SchemeExecutor.CreateException($"Type '{itemVariable.Type}' is not an object type");
-            
-            character.RemoveItem(itemName, requiredNumber);
+
+            if (expl)
+                character.RemoveItem((Object)itemVariable.Value);
+            else
+                character.RemoveItem(itemName, requiredNumber);
         }
 
         public string GetAsString()

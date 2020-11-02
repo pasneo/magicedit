@@ -351,10 +351,20 @@ namespace magicedit
                 return base.VisitCmd_desc(context);
             }
 
-            //public override object VisitCmd_destroy([NotNull] scheme_langParser.Cmd_destroyContext context)
-            //{
-            //    return base.VisitCmd_destroy(context);
-            //}
+            public override object VisitCmd_toggle([NotNull] scheme_langParser.Cmd_toggleContext context)
+            {
+                string object_name = context.object_name()?.GetText();
+
+                if (object_name != null)
+                {
+                    VariableManager.CheckValueValidity(object_name, this, context.object_name());
+
+                    CommandToggle cmd = new CommandToggle(object_name);
+                    currentFunc.AddCommand(cmd);
+                }
+
+                return base.VisitCmd_toggle(context);
+            }
 
             public override object VisitCmd_end([NotNull] scheme_langParser.Cmd_endContext context)
             {
@@ -414,12 +424,18 @@ namespace magicedit
                 string itemName = context.item_name().GetText();
                 string itemNumber = "1";
 
+                bool expl = true;
+
                 VariableManager.CheckValueValidity(characterName, this, context.character_name());
                 VariableManager.CheckValueValidity(itemName, this, context.item_name());
 
-                if (context.item_number() != null) itemNumber = GetRegName(0);
+                if (context.item_number() != null)
+                {
+                    itemNumber = GetRegName(0);
+                    expl = false;
+                }
 
-                CommandRemoveItem cmd = new CommandRemoveItem(characterName, itemNumber, itemName);
+                CommandRemoveItem cmd = new CommandRemoveItem(characterName, itemNumber, itemName, expl);
                 currentFunc.AddCommand(cmd);
 
                 if (context.item_number() != null) SetNewExpression(1);

@@ -31,12 +31,18 @@
             </Grid.ColumnDefinitions>
 
             <ScrollViewer Grid.Column="0">
+
+                <ScrollViewer.Background>
+                    <ImageBrush ImageSource="/images/old-paper-tex.jpg" Stretch="UniformToFill"/>
+                </ScrollViewer.Background>
+
                 <StackPanel HorizontalAlignment="Stretch">
 
-                    <Grid HorizontalAlignment="Stretch" Background="#99ffab">
+                    <Grid HorizontalAlignment="Stretch">
+
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
                             <TextBlock FontSize="16">Report</TextBlock>
-                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5" Background="#60ffffff">
                                 <TextBlock x:Name="tbReport" TextWrapping="Wrap" Margin="10,10,10,10">
                                     In this box there will be reports about objects when you do something with them.
                                 </TextBlock>
@@ -44,10 +50,10 @@
                         </StackPanel>
                     </Grid>
 
-                    <Grid HorizontalAlignment="Stretch" Background="#ab99ff">
+                    <Grid HorizontalAlignment="Stretch">
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
                             <TextBlock FontSize="16">Description</TextBlock>
-                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5" Background="#60ffffff">
                                 <TextBlock x:Name="tbDesc" TextWrapping="Wrap" Margin="10,10,10,10">
                                     This is a place where you can find general info about an object.
                                 </TextBlock>
@@ -55,7 +61,7 @@
                         </StackPanel>
                     </Grid>
 
-                    <Grid HorizontalAlignment="Stretch" Background="#ff99ab">
+                    <Grid HorizontalAlignment="Stretch">
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
                             <TextBlock FontSize="16">Actions (<Run x:Name="txActionPoints">2</Run>)</TextBlock>
                             <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
@@ -64,19 +70,19 @@
                         </StackPanel>
                     </Grid>
 
-                    <Grid HorizontalAlignment="Stretch" Background="#fffef2">
+                    <Grid HorizontalAlignment="Stretch">
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
                             <TextBlock FontSize="16">Inventory</TextBlock>
-                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5" Background="#60ffffff">
                                 <local:UCInventoryPanel x:Name="inventoryPanel"/>
                             </Border>
                         </StackPanel>
                     </Grid>
 
-                    <Grid HorizontalAlignment="Stretch" Background="#ffeaff">
+                    <Grid HorizontalAlignment="Stretch">
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
                             <TextBlock FontSize="16">Spells</TextBlock>
-                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5">
+                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5" Background="#60ffffff">
                                 <local:UCSpellPanel x:Name="spellPanel"/>
                             </Border>
                         </StackPanel>
@@ -88,7 +94,8 @@
             <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
                           Width="5"></GridSplitter>
 
-            <Grid x:Name="gridMap" Grid.Column="2" Background="AntiqueWhite">
+            <Grid x:Name="gridMap" Grid.Column="2">
+
                 <local:UCMapEditor x:Name="map"/>
             </Grid>
             

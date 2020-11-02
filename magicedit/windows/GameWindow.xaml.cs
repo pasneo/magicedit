@@ -41,16 +41,37 @@ namespace magicedit
             actionPanel.ActionExecuted += ActionPanel_ActionExecuted;
 
             inventoryPanel.Character = Game.CurrentPlayer.Character;
-            inventoryPanel.OnItemSelected += InventoryPanel_OnItemSelected;
+            inventoryPanel.OnItemSelected += OnItemSelected;
+
+            spellPanel.Character = Game.CurrentPlayer.Character;
+            spellPanel.OnItemSelected += OnSpellSelected;
         }
 
-        private void InventoryPanel_OnItemSelected(UCEItemRow itemRow)
+        private void OnItemSelected(UCEItemRow itemRow)
         {
             map.DeselectAll();
+
+            spellPanel.DeselectAll();
+
             if (itemRow != null && itemRow.Selected)
                 SelectedObject = itemRow.Item;
             else
                 SelectedObject = null;
+
+            Refresh();
+        }
+
+        private void OnSpellSelected(UCEItemRow itemRow)
+        {
+            map.DeselectAll();
+
+            inventoryPanel.DeselectAll();
+
+            if (itemRow != null && itemRow.Selected)
+                SelectedObject = itemRow.Item;
+            else
+                SelectedObject = null;
+
             Refresh();
         }
 
@@ -58,6 +79,7 @@ namespace magicedit
         {
             tbReport.Text = "";
             inventoryPanel.Character = Game.CurrentPlayer.Character;
+            spellPanel.Character = Game.CurrentPlayer.Character;
         }
 
         private void Game_OnReport(Text report)
@@ -72,6 +94,7 @@ namespace magicedit
             //Refresh();
 
             inventoryPanel.Refresh();
+            spellPanel.Refresh();
 
             if (!ReportArrived) tbReport.Text = "";
             ReportArrived = false;

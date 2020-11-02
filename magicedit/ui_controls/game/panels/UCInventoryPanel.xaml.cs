@@ -85,6 +85,12 @@ namespace magicedit
 
         }
 
+        public void DeselectAll()
+        {
+            SelectedItemRow?.Deselect();
+            SelectedItemRow = null;
+        }
+
         private void ItemRow_OnMoveClicked(UCEItemRow itemRow)
         {
             var slotSelectorDialog = new SlotSelectorDialog(itemRow.Item, Game);

@@ -29,7 +29,7 @@ namespace magicedit
 
             ObjectVariable spellVariable = executor.GetVariableByName(spellName);
             //TODO: Maybe check if the object identified by spellNameName is really a spellName (now we check only if it's an object)
-            if (executor.CheckTypeCompatibility(VariableTypes.Object, spellVariable.Type))
+            if (!executor.CheckTypeCompatibility(VariableTypes.Object, spellVariable.Type))
                 throw SchemeExecutor.CreateException($"Type '{spellVariable.Type}' is not an object type");
 
             character.RemoveSpell((Object)spellVariable.Value);

@@ -150,7 +150,7 @@ namespace magicedit
                 //Type of an object is its scheme
                 if (@object.Scheme?.Name != null)
                     return new ObjectVariable(@object.Scheme.Name, name, @object);
-                return new ObjectVariable("unknown", name, @object);
+                return new ObjectVariable(VariableTypes.Object, name, @object);
             }
 
             //Check if variable is a classvar constant

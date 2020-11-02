@@ -56,7 +56,7 @@ namespace magicedit
             InitializeComponent();
         }
 
-        public UCEItemRow(Object item, string slotName = null)
+        public UCEItemRow(Object item, string slotName = null, bool showMove = true)
         {
             Item = item;
             SlotName = slotName;
@@ -71,6 +71,8 @@ namespace magicedit
             img.Source = DefaultResources.GetVisualImageOrDefault(item.Visual);
 
             RefreshBackground();
+
+            if (!showMove) tbMove.Visibility = Visibility.Hidden;
         }
 
         public void Deselect()

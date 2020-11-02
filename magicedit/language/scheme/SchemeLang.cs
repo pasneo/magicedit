@@ -517,11 +517,14 @@ namespace magicedit
 
             public override object VisitCmd_teach_spell([NotNull] scheme_langParser.Cmd_teach_spellContext context)
             {
+
+                if (context.character_name() == null || context.spell_name() == null) return base.VisitCmd_teach_spell(context);
+
                 string characterName = context.character_name().GetText();
                 string spellName = context.spell_name().GetText();
 
                 VariableManager.CheckValueValidity(characterName, this, context.character_name());
-                VariableManager.CheckValueValidity(spellName, this, context.character_name());
+                VariableManager.CheckValueValidity(spellName, this, context.spell_name());
 
                 CommandAddSpell cmd = new CommandAddSpell(characterName, spellName);
                 currentFunc.AddCommand(cmd);

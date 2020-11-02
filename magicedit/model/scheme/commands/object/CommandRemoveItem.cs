@@ -33,7 +33,7 @@ namespace magicedit
 
             ObjectVariable itemVariable = executor.GetVariableByName(itemName);
             //TODO: Maybe check if the object identified by itemName is really an item (now we check only if it's an object)
-            if (executor.CheckTypeCompatibility(VariableTypes.Object, itemVariable.Type))
+            if (!executor.CheckTypeCompatibility(VariableTypes.Object, itemVariable.Type))
                 throw SchemeExecutor.CreateException($"Type '{itemVariable.Type}' is not an object type");
             
             character.RemoveItem(itemName, requiredNumber);

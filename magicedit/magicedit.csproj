@@ -82,6 +82,9 @@
     <Compile Include="ui_controls\game\panels\UCActionPanel.xaml.cs">
       <DependentUpon>UCActionPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ui_controls\game\panels\UCSpellPanel.xaml.cs">
+      <DependentUpon>UCSpellPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui_controls\game_init\UCEAbilityButton.xaml.cs">
       <DependentUpon>UCEAbilityButton.xaml</DependentUpon>
     </Compile>
@@ -289,6 +292,10 @@
     <Page Include="ui_controls\game\panels\UCActionPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\game\panels\UCSpellPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ui_controls\game_init\UCEAbilityButton.xaml">
       <Generator>MSBuild:Compile</Generator>

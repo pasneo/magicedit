@@ -11,7 +11,7 @@
         <Image x:Name="img" Height="26" MaxWidth="30" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"/>
         <TextBlock x:Name="tbItemName" VerticalAlignment="Center" Margin="40,0,0,0" HorizontalAlignment="Left">Sword</TextBlock>
 
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0"><Hyperlink x:Name="hyMove" Click="hyMove_Click">move</Hyperlink></TextBlock>
+        <TextBlock x:Name="tbMove" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0"><Hyperlink x:Name="hyMove" Click="hyMove_Click">move</Hyperlink></TextBlock>
 
     </Grid>
 

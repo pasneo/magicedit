@@ -25,7 +25,7 @@
             Margin="0,20,0,0">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="300" />
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -37,18 +37,6 @@
                 </ScrollViewer.Background>
 
                 <StackPanel HorizontalAlignment="Stretch">
-
-                    <Grid HorizontalAlignment="Stretch">
-
-                        <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
-                            <TextBlock FontSize="16">Report</TextBlock>
-                            <Border BorderBrush="Black" BorderThickness="1"  Margin="10,5,10,5" Background="#60ffffff">
-                                <TextBlock x:Name="tbReport" TextWrapping="Wrap" Margin="10,10,10,10">
-                                    In this box there will be reports about objects when you do something with them.
-                                </TextBlock>
-                            </Border>
-                        </StackPanel>
-                    </Grid>
 
                     <Grid HorizontalAlignment="Stretch">
                         <StackPanel HorizontalAlignment="Stretch" Margin="5,0,5,0">
@@ -97,8 +85,22 @@
             <Grid x:Name="gridMap" Grid.Column="2">
 
                 <local:UCMapEditor x:Name="map"/>
+
+                <Grid x:Name="reportPanel" HorizontalAlignment="Stretch" VerticalAlignment="Top" Visibility="Hidden">
+
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/images/old-paper-tex.jpg" Stretch="UniformToFill"/>
+                    </Grid.Background>
+
+                    <Border BorderBrush="Black" BorderThickness="1" Background="#60ffffff">
+                        <TextBlock x:Name="tbReport" TextWrapping="Wrap" Margin="10,10,10,10">
+                                            In this box there will be reports about objects when you do something with them.
+                        </TextBlock>
+                    </Border>
+                </Grid>
+
             </Grid>
-            
+
         </Grid>
 
     </Grid>

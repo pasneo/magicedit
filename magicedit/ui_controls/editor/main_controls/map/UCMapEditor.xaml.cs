@@ -226,6 +226,13 @@ namespace magicedit
 
         }
 
+        public void Offset(int x, int y)
+        {
+            translateX += x;
+            translateY += y;
+        }
+
+        
         private bool pan = false;
         private double panX, panY;  //Position of mouse's drag point when panning
 

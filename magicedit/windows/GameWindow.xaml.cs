@@ -45,6 +45,8 @@ namespace magicedit
 
             spellPanel.Character = Game.CurrentPlayer.Character;
             spellPanel.OnItemSelected += OnSpellSelected;
+
+            map.Offset(200, 200);
         }
 
         private void OnItemSelected(UCEItemRow itemRow)
@@ -78,6 +80,7 @@ namespace magicedit
         private void Game_OnNextPlayer()
         {
             tbReport.Text = "";
+            reportPanel.Visibility = Visibility.Hidden;
             inventoryPanel.Character = Game.CurrentPlayer.Character;
             spellPanel.Character = Game.CurrentPlayer.Character;
         }
@@ -85,6 +88,7 @@ namespace magicedit
         private void Game_OnReport(Text report)
         {
             tbReport.Text = report.Content;
+            reportPanel.Visibility = Visibility.Visible;
             ReportArrived = true;
         }
 
@@ -96,7 +100,11 @@ namespace magicedit
             inventoryPanel.Refresh();
             spellPanel.Refresh();
 
-            if (!ReportArrived) tbReport.Text = "";
+            if (!ReportArrived)
+            {
+                reportPanel.Visibility = Visibility.Hidden;
+                tbReport.Text = "";
+            }
             ReportArrived = false;
         }
 

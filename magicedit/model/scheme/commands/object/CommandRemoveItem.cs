@@ -39,9 +39,9 @@ namespace magicedit
                 throw SchemeExecutor.CreateException($"Type '{itemVariable.Type}' is not an object type");
 
             if (expl)
-                character.RemoveItem((Object)itemVariable.Value);
+                character.RemoveItem((Object)itemVariable.Value, executor.Game.Config);
             else
-                character.RemoveItem(itemName, requiredNumber);
+                character.RemoveItem(itemName, requiredNumber, executor.Game.Config);
         }
 
         public string GetAsString()

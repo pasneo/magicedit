@@ -105,21 +105,22 @@ namespace magicedit
         }
 
         //This method chooses "randomly" which items to remove, so should only be used for items that can't have unique states
-        public void RemoveItem(string itemName, int number)
+        public void RemoveItem(string itemName, int number, Config config)
         {
-            //todo: remove item from slot (if inside one)
             for(int i = Items.Count - 1; (i >= 0) && (number > 0); --i)
             {
                 if (Items[i].Name == itemName)
                 {
+                    MoveItemToBag(Items[i], config); // remove item from slot (if inside one)
                     Items.RemoveAt(i);
                     --number;
                 }
             }
         }
 
-        public void RemoveItem(Item item)
+        public void RemoveItem(Item item, Config config)
         {
+            MoveItemToBag(item, config); // remove item from slot (if inside one)
             Items.Remove(item);
         }
 

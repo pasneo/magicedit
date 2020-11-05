@@ -23,13 +23,24 @@ namespace magicedit
 
         public event SelectionChangedEventHandler SelectionChanged;
 
-        private ObjectTypeTags _typeTag;
-        public ObjectTypeTags TypeTag {
+        private ObjectTypeTags? _typeTag;
+        public ObjectTypeTags? TypeTag {
             get { return _typeTag; }
             set
             {
                 _typeTag = value;
                 Refresh();
+            }
+        }
+
+        private Scheme _schemeFilter;
+        public Scheme SchemeFilter
+        {
+            get { return _schemeFilter; }
+            set
+            {
+                _schemeFilter = value;
+                TypeTag = null;
             }
         }
 
@@ -60,7 +71,10 @@ namespace magicedit
             
             foreach(var obj in objects)
             {
-                if (obj.TypeTag == TypeTag)
+                if ((TypeTag != null && obj.TypeTag == TypeTag) ||
+                    (TypeTag == null && (SchemeFilter == null ||
+                        (obj.Scheme != null &&
+                            (obj.Scheme == SchemeFilter || obj.Scheme.HasAncestor(SchemeFilter))))))
                 {
                     ComboBoxItem cbi = new ComboBoxItem();
                     cbi.Content = obj.Name;

@@ -74,6 +74,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="model\scheme\commands\object\CommandToggle.cs" />
+    <Compile Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_Object.xaml.cs">
+      <DependentUpon>UCEParameterRow_Object.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_StringConst.xaml.cs">
+      <DependentUpon>UCEParameterRow_StringConst.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_Logical.xaml.cs">
+      <DependentUpon>UCEParameterRow_Logical.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_Number.xaml.cs">
+      <DependentUpon>UCEParameterRow_Number.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ui_controls\editor\selectors\parameter_selector\ParameterRowFactory.cs" />
+    <Compile Include="ui_controls\editor\selectors\parameter_selector\UCParameterSelector.xaml.cs">
+      <DependentUpon>UCParameterSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui_controls\game\misc\SlotSelectorDialog.xaml.cs">
       <DependentUpon>SlotSelectorDialog.xaml</DependentUpon>
     </Compile>
@@ -282,6 +298,26 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
+    <Page Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_Object.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_StringConst.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_Logical.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_Number.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui_controls\editor\selectors\parameter_selector\UCParameterSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ui_controls\game\misc\SlotSelectorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

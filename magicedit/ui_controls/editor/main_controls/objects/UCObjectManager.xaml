@@ -67,22 +67,13 @@
                                         HorizontalAlignment="Stretch" Height="30" Margin="146,68,10.328,0" VerticalAlignment="Top"
                                         SelectionChanged="schemeSelector_SelectionChanged"/>
 
-                <Label Content="Parameters" Width="136" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
 
-                <TextBox x:Name="tbParameters"
-                    VerticalContentAlignment="Center"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Stretch" Height="23" Margin="146,103,10.328,0"
-                    Text="-- TODO --"
-                    Foreground="Red" FontWeight="Bold"
-                    IsEnabled="False"
-                         TextChanged="tbParameters_TextChanged"/>
                 
-                <Label Content="Visual" Width="136" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top"/>
+                <Label Content="Visual" Width="136" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
 
                 <Border BorderThickness="1" BorderBrush="Black"
                         Width="150" Height="150"
-                        HorizontalAlignment="Left" Margin="146,134,0,0" VerticalAlignment="Top">
+                        HorizontalAlignment="Left" Margin="146,103,0,0" VerticalAlignment="Top">
                     <Grid>
                         <Image
                             x:Name="iVisualImage"
@@ -101,6 +92,12 @@
                     Visibility="Hidden" Margin="146,284,0,0"
                     OnVisualSelected="visualSelector_OnVisualSelected"/>
 
+                <Label Content="Parameters" Width="136" HorizontalAlignment="Left" Margin="10,258,0,0" VerticalAlignment="Top"/>
+
+                <local:UCParameterSelector x:Name="paramSelector" HorizontalAlignment="Stretch" VerticalAlignment="top" Margin="146,258,10.328,0">
+                    
+                </local:UCParameterSelector>
+                
                 <Button x:Name="bDelete" Content="Delete" HorizontalAlignment="Right" Margin="0,0,10.328,10.151" VerticalAlignment="Bottom" Width="75"
                         IsEnabled="False"
                         Click="bDelete_Click"/>

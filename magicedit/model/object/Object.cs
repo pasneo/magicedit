@@ -150,6 +150,11 @@ namespace magicedit
             return null;
         }
 
+        public ObjectVariable GetParameterByName(string name)
+        {
+            return Parameters.Where(param => param.Name == name).FirstOrDefault();
+        }
+
         public bool HasAttribute(string attributeName)
         {
             foreach(ObjectAttribute attr in Attributes)

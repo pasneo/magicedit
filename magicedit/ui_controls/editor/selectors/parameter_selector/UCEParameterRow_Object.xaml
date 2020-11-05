@@ -1,0 +1,13 @@
+﻿<local:ParameterRow x:Class="magicedit.UCEParameterRow_Object"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:magicedit"
+             mc:Ignorable="d">
+    <Grid>
+        <TextBlock x:Name="tbParamName" HorizontalAlignment="Left" TextWrapping="Wrap" Text="NoOfItems" VerticalAlignment="Top"/>
+        <local:UCObjectSelector x:Name="objectSelector" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="200,0,0,0" Width="200"
+                             SelectionChanged="objectSelector_SelectionChanged"/>
+    </Grid>
+</local:ParameterRow>

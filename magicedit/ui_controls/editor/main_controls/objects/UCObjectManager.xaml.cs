@@ -71,6 +71,8 @@ namespace magicedit
             iVisualImage.Source = null;
             visualSelector.Visibility = Visibility.Hidden;
             lVisualID.Content = "";
+
+            paramSelector.Object = null;
         }
 
         private void RefreshInfo()
@@ -91,6 +93,8 @@ namespace magicedit
 
                 schemeSelector.SelectByTag(obj.Scheme);
                 textSelector.SelectByTag(obj.ShownName);
+
+                paramSelector.Object = obj;
 
                 tbID.Text = obj.Id;
             }
@@ -132,11 +136,6 @@ namespace magicedit
             Project.Current.Config.Objects.Remove(mo);
             list.SelectedItem = null;
             list.Items.Remove(item);
-        }
-
-        private void tbParameters_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //todo: parse parameters like a=12 b=$STRING1 etc.
         }
 
         private void textSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

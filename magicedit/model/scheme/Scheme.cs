@@ -116,5 +116,15 @@ namespace magicedit
             return false;
         }
 
+        public bool HasAncestor(Scheme ancestor)
+        {
+            foreach (Scheme parent in Parents)
+            {
+                if (parent == ancestor) return true;
+                if (parent.HasAncestor(ancestor)) return true;
+            }
+            return false;
+        }
+
     }
 }

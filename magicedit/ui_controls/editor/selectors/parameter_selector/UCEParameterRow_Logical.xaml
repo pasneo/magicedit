@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:magicedit"
              mc:Ignorable="d">
     <Grid>
-        <TextBlock x:Name="tbParamName" HorizontalAlignment="Left" TextWrapping="Wrap" Text="NoOfItems" VerticalAlignment="Top"/>
+        <TextBlock x:Name="tbParamName" HorizontalAlignment="Left" TextWrapping="Wrap" Text="NoOfItems" VerticalAlignment="Center"/>
         <CheckBox x:Name="cb" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="200,0,0,0" 
                            Checked="cb_Checked" Unchecked="cb_Checked"  />
     </Grid>

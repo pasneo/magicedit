@@ -49,13 +49,20 @@ namespace magicedit
             {
                 var value = Object.GetParameterByName(param.Name);
 
-                if (value == null)
+                if (value == null || value.Type != param.Type)
                 {
+                    // if parameter's type changed, we delete the old and create a new
+                    if (value != null && value.Type != param.Type)
+                    {
+                        Object.Parameters.RemoveAll(p => p.Name == param.Name);
+                    }
+
                     value = new ObjectVariable(param.Type, param.Name, null);
                     Object.Parameters.Add(value);
                 }
 
                 var paramRow = ParameterRowFactory.Create(param, value, Project.Current.Config);
+                paramRow.Margin = new Thickness(5,5,5,5);
                 spParams.Children.Add(paramRow);
             }
         }

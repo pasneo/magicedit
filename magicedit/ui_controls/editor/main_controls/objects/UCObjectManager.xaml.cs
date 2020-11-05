@@ -126,6 +126,8 @@ namespace magicedit
             MapObject mo = (MapObject)item.Tag;
             mo.Name = mo.Id = tbID.Text;
             item.Content = tbID.Text;
+
+            paramSelector.Refresh();
         }
 
         private void bDelete_Click(object sender, RoutedEventArgs e)
@@ -152,6 +154,8 @@ namespace magicedit
             var item = ((ListBoxItem)list.SelectedItem);
             MapObject mo = (MapObject)item.Tag;
             mo.Scheme = schemeSelector.SelectedTag;
+
+            paramSelector.Refresh();
         }
 
         private void iVisualImage_MouseDown(object sender, MouseButtonEventArgs e)

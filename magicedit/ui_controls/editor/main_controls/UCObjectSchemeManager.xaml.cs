@@ -87,6 +87,11 @@ namespace magicedit
             GenerateDataFromCode();
         }
 
+        public override void Close()
+        {
+            GenerateDataFromCode();
+        }
+
         public void RefreshList()
         {
             var selectedItemTag = ((ListBoxItem)list.SelectedItem)?.Tag;

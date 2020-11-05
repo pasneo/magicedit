@@ -176,7 +176,7 @@
     <Compile Include="ui_controls\editor\main_controls\objects\UCObjectManager.xaml.cs">
       <DependentUpon>UCObjectManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui_controls\editor\main_controls\objects\UCObjectSchemeManager.xaml.cs">
+    <Compile Include="ui_controls\editor\main_controls\UCObjectSchemeManager.xaml.cs">
       <DependentUpon>UCObjectSchemeManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui_controls\editor\misc\IntegerUpDown.xaml.cs">
@@ -390,7 +390,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ui_controls\editor\main_controls\objects\UCObjectSchemeManager.xaml">
+    <Page Include="ui_controls\editor\main_controls\UCObjectSchemeManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

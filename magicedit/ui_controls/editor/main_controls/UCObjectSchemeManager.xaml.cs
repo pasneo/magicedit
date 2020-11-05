@@ -119,9 +119,7 @@ namespace magicedit
 
         private void ClearInfo()
         {
-            tbID.Text = "";
             tbCode.Text = "";
-            tbID.IsEnabled = false;
             tbCode.IsEnabled = false;
             bDelete.IsEnabled = false;
         }
@@ -130,13 +128,11 @@ namespace magicedit
         {
             if (list.SelectedItem != null)
             {
-                tbID.IsEnabled = true;
                 tbCode.IsEnabled = true;
                 bDelete.IsEnabled = true;
 
                 Scheme scheme = (Scheme)((ListBoxItem)list.SelectedItem).Tag;
-
-                tbID.Text = scheme.Name;
+                
                 tbCode.Text = scheme.Code;
 
                 SyntaxCheckTimer.Start();
@@ -160,15 +156,6 @@ namespace magicedit
             var item = AddListBoxItem(scheme);
 
             list.SelectedItem = item;
-        }
-
-        private void tbID_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (list.SelectedItem == null || ((ListBoxItem)list.SelectedItem).Tag == null) return;
-            var item = ((ListBoxItem)list.SelectedItem);
-            Scheme scheme = (Scheme)item.Tag;
-            scheme.Name = tbID.Text;
-            item.Content = tbID.Text;
         }
 
         private void tbCode_TextChanged(object sender, TextChangedEventArgs e)
@@ -240,6 +227,8 @@ namespace magicedit
             if (scheme.Code == null || scheme.Code == "") return true;
 
             var errors = SchemeLang.CompileWithErrors(scheme, Project.Current.Config);
+
+            item.Content = (scheme?.Name == null ? "<unknown>" : scheme.Name);
 
             if (errors.Count > 0)
             {

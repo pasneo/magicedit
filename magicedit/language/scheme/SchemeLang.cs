@@ -178,6 +178,25 @@ namespace magicedit
 
             /* Scheme building */
 
+            public override object VisitScheme_name([NotNull] scheme_langParser.Scheme_nameContext context)
+            {
+
+                string scheme_name = context?.GetText();
+
+                Scheme.Name = scheme_name;
+
+                if (scheme_name != null)
+                {
+                    int scheme_count = Config.GetSchemeCountByName(scheme_name);
+                    if (scheme_count > 1)
+                    {
+                        Errors.Add(new ErrorDescriptor($"Scheme '{scheme_name}' is already defined elsewhere.", context));
+                    }
+                }
+
+                return base.VisitScheme_name(context);
+            }
+
             public override object VisitParent_name([NotNull] scheme_langParser.Parent_nameContext context)
             {
                 //Add parent to scheme

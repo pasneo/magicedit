@@ -137,6 +137,16 @@ namespace magicedit
             return null;
         }
 
+        public int GetSchemeCountByName(string name)
+        {
+            int n = 0;
+            foreach(Scheme scheme in Schemes)
+            {
+                if (scheme.Name == name) ++n;
+            }
+            return n;
+        }
+
         public Text GetStringConstByName(string name)
         {
             if (name.Length > 0 && name[0] == '$') name = name.Substring(1);

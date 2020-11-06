@@ -85,10 +85,16 @@ namespace magicedit
         {
             RefreshList();
 
-            if (eed != null && eed is InvalidSchemeEED)
+            if (eed != null)
             {
-                Scheme scheme = ((InvalidSchemeEED)eed).Scheme;
-                SelectScheme(scheme);
+                Scheme scheme = null;
+
+                if (eed is InvalidSchemeEED)
+                    scheme = ((InvalidSchemeEED)eed).Scheme;
+                else if (eed is SchemeNameCollisionEED)
+                    scheme = ((SchemeNameCollisionEED)eed).Scheme;
+
+                if (scheme != null) SelectScheme(scheme);
             }
             else
                 GenerateDataFromCode();

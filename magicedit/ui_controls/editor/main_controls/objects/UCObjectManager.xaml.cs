@@ -40,6 +40,31 @@ namespace magicedit
             RefreshList();
             schemeSelector.Refresh();
             textSelector.Refresh();
+
+            if (eed != null)
+            {
+                if (eed is ObjectNameCollisionEED)
+                {
+                    Object @object = ((ObjectNameCollisionEED)eed).Object;
+                    if (@object.TypeTag == TypeTag)
+                    {
+                        SelectObject(@object);
+                    }
+                }
+            }
+
+        }
+
+        private void SelectObject(Object @object)
+        {
+            foreach (var item in list.Items)
+            {
+                if (((ListBoxItem)item).Tag == @object)
+                {
+                    list.SelectedItem = item;
+                    return;
+                }
+            }
         }
 
         public void RefreshList()

@@ -75,9 +75,6 @@
     </ApplicationDefinition>
     <Compile Include="model\scheme\commands\object\CommandToggle.cs" />
     <Compile Include="ui_controls\editor\errors\EditorErrorDescriptor.cs" />
-    <Compile Include="ui_controls\editor\errors\UCEValidationMessage.xaml.cs">
-      <DependentUpon>UCEValidationMessage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_Object.xaml.cs">
       <DependentUpon>UCEParameterRow_Object.xaml</DependentUpon>
     </Compile>
@@ -290,10 +287,6 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
-    <Page Include="ui_controls\editor\errors\UCEValidationMessage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_Object.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

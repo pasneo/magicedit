@@ -191,13 +191,16 @@ namespace magicedit
             List<EditorErrorDescriptor> eeds = new List<EditorErrorDescriptor>();
 
             ValidateSchemes(eeds);
+            ValidateObjectNames(eeds);
 
             return eeds;
         }
 
         private void ValidateSchemes(List<EditorErrorDescriptor> eeds)
         {
-            foreach(Scheme scheme in Schemes)
+            List<string> collisions = new List<string>();
+
+            foreach (Scheme scheme in Schemes)
             {
                 if (scheme.Name == null || scheme.Name.Length == 0)
                 {
@@ -205,11 +208,53 @@ namespace magicedit
                     continue;
                 }
 
+                if (!collisions.Contains(scheme.Name))
+                {
+
+                    var schemeNameCollisionEED = new SchemeNameCollisionEED(scheme);
+                    Schemes.ForEach(s =>
+                    {
+                        if (s != scheme && s.Name == scheme.Name) schemeNameCollisionEED.AddScheme(s);
+                    });
+
+                    if (schemeNameCollisionEED.ContainsCollision)
+                    {
+                        collisions.Add(scheme.Name);
+                        eeds.Add(schemeNameCollisionEED);
+                    }
+
+                }
+
+                Objects.Where(obj => obj.Id == scheme.Name).ToList().ForEach(obj => eeds.Add(new SchemeObjectNameCollisionEED(obj, scheme)));
+
                 var errors = SchemeLang.CompileWithErrors(scheme, this);
 
                 if (errors != null && errors.Count > 0)
                 {
                     eeds.Add(new InvalidSchemeEED(scheme));
+                }
+            }
+        }
+
+        private void ValidateObjectNames(List<EditorErrorDescriptor> eeds)
+        {
+            // check name collisions
+            List<string> collisions = new List<string>();
+
+            foreach(var obj in Objects)
+            {
+                if (collisions.Contains(obj.Id)) continue;
+
+                ObjectNameCollisionEED eed = new ObjectNameCollisionEED(obj);
+                Objects.ForEach(o =>
+                {
+                    if (o != obj && o.Id == obj.Id) eed.AddObject(o);
+                });
+
+                if (eed.ContainsCollision)
+                {
+                    collisions.Add(obj.Id);
+                    eeds.Add(eed);
                 }
             }
         }

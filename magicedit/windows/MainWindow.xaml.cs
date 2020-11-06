@@ -29,7 +29,10 @@ namespace magicedit
             SquareTypes,
             Character,
             Map,
-            Schemes
+            Schemes,
+            Objects,
+            Items,
+            Spells
         }
 
         public static MainWindow Current { get; private set; }
@@ -150,6 +153,12 @@ namespace magicedit
 
         }
 
+        private void SelectMenu(TreeViewItem item)
+        {
+            item.IsSelected = false;
+            item.IsSelected = true;
+        }
+
         public void SelectMenu(Menus menu, EditorErrorDescriptor error = null)
         {
             CurrentError = error;
@@ -157,10 +166,19 @@ namespace magicedit
             switch(menu)
             {
                 case Menus.SquareTypes:
-                    tviSquareTypes.IsSelected = true;
+                    SelectMenu(tviSquareTypes);
                     break;
                 case Menus.Schemes:
-                    tviSchemes.IsSelected = true;
+                    SelectMenu(tviSchemes);
+                    break;
+                case Menus.Objects:
+                    SelectMenu(tviObjects);
+                    break;
+                case Menus.Items:
+                    SelectMenu(tviItems);
+                    break;
+                case Menus.Spells:
+                    SelectMenu(tviSpells);
                     break;
             }
         }

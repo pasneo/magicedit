@@ -26,8 +26,9 @@ namespace magicedit
 
         public List<Scheme> Parents = new List<Scheme>();
         
+        [JsonIgnore]
         public CompiledScheme CompiledScheme { get; set; }
-        
+
         [JsonIgnore]
         public bool IsCompiledValid { get; set; } = false;
 
@@ -39,7 +40,7 @@ namespace magicedit
         {
             Name = name;
         }
-
+        
         public void AddParent(Scheme parent)
         {
             Parents.Add(parent);

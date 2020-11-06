@@ -48,6 +48,11 @@ namespace magicedit
         {
             Map = map; CharacterConfig = characterConfig; ItemConfig = itemConfig; SpellConfig = spellConfig; Visuals = visuals;
             StringConsts = stringConsts; ClassLists = classLists; Schemes = schemes; Objects = objects;
+
+            foreach(Scheme scheme in Schemes)
+            {
+                scheme.Compile(this);
+            }
         }
 
         public Config() { }

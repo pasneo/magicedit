@@ -13,13 +13,11 @@ namespace magicedit
         //Variables that are created when constructing object
         private List<ObjectVariable> Variables = new List<ObjectVariable>();
         //Parameters that are created and set when constructing object
-        [JsonIgnore]
         public List<ObjectVariable> Parameters { get; private set; } = new List<ObjectVariable>();
-
+        
         private SchemeFunction BodyFunction = null;    //This is created from code in the scheme's body (outside of any other function)
         private SchemeFunction InitFunction = null;
-
-        [JsonIgnore]
+        
         public List<SchemeFunction> ActionFunctions { get; private set; } = new List<SchemeFunction>();
 
         /* *** */

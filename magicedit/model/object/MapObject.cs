@@ -10,6 +10,8 @@ namespace magicedit
     {
         public override string ObjectType => "MapObject";
 
+        public override ObjectTypeTags TypeTag => ObjectTypeTags.MapObject;
+
         public Position Position { get; set; }
         public bool Permeable { get; set; }     //true if characters can step on this object
 

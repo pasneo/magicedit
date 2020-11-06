@@ -59,11 +59,11 @@ namespace magicedit
             tviCharacterSettings.Tag = new UCCharacterManager();
             tviMap.Tag = new UCMapManager();
             tviSchemes.Tag = new UCObjectSchemeManager();
-            tviObjects.Tag = new UCObjectManager();
+            tviObjects.Tag = new UCObjectManager("Objects", ObjectTypeTags.MapObject);
             //tviItemCategories.Tag = new UCItemCategoryManager();
             //tviSpellCategories.Tag = new UCSpellCategoryManager();
-            tviItems.Tag = new UCItemManager();
-            tviSpells.Tag = new UCSpellManager();
+            tviItems.Tag = new UCObjectManager("Items", ObjectTypeTags.Item);
+            tviSpells.Tag = new UCObjectManager("Spells", ObjectTypeTags.Spell);
             tviClasslists.Tag = new UCClasslistManager();
 
         }

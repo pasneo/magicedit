@@ -22,7 +22,7 @@
 
             <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-                <Label Content="Objects" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                <Label x:Name="lTitle" Content="Objects" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
 
                 <ListBox x:Name="list"
                     Margin="5,41,5,5"

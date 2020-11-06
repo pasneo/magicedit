@@ -12,7 +12,8 @@ namespace magicedit
     public enum ObjectTypeTags {
         Undefined,
         Item,
-        Spell
+        Spell,
+        MapObject
     }
 
     [JsonConverter(typeof(JsonSubtypes), "ObjectType")]
@@ -33,7 +34,7 @@ namespace magicedit
 
         public virtual string ObjectType { get; } = "Object";
 
-        public ObjectTypeTags TypeTag { get; set; }     //used to identify items, spells etc. in the editor
+        public virtual ObjectTypeTags TypeTag { get; set; }     //used to identify items, spells etc. in the editor
 
         public string Id { get; set; }      //A unique identifier (eg. "sword", "sword (2)")
         public string Name { get; set; }    //The name the creator gave in the editor (eg. "sword")

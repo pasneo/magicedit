@@ -139,7 +139,7 @@ namespace magicedit
             mapEditor.Redraw();
         }
 
-        public override void Open()
+        public override void Open(EditorErrorDescriptor eed)
         {
             Config.Map.RecollectMapObjects(Config.Objects);
 

@@ -28,7 +28,8 @@ namespace magicedit
             StringConsts,
             SquareTypes,
             Character,
-            Map
+            Map,
+            Schemes
         }
 
         public static MainWindow Current { get; private set; }
@@ -36,6 +37,8 @@ namespace magicedit
         MainUserControl currentMainUC = null;
 
         private string SavePath { get; set; }
+
+        private EditorErrorDescriptor CurrentError { get; set; }
 
         public MainWindow()
         {
@@ -137,7 +140,9 @@ namespace magicedit
             if (selectedItem != null && selectedItem.Tag != null && (selectedItem.Tag is MainUserControl))
             {
                 MainUserControl uc = (MainUserControl)selectedItem.Tag;
-                uc.Open();
+
+                uc.Open(CurrentError);
+                CurrentError = null;
 
                 gridMainUC.Children.Add(uc);
                 currentMainUC = uc;
@@ -145,12 +150,17 @@ namespace magicedit
 
         }
 
-        public void SelectMenu(Menus menu)
+        public void SelectMenu(Menus menu, EditorErrorDescriptor error = null)
         {
+            CurrentError = error;
+
             switch(menu)
             {
                 case Menus.SquareTypes:
                     tviSquareTypes.IsSelected = true;
+                    break;
+                case Menus.Schemes:
+                    tviSchemes.IsSelected = true;
                     break;
             }
         }
@@ -197,6 +207,46 @@ namespace magicedit
         private void mSaveAs_Click(object sender, RoutedEventArgs e)
         {
             SaveAs();
+        }
+
+        private void mValidate_Click(object sender, RoutedEventArgs e)
+        {
+            lbErrorList.Items.Clear();
+
+            var eeds = Project.Current.Config.Validate();
+
+            foreach(var eed in eeds)
+            {
+                AddError(eed);
+            }
+        }
+
+        private void AddError(EditorErrorDescriptor eed)
+        {
+            ListBoxItem item = new ListBoxItem();
+
+            item.Content = eed.Message;
+
+            if (eed.ErrorType == ErrorTypes.Error)
+                item.Foreground = Brushes.Red;
+            else if (eed.ErrorType == ErrorTypes.Warning)
+                item.Foreground = Brushes.Orange;
+
+            item.Tag = eed;
+
+            lbErrorList.Items.Add(item);
+        }
+
+        private void lbErrorList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = (ListBoxItem)lbErrorList.SelectedItem;
+
+            lbErrorList.SelectedItem = null;
+
+            if (item == null) return;
+
+            var eed = (EditorErrorDescriptor)item.Tag;
+            eed.NavigateToSource();
         }
     }
 }

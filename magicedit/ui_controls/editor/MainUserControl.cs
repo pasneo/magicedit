@@ -9,7 +9,7 @@ namespace magicedit
 {
     public class MainUserControl : UserControl
     {
-        public virtual void Open() { }
+        public virtual void Open(EditorErrorDescriptor eed) { }
         public virtual void Close() { }
     }
 }

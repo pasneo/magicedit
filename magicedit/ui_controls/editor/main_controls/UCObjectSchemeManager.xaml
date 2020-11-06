@@ -60,7 +60,7 @@
                          BorderBrush="Black"
                          FontFamily="Consolas"
                          VerticalScrollBarVisibility="Visible"
-                         HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Margin="0,0,0,0" Text="TextBox" Width="auto"
+                         HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Margin="0,0,0,0" Text="" Width="auto"
                          TextChanged="tbCode_TextChanged"
                          Visibility="Visible"
                          SyntaxHighlighting="Scheme"

@@ -27,7 +27,7 @@ namespace magicedit
             InitializeComponent();
         }
 
-        public override void Open()
+        public override void Open(EditorErrorDescriptor eed)
         {
             RefreshList();
             schemeSelector.Refresh();

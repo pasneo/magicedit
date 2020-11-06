@@ -30,7 +30,7 @@
             <MenuItem Header="Execute">
                 <MenuItem x:Name="mRun" Header="Run" Click="mRun_Click">
                 </MenuItem>
-                <MenuItem Header="Validate">
+                <MenuItem x:Name="mValidate" Header="Validate" Click="mValidate_Click">
                 </MenuItem>
             </MenuItem>
         </Menu>
@@ -119,7 +119,8 @@
                      ScrollViewer.VerticalScrollBarVisibility="Visible"
                      Foreground="Red"
                      FontFamily="Consolas"
-                     Margin="0,0,0,0" VerticalAlignment="Stretch">
+                     Margin="0,0,0,0" VerticalAlignment="Stretch"
+                     SelectionChanged="lbErrorList_SelectionChanged">
             </ListBox>
 
         </Grid>

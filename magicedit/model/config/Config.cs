@@ -184,5 +184,35 @@ namespace magicedit
             return GetObjectById(id);
         }
 
+        /* VALIDATION */
+
+        public List<EditorErrorDescriptor> Validate()
+        {
+            List<EditorErrorDescriptor> eeds = new List<EditorErrorDescriptor>();
+
+            ValidateSchemes(eeds);
+
+            return eeds;
+        }
+
+        private void ValidateSchemes(List<EditorErrorDescriptor> eeds)
+        {
+            foreach(Scheme scheme in Schemes)
+            {
+                if (scheme.Name == null || scheme.Name.Length == 0)
+                {
+                    eeds.Add(new InvalidSchemeEED(scheme));
+                    continue;
+                }
+
+                var errors = SchemeLang.CompileWithErrors(scheme, this);
+
+                if (errors != null && errors.Count > 0)
+                {
+                    eeds.Add(new InvalidSchemeEED(scheme));
+                }
+            }
+        }
+
     }
 }

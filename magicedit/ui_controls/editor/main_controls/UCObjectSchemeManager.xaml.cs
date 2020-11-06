@@ -81,15 +81,35 @@ namespace magicedit
             marker.MarkerColor = Colors.Red;
         }
 
-        public override void Open()
+        public override void Open(EditorErrorDescriptor eed)
         {
             RefreshList();
-            GenerateDataFromCode();
+
+            if (eed != null && eed is InvalidSchemeEED)
+            {
+                Scheme scheme = ((InvalidSchemeEED)eed).Scheme;
+                SelectScheme(scheme);
+            }
+            else
+                GenerateDataFromCode();
         }
 
         public override void Close()
         {
             GenerateDataFromCode();
+        }
+
+        public void SelectScheme(Scheme scheme)
+        {
+            foreach(var item in list.Items)
+            {
+                ListBoxItem listBoxItem = (ListBoxItem)item;
+                if (listBoxItem.Tag == scheme)
+                {
+                    list.SelectedItem = item;
+                    return;
+                }
+            }
         }
 
         public void RefreshList()

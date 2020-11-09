@@ -51,6 +51,14 @@ namespace magicedit
                         SelectObject(@object);
                     }
                 }
+                else if (eed is SchemeObjectNameCollisionEED)
+                {
+                    Object @object = ((SchemeObjectNameCollisionEED)eed).Object;
+                    if (@object.TypeTag == TypeTag)
+                    {
+                        SelectObject(@object);
+                    }
+                }
             }
 
         }

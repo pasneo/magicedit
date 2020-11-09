@@ -109,9 +109,9 @@ namespace magicedit
             if (NavigateToScheme) MainWindow.Current.SelectMenu(MainWindow.Menus.Schemes, new SchemeNameCollisionEED(Scheme));
             else
             {
-                if (Object.TypeTag == ObjectTypeTags.MapObject) MainWindow.Current.SelectMenu(MainWindow.Menus.Objects, new ObjectNameCollisionEED(Object));
-                else if (Object.TypeTag == ObjectTypeTags.Item) MainWindow.Current.SelectMenu(MainWindow.Menus.Items, new ObjectNameCollisionEED(Object));
-                else if (Object.TypeTag == ObjectTypeTags.Spell) MainWindow.Current.SelectMenu(MainWindow.Menus.Spells, new ObjectNameCollisionEED(Object));
+                if (Object.TypeTag == ObjectTypeTags.MapObject) MainWindow.Current.SelectMenu(MainWindow.Menus.Objects, this);
+                else if (Object.TypeTag == ObjectTypeTags.Item) MainWindow.Current.SelectMenu(MainWindow.Menus.Items, this);
+                else if (Object.TypeTag == ObjectTypeTags.Spell) MainWindow.Current.SelectMenu(MainWindow.Menus.Spells, this);
             }
             NavigateToScheme = !NavigateToScheme;
         }

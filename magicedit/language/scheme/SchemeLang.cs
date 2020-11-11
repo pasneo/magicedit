@@ -115,6 +115,14 @@ namespace magicedit
                 }
             }
 
+            public bool IsTypeValid(string type, Config config)
+            {
+                if (VariableTypes.Contains(type)) return true;
+                if (config.GetSchemeByName(type) != null) return true;
+                //todo: classlists are also valid types (?)
+                return false;
+            }
+
         }
 
         public class SchemeLangException : Exception
@@ -215,7 +223,25 @@ namespace magicedit
             {
                 //Add predefined variable to scheme
                 var variable_definition = context.variable_definition();
-                ObjectVariable variable = CreateVariableFromContext(variable_definition);
+
+                string type = variable_definition?.variable_type()?.GetText();
+                string name = variable_definition?.variable_name()?.GetText();
+
+                if (type == null || name == null) return base.VisitBody_variable_definition(context);
+
+                if (!VariableManager.IsTypeValid(type, Config))
+                {
+                    Errors.Add(new ErrorDescriptor($"Type '{type}' is not recognized.", variable_definition.variable_type()));
+                }
+
+                if (CompiledScheme.GetVariableByName(name) != null || CompiledScheme.GetParameterByName(name) != null)
+                {
+                    Errors.Add(new ErrorDescriptor($"Variable or parameter '{name}' already exists.", variable_definition.variable_name()));
+                    if (variable_definition.EQUALS() != null) SetNewExpression(1);
+                    return base.VisitBody_variable_definition(context);
+                }
+                
+                ObjectVariable variable = new ObjectVariable(type, name, null);
 
                 if (variable != null)
                 {
@@ -232,12 +258,18 @@ namespace magicedit
             public override object VisitParameter_definition([NotNull] scheme_langParser.Parameter_definitionContext context)
             {
                 //Add parameter to scheme
-                string type = context.variable_type().GetText();
-                string name = context.variable_name().GetText();
+                string type = context.variable_type()?.GetText();
+                string name = context.variable_name()?.GetText();
+
+                if (type == null || name == null) return base.VisitParameter_definition(context);
 
                 if (CompiledScheme.GetVariableByName(name) != null || CompiledScheme.GetParameterByName(name) != null)
                 {
-                    Errors.Add(new ErrorDescriptor($"Variable or parameter '{name}' already exists.", context));
+                    Errors.Add(new ErrorDescriptor($"Variable or parameter '{name}' already exists.", context.variable_name()));
+                }
+                else if (!VariableManager.IsTypeValid(type, Config))
+                {
+                    Errors.Add(new ErrorDescriptor($"Type '{type}' is not recognized.", context.variable_type()));
                 }
                 else
                 {
@@ -334,8 +366,19 @@ namespace magicedit
             {
                 var var_def = context.variable_definition();
 
-                string var_type = var_def.variable_type().GetText();
-                string var_name = var_def.variable_name().GetText();
+                string var_type = var_def.variable_type()?.GetText();
+                string var_name = var_def.variable_name()?.GetText();
+
+                if (var_type == null || var_name == null)
+                {
+                    if (var_def.EQUALS() != null) SetNewExpression(1);
+                    return base.VisitCmd_create_var(context);
+                }
+
+                if (!VariableManager.IsTypeValid(var_type, Config))
+                {
+                    Errors.Add(new ErrorDescriptor($"Type '{var_type}' is not recognized.", var_def.variable_type()));
+                }
 
                 VariableManager.CheckNewVariable(var_name, this, var_def.variable_name());
 
@@ -993,7 +1036,16 @@ namespace magicedit
         {
             var ast = GetAST(scheme.Code);
             var visitor = new Visitor(scheme, config);
-            visitor.Visit(ast);
+
+            try
+            {
+                visitor.Visit(ast);
+            }
+            catch (SchemeLangException ex)
+            {
+                Log.Write($"Compilation was terminated by an exception: {ex.Message}");
+            }
+
             return visitor.CompiledScheme;
         }
 
@@ -1005,9 +1057,16 @@ namespace magicedit
             var visitor = new Visitor(scheme, config);
             visitor.Errors = errors;
 
-            visitor.Visit(ast);
+            try
+            {
+                visitor.Visit(ast);
+            }
+            catch (SchemeLangException ex)
+            {
+                Log.Write($"Compilation was terminated by an exception: {ex.Message}");
+            }
 
-            foreach(var missingActionError in visitor.MissingActionErrors)
+            foreach (var missingActionError in visitor.MissingActionErrors)
             {
                 if (missingActionError.IsError(scheme)) visitor.Errors.Add(missingActionError);
             }

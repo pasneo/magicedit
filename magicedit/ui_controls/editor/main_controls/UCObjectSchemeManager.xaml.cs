@@ -153,6 +153,8 @@ namespace magicedit
             tbCode.Text = "";
             tbCode.IsEnabled = false;
             bDelete.IsEnabled = false;
+            bExport.IsEnabled = false;
+            bShowCompiled.IsEnabled = false;
         }
 
         private void RefreshInfo()
@@ -161,6 +163,8 @@ namespace magicedit
             {
                 tbCode.IsEnabled = true;
                 bDelete.IsEnabled = true;
+                bExport.IsEnabled = true;
+                bShowCompiled.IsEnabled = true;
 
                 Scheme scheme = (Scheme)((ListBoxItem)list.SelectedItem).Tag;
                 
@@ -319,5 +323,27 @@ namespace magicedit
             SyntaxCheckTimer.Start();
         }
 
+        private void bExport_Click(object sender, RoutedEventArgs e)
+        {
+            //todo: export scheme to text file
+        }
+
+        private void bShowCompiled_Click(object sender, RoutedEventArgs e)
+        {
+            SyntaxCheckTimer.Stop();
+
+            var item = ((ListBoxItem)list.SelectedItem);
+            if (item == null) return;
+            Scheme scheme = (Scheme)item.Tag;
+            
+            GenerateDataFromCode();
+
+            string code = scheme.CompiledScheme?.GetFullCode();
+            if (code != null)
+            {
+                MessageBox.Show(code);
+            }
+
+        }
     }
 }

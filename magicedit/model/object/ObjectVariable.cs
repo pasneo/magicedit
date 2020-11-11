@@ -9,6 +9,17 @@
         public static string Unknown = "unknown";
         public static string Object = "object";
         public static string Ability = "ability";
+
+        public static bool Contains(string type)
+        {
+            return
+                type == Logical ||
+                type == Number ||
+                type == Text ||
+                type == Unknown ||
+                type == Object ||
+                type == Ability;
+        }
     }
 
     public class ObjectVariable

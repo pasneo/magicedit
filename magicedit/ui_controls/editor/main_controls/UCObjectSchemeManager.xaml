@@ -89,7 +89,15 @@
                     VerticalScrollBarVisibility="Visible"
                     TextChanged="tbCode_TextChanged"/>
                    -->
-                
+
+                <Button x:Name="bExport" Content="Export" HorizontalAlignment="Left" Margin="75,0,0,10.151" VerticalAlignment="Bottom" Width="75"
+                        IsEnabled="False"
+                        Click="bExport_Click"/>
+
+                <Button x:Name="bShowCompiled" Content="Show Compiled" HorizontalAlignment="Left" Margin="155,0,0,10.151" VerticalAlignment="Bottom" Width="93"
+                        IsEnabled="False"
+                        Click="bShowCompiled_Click"/>
+
                 <Button x:Name="bDelete" Content="Delete" HorizontalAlignment="Right" Margin="0,0,10.328,10.151" VerticalAlignment="Bottom" Width="75"
                         IsEnabled="False"
                         Click="bDelete_Click"/>

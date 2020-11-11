@@ -144,7 +144,7 @@ namespace magicedit
             ListBoxItem item = (ListBoxItem)list.SelectedItem;
             SquareType squareType = (SquareType)item.Tag;
 
-            Project.Current.Config.Map.SquareTypes.Remove(squareType);
+            Project.Current.Config.Map.RemoveSquareType(squareType);
             list.SelectedItem = null;
             list.Items.Remove(item);
 

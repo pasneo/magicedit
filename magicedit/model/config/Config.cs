@@ -108,6 +108,18 @@ namespace magicedit
             return objects;
         }
 
+        public void RemoveAbility(string ability)
+        {
+            CharacterConfig.Abilities.RemoveAll(ab => ab.Name == ability);
+            ClassLists.ForEach(cl =>
+            {
+                cl.Classes.ForEach(c =>
+                {
+                    c.RemoveAbilityModifier(ability);
+                });
+            });
+        }
+
         public void AddClassList(ClassList classList)
         {
             ClassLists.Add(classList);
@@ -120,6 +132,25 @@ namespace magicedit
                 if (classList.Name == name) return true;
             }
             return false;
+        }
+
+        public void RemoveStringConst(Text text)
+        {
+            StringConsts.Remove(text);
+
+            Objects.ForEach(obj => {
+                obj.RemoveValuesContaining(text);
+                if (obj.ShownName == text) obj.ShownName = null;
+            });
+
+            ClassLists.ForEach(cl =>
+            {
+                if (cl.ShownName == text) cl.ShownName = null;
+                cl.Classes.ForEach(c =>
+                {
+                    if (c.ShownName == text) c.ShownName = null;
+                });
+            });
         }
 
         //Searches for given class in all classlists (returns null if not found), return both classlist and class in a tuple
@@ -184,14 +215,46 @@ namespace magicedit
             return GetObjectById(id);
         }
 
+        public void RemoveScheme(Scheme scheme)
+        {
+            Schemes.Remove(scheme);
+
+            Objects.ForEach(obj =>
+            {
+                if (obj.Scheme == scheme) obj.Scheme = null;
+                obj.RemoveValuesOfType(scheme.Name);
+            });
+
+            CharacterConfig.InventorySlots.RemoveAll(slot => slot.Type == scheme.Name);
+
+            Schemes.ForEach(sch =>
+            {
+                sch.CompiledScheme?.Parameters.RemoveAll(param => param.Type == scheme.Name);
+            });
+        }
+
+        // removes object from list and all its references/occurences
+        public void RemoveObject(Object @object)
+        {
+            Objects.Remove(@object);
+
+            //remove it from map
+            if (@object is MapObject) Map.RemoveObject((MapObject)@object);
+
+            //remove it from variables and parameters
+            Objects.ForEach(obj => obj.RemoveValuesContaining(@object));
+        }
+
         /* VALIDATION */
 
         public List<EditorErrorDescriptor> Validate()
         {
             List<EditorErrorDescriptor> eeds = new List<EditorErrorDescriptor>();
 
-            ValidateSchemes(eeds);
             ValidateObjectNames(eeds);
+
+            //schemes should be validated last
+            ValidateSchemes(eeds);
 
             return eeds;
         }
@@ -256,6 +319,14 @@ namespace magicedit
                     collisions.Add(obj.Id);
                     eeds.Add(eed);
                 }
+            }
+        }
+
+        private void ValidateObjects(List<EditorErrorDescriptor> eeds)
+        {
+            foreach (var obj in Objects)
+            {
+                // todo
             }
         }
 

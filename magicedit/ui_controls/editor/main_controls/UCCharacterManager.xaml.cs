@@ -91,7 +91,7 @@ namespace magicedit
 
         private void tlAbilities_TextDeleted(UCETextListElem elem)
         {
-            Project.Current.Config.CharacterConfig.Abilities.RemoveAll(ab => ab.Name == elem.Content);
+            Project.Current.Config.RemoveAbility(elem.Content);
         }
 
         private void iAbilityPoints_ValueChanged(IntegerUpDown sender)

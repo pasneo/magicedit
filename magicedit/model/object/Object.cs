@@ -165,6 +165,12 @@ namespace magicedit
             return false;
         }
 
+        public void RemoveValuesContaining(object value)
+        {
+            Parameters.RemoveAll(param => param.Value == value);
+            Variables.RemoveAll(variable => variable.Value == value);
+        }
+
         public void AddAction(string actionName)
         {
             if (Scheme?.GetFunctionByName(actionName) == null) throw new GameException($"Action '{actionName}' not found");
@@ -179,6 +185,12 @@ namespace magicedit
         public void ClearActions()
         {
             AvailableActions.Clear();
+        }
+
+        public void RemoveValuesOfType(string name)
+        {
+            Parameters.RemoveAll(param => param.Type == name);
+            Variables.RemoveAll(variable => variable.Type == name);
         }
 
         public void SetAttribute(string attributeName)

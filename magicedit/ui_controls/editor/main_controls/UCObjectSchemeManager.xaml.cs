@@ -202,7 +202,8 @@ namespace magicedit
             ListBoxItem item = (ListBoxItem)list.SelectedItem;
             Scheme scheme = (Scheme)item.Tag;
 
-            Project.Current.Config.Schemes.Remove(scheme);
+            Project.Current.Config.RemoveScheme(scheme);
+
             list.SelectedItem = null;
             list.Items.Remove(item);
         }

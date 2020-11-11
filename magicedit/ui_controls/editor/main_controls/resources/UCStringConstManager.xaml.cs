@@ -124,7 +124,7 @@ namespace magicedit
             ListBoxItem item = (ListBoxItem)listTexts.SelectedItem;
             Text text = (Text)item.Tag;
 
-            Project.Current.Config.StringConsts.Remove(text);
+            Project.Current.Config.RemoveStringConst(text);
             listTexts.SelectedItem = null;
             listTexts.Items.Remove(item);
         }

@@ -140,6 +140,19 @@ namespace magicedit
             return false;
         }
 
+        public void RemoveAbilityModifier(string abilityName)
+        {
+            Modifiers.RemoveAll(modif =>
+            {
+                if (modif is AbilityModifier)
+                {
+                    AbilityModifier abilityModifier = (AbilityModifier)modif;
+                    if (abilityModifier.AbilityName == abilityName) return true;
+                }
+                return false;
+            });
+        }
+
         public bool ContainsAttributeModifier(string attributeName)
         {
             foreach (ClassModifier modifier in Modifiers)

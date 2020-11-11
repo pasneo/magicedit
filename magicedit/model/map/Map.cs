@@ -73,6 +73,24 @@ namespace magicedit
             return null;
         }
 
+        // removes squaretype and all its references/occurences
+        public void RemoveSquareType(SquareType squareType)
+        {
+            SquareTypes.Remove(squareType);
+
+            List<Position> keysToRemove = new List<Position>();
+
+            foreach(var square in Squares)
+            {
+                if (square.Value == squareType)
+                {
+                    keysToRemove.Add(square.Key);
+                }
+            }
+
+            keysToRemove.ForEach(pos => Squares.Remove(pos));
+        }
+
         public void AddSpawner(Position position)
         {
             SpawnerPositions.Add(position);
@@ -167,6 +185,10 @@ namespace magicedit
             SpawnerPositions.RemoveAll(sp => !IsPositionWithin(sp));
         }
 
+        public void RemoveObject(MapObject @object)
+        {
+            Objects.Remove(@object);
+        }
 
         public void _AddObject(MapObject @object) { Objects.Add(@object); }
 

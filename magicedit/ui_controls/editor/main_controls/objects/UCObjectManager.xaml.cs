@@ -190,7 +190,7 @@ namespace magicedit
             ListBoxItem item = (ListBoxItem)list.SelectedItem;
             Object mo = (Object)item.Tag;
 
-            Project.Current.Config.Objects.Remove(mo);
+            Project.Current.Config.RemoveObject(mo);
             list.SelectedItem = null;
             list.Items.Remove(item);
         }

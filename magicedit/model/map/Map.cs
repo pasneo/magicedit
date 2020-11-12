@@ -143,7 +143,7 @@ namespace magicedit
         {
             foreach (MapObject obj in Objects)
             {
-                if (!obj.IsPermeable && obj.Position.Equals(position)) return false;
+                if (obj.Position != null && !obj.IsPermeable && obj.Position.Equals(position)) return false;
             }
             return true;
         }

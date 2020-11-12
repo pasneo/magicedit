@@ -35,6 +35,7 @@ namespace magicedit
         {
             textSelector.Refresh();
             itemSelector.Refresh();
+            spellSelector.Refresh();
         }
 
         private void ClearInfo()
@@ -107,6 +108,7 @@ namespace magicedit
             tlSetAttributes.ClearList();
             tlForbiddenAttributes.ClearList();
             spItemModifiers.Children.Clear();
+            spSpellModifiers.Children.Clear();
 
             foreach(var modif in @class.Modifiers)
             {
@@ -128,6 +130,11 @@ namespace magicedit
                 {
                     var textElem = CreateItemModifierElem((ItemModifier)modif);
                     spItemModifiers.Children.Add(textElem);
+                }
+                else if (modif is SpellModifier)
+                {
+                    var textElem = CreateSpellModifierElem((SpellModifier)modif);
+                    spSpellModifiers.Children.Add(textElem);
                 }
             }
 
@@ -295,6 +302,26 @@ namespace magicedit
             return textElem;
         }
 
+        private UCETextListElem CreateSpellModifierElem(SpellModifier modif)
+        {
+            UCETextListElem textElem = new UCETextListElem();
+            textElem.Content = $"{modif.SpellName}";
+            textElem.Tag = modif;
+            textElem.DeleteClicked += SpellTextElem_DeleteClicked; ;
+
+            return textElem;
+        }
+
+        private void SpellTextElem_DeleteClicked(object sender, RoutedEventArgs e)
+        {
+            Class selectedClass = (Class)((TreeViewItem)tvClasslists.SelectedItem).Tag;
+
+            UCETextListElem textElem = (UCETextListElem)sender;
+
+            selectedClass.Modifiers.Remove((SpellModifier)textElem.Tag);
+            spSpellModifiers.Children.Remove(textElem);
+        }
+
         private void bAddItem_Click(object sender, RoutedEventArgs e)
         {
             if (itemSelector.SelectedTag != null)
@@ -320,6 +347,22 @@ namespace magicedit
 
             selectedClass.Modifiers.Remove((ItemModifier)textElem.Tag);
             spItemModifiers.Children.Remove(textElem);
+        }
+
+        private void bAddSpell_Click(object sender, RoutedEventArgs e)
+        {
+            if (spellSelector.SelectedTag != null)
+            {
+                Class selectedClass = (Class)((TreeViewItem)tvClasslists.SelectedItem).Tag;
+
+                SpellModifier modif = new SpellModifier(spellSelector.SelectedTag.Name);
+                selectedClass.AddModifier(modif);
+
+                var textElem = CreateSpellModifierElem(modif);
+                spSpellModifiers.Children.Add(textElem);
+            }
+
+            spellSelector.SelectByTag(null);
         }
     }
 }

@@ -125,9 +125,29 @@
                             
                         </Grid>
 
-                        <!-- TODO: add items -->
+                        <Label Content="Spells" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"
+                               FontWeight="Bold"/>
 
-                </StackPanel>
+
+                        <Grid Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="LightGray">
+
+                            <local:UCObjectSelector
+                                x:Name="spellSelector"
+                                TypeTag="Spell"
+                                HorizontalAlignment="Left" VerticalAlignment="Top"
+                                Width="220"
+                                />
+                            <Button x:Name="bAddSpell" Content="Add"
+                                    HorizontalAlignment="Left" VerticalAlignment="Top"
+                                    Width="40" Margin="220,0,0,0" Height="23"
+                                    Click="bAddSpell_Click"/>
+
+                            <StackPanel x:Name="spSpellModifiers" Margin="0,30,0,0">
+                            </StackPanel>
+
+                        </Grid>
+
+                    </StackPanel>
 
               </Grid>
 

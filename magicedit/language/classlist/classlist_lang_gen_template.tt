@@ -6,12 +6,12 @@
 
 <# ClassList lastClassList = Project.Current.Config.ClassLists.Last(); #>
 <# foreach (ClassList classList in Project.Current.Config.ClassLists) { #>
-<#= classList.Name #> {
+<#= classList.Name #><# if (classList.ShownName != null) { #> <#= $"${classList.ShownName.ID}" #><# } #> {
 <#
 foreach (Class c in classList.Classes)
 {
 #>
-	<#= c.Name #> {
+	<#= c.Name #><# if (c.ShownName != null) { #> <#= $"${c.ShownName.ID}" #><# } #> {
 <# foreach (ClassModifier classModifier in c.Modifiers) { #>
 			<#= classModifier.GetCode() #>
 <# } #>

@@ -47,6 +47,25 @@ namespace magicedit.language.classlist
             
             #line default
             #line hidden
+            
+            #line 9 "C:\Users\Mathias\Desktop\Tananyag\Diplomatervezes 1\Project\magicedit\magicedit\language\classlist\classlist_lang_gen_template.tt"
+ if (classList.ShownName != null) { 
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 9 "C:\Users\Mathias\Desktop\Tananyag\Diplomatervezes 1\Project\magicedit\magicedit\language\classlist\classlist_lang_gen_template.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture($"${classList.ShownName.ID}"));
+            
+            #line default
+            #line hidden
+            
+            #line 9 "C:\Users\Mathias\Desktop\Tananyag\Diplomatervezes 1\Project\magicedit\magicedit\language\classlist\classlist_lang_gen_template.tt"
+ } 
+            
+            #line default
+            #line hidden
             this.Write(" {\r\n");
             
             #line 10 "C:\Users\Mathias\Desktop\Tananyag\Diplomatervezes 1\Project\magicedit\magicedit\language\classlist\classlist_lang_gen_template.tt"
@@ -61,6 +80,25 @@ foreach (Class c in classList.Classes)
             
             #line 14 "C:\Users\Mathias\Desktop\Tananyag\Diplomatervezes 1\Project\magicedit\magicedit\language\classlist\classlist_lang_gen_template.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Name));
+            
+            #line default
+            #line hidden
+            
+            #line 14 "C:\Users\Mathias\Desktop\Tananyag\Diplomatervezes 1\Project\magicedit\magicedit\language\classlist\classlist_lang_gen_template.tt"
+ if (c.ShownName != null) { 
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 14 "C:\Users\Mathias\Desktop\Tananyag\Diplomatervezes 1\Project\magicedit\magicedit\language\classlist\classlist_lang_gen_template.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture($"${c.ShownName.ID}"));
+            
+            #line default
+            #line hidden
+            
+            #line 14 "C:\Users\Mathias\Desktop\Tananyag\Diplomatervezes 1\Project\magicedit\magicedit\language\classlist\classlist_lang_gen_template.tt"
+ } 
             
             #line default
             #line hidden

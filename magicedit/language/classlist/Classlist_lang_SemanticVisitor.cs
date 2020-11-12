@@ -50,6 +50,18 @@ namespace magicedit.language.classlist
             return base.VisitClassListName(context);
         }
 
+        public override object VisitClassListShownName([NotNull] classlist_langParser.ClassListShownNameContext context)
+        {
+            string stringConst = context.GetText();
+
+            if (Config.GetStringConstByName(stringConst) == null)
+            {
+                Errors.Add(new ErrorDescriptor($"String const '{stringConst}' does not exist.", context.Start.Line, context.Start.Column, context.Start.StartIndex, context.Start.StopIndex));
+            }
+
+            return base.VisitClassListShownName(context);
+        }
+
         public override object VisitClassName([NotNull] classlist_langParser.ClassNameContext context)
         {
             //Check if class already exists in current list
@@ -76,6 +88,18 @@ namespace magicedit.language.classlist
             }
 
             return base.VisitClassName(context);
+        }
+
+        public override object VisitClassShownName([NotNull] classlist_langParser.ClassShownNameContext context)
+        {
+            string stringConst = context.GetText();
+
+            if (Config.GetStringConstByName(stringConst) == null)
+            {
+                Errors.Add(new ErrorDescriptor($"String const '{stringConst}' does not exist.", context.Start.Line, context.Start.Column, context.Start.StartIndex, context.Start.StopIndex));
+            }
+
+            return base.VisitClassShownName(context);
         }
 
         public override object VisitAbility([NotNull] classlist_langParser.AbilityContext context)

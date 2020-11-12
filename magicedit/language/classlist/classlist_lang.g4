@@ -30,11 +30,11 @@ Elf
 grammar classlist_lang;
 
 doc : classListExpr* ;
-classListExpr : classListName LEFT_BRACE classListBody RIGHT_BRACE ;
+classListExpr : classListName classListShownName? LEFT_BRACE classListBody RIGHT_BRACE ;
 
 classListBody : classExpr* ;
 
-classExpr : className LEFT_BRACE classBody RIGHT_BRACE ;
+classExpr : className classShownName? LEFT_BRACE classBody RIGHT_BRACE ;
 
 classBody : classLine* ;
 classLine : abilityLine | attributeLine | itemLine | spellLine ;
@@ -47,6 +47,9 @@ spellLine : TEACH spell ;
 classListName : STR ;
 className : STR ;
 
+classListShownName : string_const;
+classShownName : string_const ;
+
 ability : STR ;
 abilityModifier : PLUS | MINUS ;
 attribute : STR ;
@@ -55,6 +58,8 @@ value : VALUE ;
 item : STR ;
 item_number : VALUE ;
 spell : STR ;
+
+string_const : STRING_CONST ;
 
 SET : 'set' ;
 FORBID : 'forbid' ;
@@ -65,6 +70,9 @@ MINUS : '-' ;
 
 VALUE : '0' | [1-9]([0-9])* ;
 STR : ([a-zA-Z] | '_')([a-zA-Z0-9] | '_')* ;
+
+STRING_CONST : '$'STR ;
+
 WS : (' ' | '\r' | '\n' | '\t') -> skip ;
 
 LEFT_BRACE : '{' ;

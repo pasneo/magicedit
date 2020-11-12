@@ -10,6 +10,10 @@ namespace magicedit.language.classlist
 {
     public class Classlist_langVisitor : classlist_langBaseVisitor<object>
     {
+        private Config Config
+        {
+            get { return Project.Current?.Config; }
+        }
 
         public List<ClassList> ClassLists { get; set; } = new List<ClassList>();
 
@@ -29,6 +33,17 @@ namespace magicedit.language.classlist
             return base.VisitClassListExpr(context);
         }
 
+        public override object VisitClassListShownName([NotNull] classlist_langParser.ClassListShownNameContext context)
+        {
+            if (currentClassList != null)
+            {
+                string stringConst = context.GetText();
+                currentClassList.ShownName = Config.GetStringConstByName(stringConst);
+            }
+
+            return base.VisitClassListShownName(context);
+        }
+
         public override object VisitClassName([NotNull] classlist_langParser.ClassNameContext context)
         {
             //Create new class and save it as current class
@@ -42,6 +57,17 @@ namespace magicedit.language.classlist
             currentClass = c;
 
             return base.VisitClassName(context);
+        }
+
+        public override object VisitClassShownName([NotNull] classlist_langParser.ClassShownNameContext context)
+        {
+            if (currentClass != null)
+            {
+                string stringConst = context.GetText();
+                currentClass.ShownName = Config.GetStringConstByName(stringConst);
+            }
+
+            return base.VisitClassShownName(context);
         }
 
         public override object VisitAbilityLine([NotNull] classlist_langParser.AbilityLineContext context)

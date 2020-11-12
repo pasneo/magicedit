@@ -132,6 +132,20 @@ namespace magicedit.language.classlist
             return base.VisitItem(context);
         }
 
+        public override object VisitSpell([NotNull] classlist_langParser.SpellContext context)
+        {
+            string spellName = context.GetText();
+
+            var spell = Config.GetObjectById(spellName);
+
+            if (spell == null || spell.TypeTag != ObjectTypeTags.Spell)
+            {
+                Errors.Add(new ErrorDescriptor($"Spell '{spellName}' does not exist.", context.Start.Line, context.Start.Column, context.Start.StartIndex, context.Start.StopIndex));
+            }
+
+            return base.VisitSpell(context);
+        }
+
     }
 
 }

@@ -86,7 +86,7 @@ namespace magicedit
             character.CreateInventorySlots(Config);      //generate variables for inventory slots
             if (spawnNo >= 0)
                 character.Position = Map.GetSpawnerByNo(spawnNo);
-            character.EvaluateClassItemModifiers(this);    //add items to character provided by its class modifiers
+            character.EvaluateClassItemSpellModifiers(this);    //add items & spells to character provided by its class modifiers
 
             Objects.Add(character);
             Map.Objects.Add(character);

@@ -126,6 +126,7 @@ namespace magicedit
 
         public void AddSpell(Spell spell)
         {
+            //todo: if we want spells to have different inner state based on their owners, we must copy spells just like items
             Spells.Add(spell);
         }
 
@@ -135,7 +136,7 @@ namespace magicedit
         }
 
         // used to evaluate classes that provide items for characters
-        public void EvaluateClassItemModifiers(Game game)
+        public void EvaluateClassItemSpellModifiers(Game game)
         {
             foreach (ObjectVariable var in Variables)
             {
@@ -148,6 +149,14 @@ namespace magicedit
                         Item item = game.GetObjectById(im.ItemName);
                         AddItem(game, item, im.ItemNumber);
                     }
+
+                    List<SpellModifier> spellModifiers = @class.GetSpellModifiers();
+                    foreach(SpellModifier sm in spellModifiers)
+                    {
+                        Spell spell = game.GetObjectById(sm.SpellName);
+                        AddSpell(spell);
+                    }
+
                 }
             }
         }

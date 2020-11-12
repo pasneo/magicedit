@@ -93,5 +93,18 @@ namespace magicedit.language.classlist
             return base.VisitItemLine(context);
         }
 
+        public override object VisitSpellLine([NotNull] classlist_langParser.SpellLineContext context)
+        {
+            //add spell modif
+
+            SpellModifier modif = new SpellModifier();
+
+            modif.SpellName = context.spell().GetText();
+
+            currentClass.Modifiers.Add(modif);
+
+            return base.VisitSpellLine(context);
+        }
+
     }
 }

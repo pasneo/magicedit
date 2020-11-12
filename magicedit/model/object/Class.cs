@@ -107,6 +107,24 @@ namespace magicedit
         }
     }
 
+    public class SpellModifier : ClassModifier
+    {
+        public override string ModifierType => "SpellModifier";
+
+        public string SpellName { get; set; }
+
+        public SpellModifier() { }
+        public SpellModifier(string spellName)
+        {
+            SpellName = spellName;
+        }
+
+        public override string GetCode()
+        {
+            return $"teach {SpellName}";
+        }
+    }
+
     public class Class
     {
         public Text ShownName { get; set; }     //This name is shown during game
@@ -259,6 +277,16 @@ namespace magicedit
                 if (modifier is ItemModifier) itemModifiers.Add((ItemModifier)modifier);
             }
             return itemModifiers;
+        }
+
+        public List<SpellModifier> GetSpellModifiers()
+        {
+            List<SpellModifier> spellModifiers = new List<SpellModifier>();
+            foreach (ClassModifier modifier in Modifiers)
+            {
+                if (modifier is SpellModifier) spellModifiers.Add((SpellModifier)modifier);
+            }
+            return spellModifiers;
         }
 
     }

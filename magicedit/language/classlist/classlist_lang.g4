@@ -8,6 +8,7 @@
     'set' [Attribute]
     'forbid' [Attribute]
     'add' [Item]
+	'teach' [Spell]
 ...
 
 Example:
@@ -18,6 +19,7 @@ Dwarf
     set can_use_hammer
     forbid can_climb_mountains
     add Hammer_of_Tek
+	teach Frost
 
 Elf
     STR -= 1
@@ -35,11 +37,12 @@ classListBody : classExpr* ;
 classExpr : className LEFT_BRACE classBody RIGHT_BRACE ;
 
 classBody : classLine* ;
-classLine : abilityLine | attributeLine | itemLine ;
+classLine : abilityLine | attributeLine | itemLine | spellLine ;
 
 abilityLine : ability abilityModifier value ;
 attributeLine : attributeOption attribute ;
 itemLine : ADD item_number? item ;
+spellLine : TEACH spell ;
 
 classListName : STR ;
 className : STR ;
@@ -51,10 +54,12 @@ attributeOption : (SET | FORBID) ;
 value : VALUE ;
 item : STR ;
 item_number : VALUE ;
+spell : STR ;
 
 SET : 'set' ;
 FORBID : 'forbid' ;
 ADD : 'add' ;
+TEACH : 'teach' ;
 PLUS : '+' ;
 MINUS : '-' ;
 

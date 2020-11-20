@@ -73,6 +73,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="windows\FuncCodeWindow.xaml.cs">
+      <DependentUpon>FuncCodeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="model\scheme\commands\object\CommandToggle.cs" />
     <Compile Include="ui_controls\editor\errors\EditorErrorDescriptor.cs" />
     <Compile Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_Object.xaml.cs">
@@ -287,6 +290,10 @@
     <Compile Include="model\scheme\SchemeFunction.cs" />
     <Compile Include="model\resource\Visual.cs" />
     <Compile Include="model\resource\Text.cs" />
+    <Page Include="windows\FuncCodeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ui_controls\editor\selectors\parameter_selector\UCEParameterRow_Object.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -511,6 +518,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="language\scheme\scheme_lang_highlight.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="language\scheme\func_lang_highlight.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

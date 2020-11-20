@@ -15,8 +15,8 @@ namespace magicedit
         //Parameters that are created and set when constructing object
         public List<ObjectVariable> Parameters { get; private set; } = new List<ObjectVariable>();
         
-        private SchemeFunction BodyFunction = null;    //This is created from code in the scheme's body (outside of any other function)
-        private SchemeFunction InitFunction = null;
+        public SchemeFunction BodyFunction { get; private set; } = null;    //This is created from code in the scheme's body (outside of any other function)
+        public SchemeFunction InitFunction { get; private set; } = null;
         
         public List<SchemeFunction> ActionFunctions { get; private set; } = new List<SchemeFunction>();
 

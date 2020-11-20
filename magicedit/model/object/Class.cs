@@ -12,12 +12,6 @@ namespace magicedit
     [JsonConverter(typeof(JsonSubtypes), "ModifierType")]
     public abstract class ClassModifier
     {
-        public enum Type
-        {
-            AbilityModifier,
-            AttributeModifier,
-            ItemModifier
-        }
 
         public virtual string ModifierType => "ClassModifier";
 

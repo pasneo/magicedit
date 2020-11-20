@@ -272,6 +272,8 @@ namespace magicedit
                 return false;
             }
 
+            SchemeLangOptimizer.Optimize(scheme);
+
             //var visitor = new Classlist_langVisitor();
             //visitor.Visit(tree);
 
@@ -338,10 +340,11 @@ namespace magicedit
             
             GenerateDataFromCode();
 
-            string code = scheme.CompiledScheme?.GetFullCode();
-            if (code != null)
+            string funcCode = scheme.CompiledScheme?.GetFullCode();
+            if (funcCode != null)
             {
-                MessageBox.Show(code);
+                FuncCodeWindow funcCodeWindow = new FuncCodeWindow(scheme.Code, funcCode);
+                funcCodeWindow.Show();
             }
 
         }

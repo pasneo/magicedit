@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- syntaxdefinition for Json by alek kowalczyk -->
+<SyntaxDefinition name="Scheme" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+
+  <Color name="Keywords" foreground="#4994f5" fontWeight="bold" />
+	<Color name="BasicTypes" foreground="#edc937" fontWeight="bold" />
+  <Color name="Consts" foreground="#000000" fontWeight="bold" />
+  <Color name="Operations" foreground="#bb6677" fontWeight="bold" />
+  <Color name="JumpInstructions" foreground="#36d957" fontWeight="bold" />
+  
+  <RuleSet ignoreCase="false">
+    
+		<Keywords color="Keywords" >
+			<Word>action</Word>
+			<Word>init</Word>
+      <Word>param</Word>
+		</Keywords>
+
+    <Keywords color="BasicTypes" >
+      <Word>number</Word>
+      <Word>logical</Word>
+      <Word>text</Word>
+      <Word>object</Word>
+      <Word>ability</Word>
+    </Keywords>
+
+    <Keywords color="Consts" >
+      <Word>actor</Word>
+      <Word>me</Word>
+
+      <Word>true</Word>
+      <Word>false</Word>
+      <Word>True</Word>
+      <Word>False</Word>
+      <Word>TRUE</Word>
+      <Word>FALSE</Word>
+    </Keywords>
+
+    <Keywords color="JumpInstructions" >
+      <Word>JUMP</Word>
+      <Word>JF</Word>
+    </Keywords>  
+      
+    <Keywords color="Operations" >
+      <Word>CREATE</Word>
+      <Word>END</Word>
+      <Word>FAIL</Word>
+      <Word>IS</Word>
+      <Word>OF</Word>
+      <Word>PRINT</Word>
+      <Word>SETOF</Word>
+      <Word>SET</Word>
+
+      <Word>ADD</Word>
+      <Word>AND</Word>
+      <Word>CMP</Word>
+      <Word>DIVIDE</Word>
+      <Word>EQUALS</Word>
+      <Word>LOWER</Word>
+      <Word>MULTIPLY</Word>
+      <Word>NOT</Word>
+      <Word>OR</Word>
+      <Word>SUB</Word>
+
+      <Word>ACTION</Word>
+      <Word>ADDSPELL</Word>
+      <Word>CLEAR</Word>
+      <Word>ACTIONS</Word>
+      <Word>DESC</Word>
+      <Word>FORBID</Word>
+      <Word>ATTR</Word>
+      <Word>KNOWS</Word>
+      <Word>OWNS</Word>
+      <Word>REMOVE</Word>
+      <Word>ITEM</Word>
+      <Word>REPORT</Word>
+      <Word>TOGGLE</Word>
+    </Keywords>
+	
+  </RuleSet>
+
+</SyntaxDefinition>

@@ -208,9 +208,25 @@ namespace magicedit
 
         public static void Optimize(SchemeFunction function)
         {
+            if (function == null) return;
+
             SolveDoubleJumps(function);
             SolveSimpleValueRegs(function);
             SolveDeadCode(function);
+        }
+
+        public static void Optimize(Scheme scheme)
+        {
+            //if (!scheme.IsCompiledValid) return;
+
+            Optimize(scheme.CompiledScheme.InitFunction);
+            Optimize(scheme.CompiledScheme.BodyFunction);
+
+            foreach(SchemeFunction func in scheme.CompiledScheme.ActionFunctions)
+            {
+                Optimize(func);
+            }
+
         }
 
     }

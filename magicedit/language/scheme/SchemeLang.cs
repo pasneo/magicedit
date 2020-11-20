@@ -192,6 +192,7 @@ namespace magicedit
                 string scheme_name = context?.GetText();
 
                 Scheme.Name = scheme_name;
+                Scheme.Parents.Clear();
 
                 if (scheme_name != null)
                 {

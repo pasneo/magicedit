@@ -37,15 +37,11 @@ namespace magicedit
             InitializeComponent();
         }
 
-        public void Refresh()
+        private void AddParams(Scheme scheme)
         {
-            spParams.Children.Clear();
-
-            Scheme scheme = Object?.Scheme;
-
             if (scheme?.CompiledScheme == null) return;
 
-            foreach(var param in scheme.CompiledScheme.Parameters)
+            foreach (var param in scheme.CompiledScheme.Parameters)
             {
                 var value = Object.GetParameterByName(param.Name);
 
@@ -62,8 +58,25 @@ namespace magicedit
                 }
 
                 var paramRow = ParameterRowFactory.Create(param, value, Project.Current.Config);
-                paramRow.Margin = new Thickness(5,5,5,5);
+                paramRow.Margin = new Thickness(5, 5, 5, 5);
                 spParams.Children.Add(paramRow);
+            }
+        }
+
+        public void Refresh()
+        {
+            spParams.Children.Clear();
+
+            Scheme scheme = Object?.Scheme;
+
+            AddParams(scheme);
+
+            if (scheme?.Parents != null)
+            {
+                foreach (Scheme parent in scheme.Parents)
+                {
+                    AddParams(parent);
+                }
             }
         }
 

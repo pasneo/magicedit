@@ -19,7 +19,7 @@ namespace magicedit
     /// </summary>
     public partial class FuncCodeWindow : Window
     {
-        public FuncCodeWindow(string schemeCode, string funcCode)
+        public FuncCodeWindow(string schemeCode, string funcCodeOriginal, string funcCodeOptimized)
         {
             using (var stream = new System.IO.StreamReader("language/scheme/func_lang_highlight.xshd"))
             {
@@ -34,7 +34,8 @@ namespace magicedit
             InitializeComponent();
 
             tbSchemeCode.Text = schemeCode;
-            tbFuncCode.Text = funcCode;
+            tbFuncCodeOriginal.Text = funcCodeOriginal;
+            tbFuncCodeOptimized.Text = funcCodeOptimized;
         }
     }
 }

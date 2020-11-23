@@ -13,6 +13,8 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
         <avalonEdit:TextEditor x:Name="tbSchemeCode"
@@ -30,7 +32,7 @@
         <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
                            Width="5"></GridSplitter>
 
-        <avalonEdit:TextEditor x:Name="tbFuncCode"
+        <avalonEdit:TextEditor x:Name="tbFuncCodeOriginal"
                          IsEnabled="False"
                          Background="#fefefe"
                          ShowLineNumbers="True"
@@ -41,6 +43,21 @@
                          Visibility="Visible"
                          SyntaxHighlighting="Func"
                          Grid.Column="2"/>
-        
+
+        <GridSplitter Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Center"
+                           Width="5"></GridSplitter>
+
+        <avalonEdit:TextEditor x:Name="tbFuncCodeOptimized"
+                         IsEnabled="False"
+                         Background="#fefefe"
+                         ShowLineNumbers="True"
+                         BorderBrush="Black"
+                         FontFamily="Consolas"
+                         VerticalScrollBarVisibility="Visible"
+                         HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Margin="10,10,10,10" Text="" Width="auto"
+                         Visibility="Visible"
+                         SyntaxHighlighting="Func"
+                         Grid.Column="4"/>
+
     </Grid>
 </Window>

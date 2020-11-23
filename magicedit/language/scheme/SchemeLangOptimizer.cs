@@ -137,6 +137,64 @@ namespace magicedit
 
         }
 
+        public static void SolveRegisterBuffers(SchemeFunction function)
+        {
+            // if an operation stores its result in a register <reg>, and it is followed by a SET(<var>, <reg>) command
+            //      we delete the SET command and set the opperation's output to <var>
+            //      we iterate over the following commands and change any <reg> to <var>
+            //      we stop if <reg> is set again or we leave the block
+
+            var commands = function.Commands;
+            HashSet<int> removableIndexes = new HashSet<int>();
+
+            for (int i = 0; i < commands.Count; ++i)
+            {
+                ISchemeCommand cmd = commands[i];
+
+                var outputs = cmd.GetOutputs();
+
+                if (outputs == null) continue;
+
+                // check if any output is a register
+                foreach(var reg in outputs)
+                {
+                    if (SchemeExecutor.IsRegister(reg))
+                    {
+                        string variable = null;
+                        for(int j = i + 1; j < commands.Count; ++j)
+                        {
+                            ISchemeCommand cmd2 = commands[j];
+
+                            if (cmd2 is CommandJumpBase) break; // break if we leave the block
+                            if (cmd2.HasOutput(reg)) break;  // break if the register is set again
+
+                            if (cmd2 is CommandSetVariable && cmd2.HasInput(reg))
+                            {
+                                CommandSetVariable setCmd = (CommandSetVariable)cmd2;
+                                variable = setCmd.GetVariableName();
+                                if (SchemeExecutor.IsRegister(variable))
+                                {
+                                    variable = null;
+                                }
+                                else
+                                {
+                                    cmd.ChangeOutput(reg, variable);
+                                    removableIndexes.Add(j);
+                                }
+                            }
+
+                            if (variable != null && cmd2.HasInput(reg))
+                            {
+                                cmd2.ChangeInputs(reg, variable);
+                            }
+                        }
+                    }
+                }
+            }
+
+            RemoveCommandsAt(function, removableIndexes);
+        }
+
         public static void SolveDeadCode(SchemeFunction function)
         {
 
@@ -212,6 +270,7 @@ namespace magicedit
 
             SolveDoubleJumps(function);
             SolveSimpleValueRegs(function);
+            SolveRegisterBuffers(function);
             SolveDeadCode(function);
         }
 

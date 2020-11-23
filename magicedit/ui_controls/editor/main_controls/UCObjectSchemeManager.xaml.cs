@@ -248,7 +248,7 @@ namespace magicedit
         }
 
         //Return true if generation is successfull
-        public bool GenerateDataFromCode()
+        public bool GenerateDataFromCode(bool optimize = true)
         {
             RemoveAllErrorHighlight();
 
@@ -272,7 +272,8 @@ namespace magicedit
                 return false;
             }
 
-            SchemeLangOptimizer.Optimize(scheme);
+            if (optimize)
+                SchemeLangOptimizer.Optimize(scheme);
 
             //var visitor = new Classlist_langVisitor();
             //visitor.Visit(tree);
@@ -338,12 +339,15 @@ namespace magicedit
             if (item == null) return;
             Scheme scheme = (Scheme)item.Tag;
             
-            GenerateDataFromCode();
+            GenerateDataFromCode(false);
+            string funcCodeOriginal = scheme.CompiledScheme?.GetFullCode();
 
-            string funcCode = scheme.CompiledScheme?.GetFullCode();
-            if (funcCode != null)
+            SchemeLangOptimizer.Optimize(scheme);
+            string funcCodeOptimized = scheme.CompiledScheme?.GetFullCode();
+
+            if (funcCodeOriginal != null && funcCodeOptimized != null)
             {
-                FuncCodeWindow funcCodeWindow = new FuncCodeWindow(scheme.Code, funcCode);
+                FuncCodeWindow funcCodeWindow = new FuncCodeWindow(scheme.Code, funcCodeOriginal, funcCodeOptimized);
                 funcCodeWindow.Show();
             }
 

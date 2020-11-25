@@ -29,6 +29,8 @@ namespace magicedit
         public UCClassListEditor()
         {
             InitializeComponent();
+
+            tviClasslists.MouseRightButtonDown += TviClasslists_MouseRightButtonDown;
         }
 
         public void Refresh()
@@ -154,9 +156,32 @@ namespace magicedit
             e.Handled = true;
         }
 
+        private void tviClass_MouseRightButton(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void TviClasslists_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ContextMenu cm = this.FindResource("cmClasslists") as ContextMenu;
+            cm.PlacementTarget = sender as TreeViewItem;
+            cm.Tag = sender;
+            cm.IsOpen = true;
+            e.Handled = true;
+        }
+
         private void tviClassList_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             ContextMenu cm = this.FindResource("cmNewClass") as ContextMenu;
+            cm.PlacementTarget = sender as TreeViewItem;
+            cm.Tag = sender;
+            cm.IsOpen = true;
+            //e.Handled = true;
+        }
+
+        private void tviClass_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ContextMenu cm = this.FindResource("cmClass") as ContextMenu;
             cm.PlacementTarget = sender as TreeViewItem;
             cm.Tag = sender;
             cm.IsOpen = true;
@@ -177,6 +202,28 @@ namespace magicedit
             item.IsSelected = true;
         }
 
+        private void miDeleteClassList_Click(object sender, RoutedEventArgs e)
+        {
+            ContextMenu cm = this.FindResource("cmNewClass") as ContextMenu;
+            TreeViewItem tvi = cm.Tag as TreeViewItem;
+
+            ClassList classList = (ClassList)tvi.Tag;
+
+            Project.Current.Config.ClassLists.Remove(classList);
+            RebuildTree();
+        }
+
+        private void miDeleteClass_Click(object sender, RoutedEventArgs e)
+        {
+            ContextMenu cm = this.FindResource("cmClass") as ContextMenu;
+            TreeViewItem tvi = cm.Tag as TreeViewItem;
+
+            Class c = (Class)tvi.Tag;
+
+            Project.Current.Config.ClassLists.ForEach(cl => cl.Classes.Remove(c));
+            RebuildTree();
+        }
+
         private TreeViewItem AddNewClasslistItem(ClassList classList)
         {
             TreeViewItem item = new TreeViewItem();
@@ -185,9 +232,9 @@ namespace magicedit
 
             item.PreviewMouseRightButtonDown += tviClassList_MouseRightButtonDown;
 
-            item.MouseRightButtonDown += tviClassList_MouseRightButton;
-            item.PreviewMouseRightButtonUp += tviClassList_MouseRightButton;
-            item.MouseRightButtonUp += tviClassList_MouseRightButton;
+            //item.MouseRightButtonDown += tviClassList_MouseRightButton;
+            //item.PreviewMouseRightButtonUp += tviClassList_MouseRightButton;
+            //item.MouseRightButtonUp += tviClassList_MouseRightButton;
 
             tviClasslists.Items.Add(item);
 
@@ -201,6 +248,12 @@ namespace magicedit
             item.Tag = @class;
 
             //item.PreviewMouseLeftButtonDown += tviClass_PreviewMouseLeftButtonDown;
+
+            item.PreviewMouseRightButtonDown += tviClass_MouseRightButtonDown;
+
+            //item.MouseRightButtonDown += tviClass_MouseRightButton;
+            //item.PreviewMouseRightButtonUp += tviClass_MouseRightButton;
+            //item.MouseRightButtonUp += tviClass_MouseRightButton;
 
             classListItem.Items.Add(item);
 

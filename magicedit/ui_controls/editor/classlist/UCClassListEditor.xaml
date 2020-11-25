@@ -10,6 +10,15 @@
     <Control.Resources>
         <ContextMenu x:Key="cmNewClass">
             <MenuItem x:Name="miNewClass" Header="New class" Click="miNewClass_Click" />
+            <MenuItem x:Name="miDeleteClassList" Header="Delete classlist" Click="miDeleteClassList_Click" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="cmClass">
+            <MenuItem x:Name="miDeleteClass" Header="Delete class" Click="miDeleteClass_Click" />
+        </ContextMenu>
+
+        <ContextMenu x:Key="cmClasslists">
+            <MenuItem x:Name="cmiNewClasslist" Header="New class list" Click="cmiNewClasslist_Click"></MenuItem>
         </ContextMenu>
     </Control.Resources>
 
@@ -26,11 +35,13 @@
                       SelectedItemChanged="tvClasslists_SelectedItemChanged">
 
                 <TreeViewItem x:Name="tviClasslists" Header="Class lists">
+                    <!--
                     <TreeViewItem.ContextMenu>
                         <ContextMenu>
                             <MenuItem x:Name="cmiNewClasslist" Header="New class list" Click="cmiNewClasslist_Click"></MenuItem>
                         </ContextMenu>
                     </TreeViewItem.ContextMenu>
+                    -->
                 </TreeViewItem>
             </TreeView>
         </Grid>

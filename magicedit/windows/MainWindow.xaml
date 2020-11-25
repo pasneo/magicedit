@@ -20,11 +20,7 @@
                 <MenuItem x:Name="mSaveAs" Header="Save As" Click="mSaveAs_Click">
                 </MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Exit">
-                </MenuItem>
-            </MenuItem>
-            <MenuItem Header="View">
-                <MenuItem Header="Code view" IsCheckable="True" IsChecked="False">
+                <MenuItem x:Name="mExit" Header="Exit" Click="mExit_Click">
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Execute">
@@ -66,30 +62,20 @@
                             </TreeViewItem>
                             <TreeViewItem x:Name="tviMap" Header="Map">
                             </TreeViewItem>
-                            <TreeViewItem Header="Scheme">
-                            </TreeViewItem>
                         </TreeViewItem>
                         <TreeViewItem Header="Character">
                             <TreeViewItem x:Name="tviCharacterSettings" Header="Settings">
                             </TreeViewItem>
                             <TreeViewItem x:Name="tviClasslists" Header="Classlists">
                             </TreeViewItem>
-                            <TreeViewItem Header="Scheme">
-                            </TreeViewItem>
                         </TreeViewItem>
                         
-                        <!-- <TreeViewItem x:Name="tviItemCategories" Header="Categories">
-                        </TreeViewItem> -->
                         <TreeViewItem x:Name="tviItems" Header="Items">
                         </TreeViewItem>
-                            <!-- <TreeViewItem x:Name="tviSpellCategories" Header="Categories"> 
-                            </TreeViewItem> -->
                         <TreeViewItem x:Name="tviSpells" Header="Spells">
                         </TreeViewItem>
-                        
                         <TreeViewItem x:Name="tviObjects" Header="Objects">
                         </TreeViewItem>
-                        
                         <TreeViewItem x:Name="tviSchemes" Header="Schemes">
                         </TreeViewItem>
                     </TreeView>

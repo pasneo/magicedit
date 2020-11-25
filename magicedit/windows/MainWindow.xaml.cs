@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -202,7 +203,7 @@ namespace magicedit
             SaveAs(SavePath);
         }
 
-        private void SaveAs(string path = null)
+        private bool SaveAs(string path = null)
         {
             if (path == null)
             {
@@ -212,7 +213,7 @@ namespace magicedit
                 if (saveFileDialog.ShowDialog() == true)
                     SavePath = saveFileDialog.FileName;
                 else
-                    return;
+                    return false;
             }
 
             if (SavePath != null)
@@ -220,6 +221,7 @@ namespace magicedit
                 Project.Current?.Config?.Save(SavePath);
             }
 
+            return true;
         }
 
         private void mSaveAs_Click(object sender, RoutedEventArgs e)
@@ -266,5 +268,31 @@ namespace magicedit
             var eed = (EditorErrorDescriptor)item.Tag;
             eed.NavigateToSource();
         }
+
+        private void mExit_Click(object sender, RoutedEventArgs e)
+        {
+            Exit();
+        }
+
+        private bool Exit()
+        {
+            var result = MessageBox.Show("Do you want to save the project?", "Save Project", MessageBoxButton.YesNoCancel);
+
+            if (result == MessageBoxResult.Cancel) return false;
+
+            if (result == MessageBoxResult.Yes)
+            {
+                if (!SaveAs(SavePath)) return false;
+            }
+
+            Application.Current.Shutdown();
+            return true;
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (!Exit()) e.Cancel = true;
+        }
+
     }
 }

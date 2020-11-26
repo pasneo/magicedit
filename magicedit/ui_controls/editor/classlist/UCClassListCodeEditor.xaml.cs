@@ -19,6 +19,8 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using magicedit.language;
+using Microsoft.Win32;
+using System.IO;
 
 namespace magicedit
 {
@@ -348,6 +350,17 @@ namespace magicedit
                 completionWindow.Closed += delegate {
                     completionWindow = null;
                 };
+            }
+        }
+
+        private void bExport_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, tbCode.Text);
             }
         }
     }

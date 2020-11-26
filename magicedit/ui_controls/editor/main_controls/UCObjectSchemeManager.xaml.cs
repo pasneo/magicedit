@@ -6,9 +6,11 @@ using ICSharpCode.AvalonEdit.AddIn;
 using ICSharpCode.SharpDevelop.Editor;
 using magicedit.language;
 using magicedit.language.scheme;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -328,7 +330,13 @@ namespace magicedit
 
         private void bExport_Click(object sender, RoutedEventArgs e)
         {
-            //todo: export scheme to text file
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                File.WriteAllText(saveFileDialog.FileName, tbCode.Text);
+            }
         }
 
         private void bShowCompiled_Click(object sender, RoutedEventArgs e)

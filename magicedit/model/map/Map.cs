@@ -148,7 +148,7 @@ namespace magicedit
             return true;
         }
 
-        public void CallSquareMethod(SquareType squareType, Character actor, Game game)
+        public void ExecuteSquareAction(SquareType squareType, Character actor, Game game)
         {
             if (Scheme == null || squareType.ActionName == null || squareType.ActionName == "") return;
 

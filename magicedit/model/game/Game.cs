@@ -239,7 +239,7 @@ namespace magicedit
                 CurrentPlayer.AvailableActionPoints -= Config.CharacterConfig.MovementActionPoints;
 
                 // if character stepped on a square, we may have to call an action
-                Map.CallSquareMethod(squareType, character, this);
+                Map.ExecuteSquareAction(squareType, character, this);
 
             }
             else if (actionName == BasicActions.EndTurn)

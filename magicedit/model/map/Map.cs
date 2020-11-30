@@ -24,6 +24,7 @@ namespace magicedit
             set { height = value; SizeChanged(); }
         }
 
+        public Object SchemeObject { get; set; }   //an object for tracking states of map when executing actions from map's scheme
         public Scheme Scheme { get; set; } //scheme for map, that contains actions used by Squares (see SquareType)
 
         public List<SquareType> SquareTypes = new List<SquareType>();
@@ -148,6 +149,13 @@ namespace magicedit
             return true;
         }
 
+        public void CreateSchemeObject(Game game)
+        {
+            SchemeObject = new Object();
+            SchemeObject.Scheme = Scheme;
+            SchemeObject.Create(game);
+        }
+
         public void ExecuteSquareAction(SquareType squareType, Character actor, Game game)
         {
             if (Scheme == null || squareType.ActionName == null || squareType.ActionName == "") return;
@@ -155,8 +163,8 @@ namespace magicedit
             SchemeFunction action = Scheme.GetFunctionByName(squareType.ActionName);
 
             if (action == null) throw new GameException($"No such action in map: {squareType.ActionName}");
-
-            action.Execute(new Object(), actor, game);
+            
+            action.Execute(SchemeObject, actor, game);
         }
 
         public int GetMovementCost(SquareType squareType, Config config)

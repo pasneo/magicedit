@@ -67,7 +67,7 @@ namespace magicedit
 
             Map?.Scheme?.Compile(config);
             Map?.RecollectMapObjects(Objects);
-
+            Map?.CreateSchemeObject(this);
         }
 
         private void InitializeCharacter(Character character, int spawnNo)

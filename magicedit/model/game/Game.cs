@@ -236,7 +236,7 @@ namespace magicedit
                     throw new GameException("Too few action points for movement");
 
                 character.Position = newPosition;
-                CurrentPlayer.AvailableActionPoints -= Config.CharacterConfig.MovementActionPoints;
+                CurrentPlayer.AvailableActionPoints -= MovementCost;
 
                 // if character stepped on a square, we may have to call an action
                 Map.ExecuteSquareAction(squareType, character, this);

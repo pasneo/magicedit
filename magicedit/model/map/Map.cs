@@ -158,7 +158,7 @@ namespace magicedit
 
         public void ExecuteSquareAction(SquareType squareType, Character actor, Game game)
         {
-            if (Scheme == null || squareType.ActionName == null || squareType.ActionName == "") return;
+            if (squareType == null ||Scheme == null || squareType.ActionName == null || squareType.ActionName == "") return;
 
             SchemeFunction action = Scheme.GetFunctionByName(squareType.ActionName);
 

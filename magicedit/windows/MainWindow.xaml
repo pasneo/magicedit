@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:magicedit"
         mc:Ignorable="d"
-        Title="MagicEdit v1.0" Height="450" Width="800">
+        Title="Editor" Height="450" Width="800">
     <Grid>
         <Menu HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="auto">
             <MenuItem Height="20" Width="0"></MenuItem> <!-- For setting menu height -->

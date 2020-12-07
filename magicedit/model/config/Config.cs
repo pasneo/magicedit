@@ -207,7 +207,7 @@ namespace magicedit
 
         public Object GetObjectById(string id)
         {
-            return Objects.Where(o => o.Id == id).FirstOrDefault();
+            return Objects.Where(o => o?.Id == id).FirstOrDefault();
         }
 
         public Object GetItemById(string id)

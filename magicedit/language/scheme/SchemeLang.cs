@@ -1046,6 +1046,10 @@ namespace magicedit
             {
                 Log.Write($"Compilation was terminated by an exception: {ex.Message}");
             }
+            catch (Exception ex)
+            {
+                Log.Write(ex.Message);
+            }
 
             return visitor.CompiledScheme;
         }

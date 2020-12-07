@@ -50,13 +50,11 @@ namespace magicedit
 
             Project project = new Project();
             project.SetAsCurrent();
-            Project.Current.Config.Visuals.Add(new Visual("axe", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\axe.png"));
-            Project.Current.Config.Visuals.Add(new Visual("sword", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\sword.jpg"));
 
-            InitResources();
-            
+            //InitResources();
+
             InitializeComponent();
-
+            
             tviVisuals.Tag = new UCVisualManager();
             tviTexts.Tag = new UCStringConstManager();
             tviSquareTypes.Tag = new UCSquareTypeManager();
@@ -64,8 +62,6 @@ namespace magicedit
             tviMap.Tag = new UCMapManager();
             tviSchemes.Tag = new UCObjectSchemeManager();
             tviObjects.Tag = new UCObjectManager("Objects", ObjectTypeTags.MapObject);
-            //tviItemCategories.Tag = new UCItemCategoryManager();
-            //tviSpellCategories.Tag = new UCSpellCategoryManager();
             tviItems.Tag = new UCObjectManager("Items", ObjectTypeTags.Item);
             tviSpells.Tag = new UCObjectManager("Spells", ObjectTypeTags.Spell);
             tviClasslists.Tag = new UCClasslistManager();
@@ -75,6 +71,9 @@ namespace magicedit
         private void InitResources()
         {
             Config config = Project.Current.Config;
+
+            config.Visuals.Add(new Visual("axe", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\axe.png"));
+            config.Visuals.Add(new Visual("sword", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\sword.jpg"));
 
             config.Visuals.Add(new Visual("mage", "images/objects/mage.png", true));
             config.Visuals.Add(new Visual("soldier", "images/objects/soldier.png", true));

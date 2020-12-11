@@ -227,7 +227,7 @@
     <Compile Include="model\scheme\commands\object\CommandRemoveAction.cs" />
     <Compile Include="model\scheme\commands\object\CommandReport.cs" />
     <Compile Include="model\object\Class.cs" />
-    <Compile Include="model\scheme\commands\CommandIs.cs" />
+    <Compile Include="model\scheme\commands\object\CommandIs.cs" />
     <Compile Include="model\scheme\commands\object\CommandKnows.cs" />
     <Compile Include="model\scheme\commands\object\CommandOwns.cs" />
     <Compile Include="model\scheme\commands\CommandPrint.cs" />
@@ -243,8 +243,8 @@
     <Compile Include="model\scheme\commands\operations\CommandAnd.cs" />
     <Compile Include="model\scheme\commands\operations\CommandLogicalOperation.cs" />
     <Compile Include="model\scheme\commands\operations\CommandOr.cs" />
-    <Compile Include="model\scheme\commands\CommandSetOf.cs" />
-    <Compile Include="model\scheme\commands\CommandOf.cs" />
+    <Compile Include="model\scheme\commands\object\CommandSetOf.cs" />
+    <Compile Include="model\scheme\commands\object\CommandOf.cs" />
     <Compile Include="model\scheme\commands\operations\CommandDivide.cs" />
     <Compile Include="model\scheme\commands\operations\CommandMultiply.cs" />
     <Compile Include="model\scheme\commands\operations\CommandOperation.cs" />

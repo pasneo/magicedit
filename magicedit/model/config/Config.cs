@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace magicedit
 {
@@ -21,10 +22,6 @@ namespace magicedit
         public Map Map = new Map();
 
         public CharacterConfig CharacterConfig { get; set; } = new CharacterConfig();
-
-        //TODO: remove these two fields
-        public ItemSpellConfig ItemConfig { get; set; } = new ItemSpellConfig();
-        public ItemSpellConfig SpellConfig { get; set; } = new ItemSpellConfig();
         
         public List<Visual> Visuals = new List<Visual>();
         
@@ -48,11 +45,6 @@ namespace magicedit
         {
             Map = map; CharacterConfig = characterConfig; ItemConfig = itemConfig; SpellConfig = spellConfig; Visuals = visuals;
             StringConsts = stringConsts; ClassLists = classLists; Schemes = schemes; Objects = objects;
-
-            foreach(Scheme scheme in Schemes)
-            {
-                scheme.Compile(this);
-            }
         }
 
         public Config() { }
@@ -63,7 +55,9 @@ namespace magicedit
             {
                 //Uri uri = new Uri(filePath, UriKind.Absolute);
                 string json = File.ReadAllText(filePath);
-                Config config = JsonConvert.DeserializeObject<Config>(json);
+                JsonSerializerSettings jsonSettings = new JsonSerializerSettings();
+                jsonSettings.PreserveReferencesHandling = PreserveReferencesHandling.All;
+                Config config = JsonConvert.DeserializeObject<Config>(json, jsonSettings);
                 config.AfterLoaded();
                 return config;
             }
@@ -84,6 +78,11 @@ namespace magicedit
         // called after this config has been loaded from file
         private void AfterLoaded()
         {
+            foreach (Scheme scheme in Schemes)
+            {
+                scheme.Compile(this);
+            }
+
             Map?.RecollectMapObjects(Objects);
         }
 
@@ -319,14 +318,6 @@ namespace magicedit
                     collisions.Add(obj.Id);
                     eeds.Add(eed);
                 }
-            }
-        }
-
-        private void ValidateObjects(List<EditorErrorDescriptor> eeds)
-        {
-            foreach (var obj in Objects)
-            {
-                // todo
             }
         }
 

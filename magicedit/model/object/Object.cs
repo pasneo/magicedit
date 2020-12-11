@@ -20,18 +20,6 @@ namespace magicedit
     public class Object
     {
 
-        /*
-         * TODO: the Name property might be renamed to OriginalId or something similar to highlight to following:
-         * 
-         * 'Id' is a unique identifier, but it is used mainly (or only?) to identify pre-defined (in-editor) objects from code.
-         * Eg. we define a sword item, and want to use it in code as 'add sword to actor'. In this case the Id of the item
-         * will be 'sword'. But we also want to write code like 'actor has 2 sword'. In this case we want all the sword items
-         * to be counted, thus we must use their Name, which will be 'sword' for each.
-         * 
-         * Conclusion: the Name must be the same as the Id of the original object. Copies of the original can (or must) have
-         * newly defined Ids (eg. sword_1, sword_2 ...)
-         */
-
         public virtual string ObjectType { get; } = "Object";
 
         public virtual ObjectTypeTags TypeTag { get; set; }     //used to identify items, spells etc. in the editor

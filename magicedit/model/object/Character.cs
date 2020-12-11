@@ -126,7 +126,6 @@ namespace magicedit
 
         public void AddSpell(Spell spell)
         {
-            //todo: if we want spells to have different inner state based on their owners, we must copy spells just like items
             Spells.Add(spell);
         }
 
@@ -157,6 +156,22 @@ namespace magicedit
                         AddSpell(spell);
                     }
 
+                }
+            }
+        }
+
+        public void EvaluateClassAttributeModifiers(Game game)
+        {
+            foreach (ObjectVariable var in Variables)
+            {
+                if (game.Config.IsClassType(var.Type))
+                {
+                    Class @class = (Class)var.Value;
+                    foreach(var attrModif in @class.GetAttributeModifiers())
+                    {
+                        if (attrModif.Option == AttributeModifier.AttributeModifierOptions.SET) SetAttribute(attrModif.AttributeName);
+                        else if (attrModif.Option == AttributeModifier.AttributeModifierOptions.FORBID) ForbidAttribute(attrModif.AttributeName);
+                    }
                 }
             }
         }

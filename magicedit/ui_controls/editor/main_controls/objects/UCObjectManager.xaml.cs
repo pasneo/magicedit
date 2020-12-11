@@ -209,8 +209,7 @@ namespace magicedit
             var item = ((ListBoxItem)list.SelectedItem);
             Object mo = (Object)item.Tag;
             mo.Scheme = schemeSelector.SelectedTag;
-
-            //TODO: remove parameters from object that are not present in newly selected scheme
+            
 
             paramSelector.Refresh();
         }

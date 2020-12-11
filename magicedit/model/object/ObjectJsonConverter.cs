@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace magicedit
 {
-
-    //TODO: delete this class
+    
     public class ObjectJsonConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)

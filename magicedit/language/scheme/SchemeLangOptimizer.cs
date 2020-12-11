@@ -41,13 +41,6 @@ namespace magicedit
             }
         }
 
-        public static void SolveAdjacentJumps(SchemeFunction function)
-        {
-
-            //TODO
-
-        }
-
         private static void DecreaseJumpLocations(List<ISchemeCommand> commands, int loc)
         {
             foreach(var cmd in commands)

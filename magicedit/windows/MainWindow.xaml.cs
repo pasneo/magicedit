@@ -93,8 +93,7 @@ namespace magicedit
             Project.Current.Config.Map.SquareTypes.Add(new SquareType("stone", config.GetVisualById("stone")));
             Project.Current.Config.Map.SquareTypes.Add(new SquareType("wall", config.GetVisualById("wall")));
             Project.Current.Config.Map.SquareTypes.Add(new SquareType("wall_opening", config.GetVisualById("wall_opening")));
-
-            //TODO: remove the following lines
+            
             ClassList races = new ClassList("Races");
             races.Classes.Add(new Class("Dwarf"));
             races.Classes.Add(new Class("Elf"));

@@ -31,10 +31,12 @@ namespace magicedit
         {
             foreach(string attr in AllowedAttributes)
             {
+                if (attr == null || attr == "") continue;
                 if (!character.HasAttribute(attr)) return false;
             }
             foreach(string attr in ForbiddenAttributes)
             {
+                if (attr == null || attr == "") continue;
                 if (character.HasAttribute(attr)) return false;
             }
             return true;

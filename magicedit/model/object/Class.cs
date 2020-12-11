@@ -273,6 +273,16 @@ namespace magicedit
             return itemModifiers;
         }
 
+        public List<AttributeModifier> GetAttributeModifiers()
+        {
+            List<AttributeModifier> attributeModifiers = new List<AttributeModifier>();
+            foreach (ClassModifier modifier in Modifiers)
+            {
+                if (modifier is AttributeModifier) attributeModifiers.Add((AttributeModifier)modifier);
+            }
+            return attributeModifiers;
+        }
+
         public List<SpellModifier> GetSpellModifiers()
         {
             List<SpellModifier> spellModifiers = new List<SpellModifier>();

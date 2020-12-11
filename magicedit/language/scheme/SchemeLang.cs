@@ -119,7 +119,6 @@ namespace magicedit
             {
                 if (VariableTypes.Contains(type)) return true;
                 if (config.GetSchemeByName(type) != null) return true;
-                //todo: classlists are also valid types (?)
                 return false;
             }
 
@@ -472,14 +471,6 @@ namespace magicedit
                 return base.VisitClear_actions(context);
             }
 
-            //public override object VisitCmd_modify_var([NotNull] scheme_langParser.Cmd_modify_varContext context)
-            //{
-
-            //    //TODO: create commands like CommandIncrease, CommandDecrease... so we dont have to do magic here
-
-            //    return base.VisitCmd_modify_var(context);
-            //}
-
             public override object VisitCmd_remove_item([NotNull] scheme_langParser.Cmd_remove_itemContext context)
             {
 
@@ -580,8 +571,6 @@ namespace magicedit
             {
 
                 string propertyName = context.property_name().GetText();
-
-                //todo: maybe check if given object really has such property (but this is a bit complicated)
 
                 int objectReg = 0;
                 int valueReg = 1;
@@ -958,8 +947,6 @@ namespace magicedit
             {
 
                 int param = GetLastParamReg();
-
-                //todo: maybe check if identifier is valid
 
                 CommandIs cmd = new CommandIs(GetRegName(param), context.identifier().GetText(), GetRegName(param));
                 currentFunc.AddCommand(cmd, expression_index);

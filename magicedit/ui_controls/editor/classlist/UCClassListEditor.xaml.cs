@@ -23,8 +23,7 @@ namespace magicedit
 
         public ClassList SelectedClassList { get; set; }
         public Class SelectedClass { get; set; }
-
-        //todo: add delete classlist and delete class to ui
+        
 
         public UCClassListEditor()
         {

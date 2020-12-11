@@ -87,6 +87,7 @@ namespace magicedit
             if (spawnNo >= 0)
                 character.Position = Map.GetSpawnerByNo(spawnNo);
             character.EvaluateClassItemSpellModifiers(this);    //add items & spells to character provided by its class modifiers
+            character.EvaluateClassAttributeModifiers(this);
 
             Objects.Add(character);
             Map.Objects.Add(character);

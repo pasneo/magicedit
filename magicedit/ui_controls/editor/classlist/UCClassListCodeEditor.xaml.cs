@@ -337,20 +337,7 @@ namespace magicedit
 
         private void tbCode_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            //TODO: do this or remove this
-            if (e.Text == ".")
-            {
-                // Open code completion after the user has pressed dot:
-                completionWindow = new CompletionWindow(tbCode.TextArea);
-                IList<ICompletionData> data = completionWindow.CompletionList.CompletionData;
-                data.Add(new MyCompletionData("Item1"));
-                data.Add(new MyCompletionData("Item2"));
-                data.Add(new MyCompletionData("Item3"));
-                completionWindow.Show();
-                completionWindow.Closed += delegate {
-                    completionWindow = null;
-                };
-            }
+            
         }
 
         private void bExport_Click(object sender, RoutedEventArgs e)

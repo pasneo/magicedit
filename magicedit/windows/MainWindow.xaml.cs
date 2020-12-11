@@ -51,8 +51,6 @@ namespace magicedit
             Project project = new Project();
             project.SetAsCurrent();
 
-            //InitResources();
-
             InitializeComponent();
             
             tviVisuals.Tag = new UCVisualManager();
@@ -66,49 +64,6 @@ namespace magicedit
             tviSpells.Tag = new UCObjectManager("Spells", ObjectTypeTags.Spell);
             tviClasslists.Tag = new UCClasslistManager();
 
-        }
-
-        private void InitResources()
-        {
-            Config config = Project.Current.Config;
-
-            config.Visuals.Add(new Visual("axe", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\axe.png"));
-            config.Visuals.Add(new Visual("sword", "C:\\Users\\Mathias\\Desktop\\Tananyag\\Diplomatervezes 1\\Project\\sample resources\\sword.jpg"));
-
-            config.Visuals.Add(new Visual("mage", "images/objects/mage.png", true));
-            config.Visuals.Add(new Visual("soldier", "images/objects/soldier.png", true));
-
-            config.Visuals.Add(new Visual("forest", "images/terrain/forest.png", true));
-            config.Visuals.Add(new Visual("grass", "images/terrain/grass.png", true));
-            config.Visuals.Add(new Visual("village", "images/terrain/village.png", true));
-            config.Visuals.Add(new Visual("desert", "images/terrain/desert.png", true));
-            config.Visuals.Add(new Visual("stone", "images/terrain/stone.png", true));
-            config.Visuals.Add(new Visual("wall", "images/terrain/wall.png", true));
-            config.Visuals.Add(new Visual("wall_opening", "images/terrain/wall-opening.png", true));
-
-            Project.Current.Config.Map.SquareTypes.Add(new SquareType("forest", config.GetVisualById("forest")));
-            Project.Current.Config.Map.SquareTypes.Add(new SquareType("grass", config.GetVisualById("grass")));
-            Project.Current.Config.Map.SquareTypes.Add(new SquareType("village", config.GetVisualById("village")));
-            Project.Current.Config.Map.SquareTypes.Add(new SquareType("desert", config.GetVisualById("desert")));
-            Project.Current.Config.Map.SquareTypes.Add(new SquareType("stone", config.GetVisualById("stone")));
-            Project.Current.Config.Map.SquareTypes.Add(new SquareType("wall", config.GetVisualById("wall")));
-            Project.Current.Config.Map.SquareTypes.Add(new SquareType("wall_opening", config.GetVisualById("wall_opening")));
-            
-            ClassList races = new ClassList("Races");
-            races.Classes.Add(new Class("Dwarf"));
-            races.Classes.Add(new Class("Elf"));
-
-            ClassList skills = new ClassList("Skills");
-            skills.Classes.Add(new Class("Smith"));
-            skills.Classes.Add(new Class("Hunter"));
-            skills.Classes.Add(new Class("Potter"));
-
-            Project.Current.Config.ClassLists.Add(races);
-            Project.Current.Config.ClassLists.Add(skills);
-
-            Project.Current.Config.CharacterConfig.Abilities.Add(new ObjectVariable("number", "STRENGTH", 0));
-            Project.Current.Config.CharacterConfig.Abilities.Add(new ObjectVariable("number", "DEFENSE", 0));
-            Project.Current.Config.CharacterConfig.Abilities.Add(new ObjectVariable("number", "DEXTERITY", 0));
         }
 
         private void mRun_Click(object sender, RoutedEventArgs e)

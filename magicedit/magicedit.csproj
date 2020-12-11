@@ -492,12 +492,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="doc\ADL spec.docx" />
     <Antlr4 Include="language\scheme\scheme_lang.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>magicedit.language.scheme</CustomToolNamespace>
     </Antlr4>
-    <None Include="doc\Optimization.docx" />
     <Antlr4 Include="language\classlist\classlist_lang.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>magicedit.language.classlist</CustomToolNamespace>

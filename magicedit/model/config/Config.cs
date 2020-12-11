@@ -40,10 +40,10 @@ namespace magicedit
 
         [JsonConstructor]
         public Config(
-            Map map, CharacterConfig characterConfig, ItemSpellConfig itemConfig, ItemSpellConfig spellConfig, List<Visual> visuals,
+            Map map, CharacterConfig characterConfig, List<Visual> visuals,
             List<Text> stringConsts, List<ClassList> classLists, List<Scheme> schemes, List<Object> objects)
         {
-            Map = map; CharacterConfig = characterConfig; ItemConfig = itemConfig; SpellConfig = spellConfig; Visuals = visuals;
+            Map = map; CharacterConfig = characterConfig; Visuals = visuals;
             StringConsts = stringConsts; ClassLists = classLists; Schemes = schemes; Objects = objects;
         }
 
